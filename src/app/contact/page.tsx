@@ -106,10 +106,7 @@ export default function Contact() {
                         </div>
 
                         <div>
-                            <h3
-                                className="text-xl font-light mb-4 text-neutral-800"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
+                            <h3 className="text-xl font-light mb-4 text-neutral-800">
                                 Commissions
                             </h3>
                             <p

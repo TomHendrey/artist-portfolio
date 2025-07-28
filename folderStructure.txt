@@ -1,0 +1,31 @@
+artist-portfolio/
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   │   └── page.tsx
+│   │   ├── contact/
+│   │   │   └── page.tsx
+│   │   ├── portfolio/
+│   │   │   └── page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── components/
+│       └── Navigation.tsx
+├── public/
+│   └── images/
+│       ├── hero-artwork.jpg
+│       ├── featured-1.jpg
+│       ├── featured-2.jpg
+│       ├── featured-3.jpg
+│       ├── artist-photo.jpg
+│       ├── artwork-1.jpg
+│       ├── artwork-2.jpg
+│       ├── artwork-3.jpg
+│       ├── artwork-4.jpg
+│       ├── artwork-5.jpg
+│       └── artwork-6.jpg
+├── next.config.js
+├── tailwind.config.js
+├── package.json
+└── README.md

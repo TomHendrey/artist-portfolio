@@ -6,33 +6,40 @@ export default function Home() {
     return (
         <div className="min-h-screen">
             {/* Hero Section */}
-            <section className="relative h-screen flex items-center justify-center overflow-hidden">
+            <section
+                className="relative h-screen flex items-center justify-center overflow-hidden"
+                style={{ backgroundColor: "#f0f1f1" }}
+            >
                 <div className="absolute inset-0 z-0">
-                    <Image
-                        src="/images/Surface-1-bg.jpg" // Replace with your hero image
-                        alt="Featured artwork"
-                        fill
-                        className="object-cover object-top"
-                        priority
-                        quality={100}
-                    />
-                    <div className="absolute inset-0 bg-black/30" />
+                    <div className="absolute right-8 md:right-16 lg:right-24 top-1/2 -translate-y-1/2 w-[600px] md:w-[750px] lg:w-[850px] h-[95vh]">
+                        <Image
+                            src="/images/Surface-1-bg5.jpg"
+                            alt="Featured artwork"
+                            fill
+                            className="object-contain"
+                            priority
+                            quality={90}
+                        />
+                    </div>
                 </div>
 
-                <div className="relative z-10 text-left text-white px-4">
-                    <h1 className="text-5xl md:text-7xl font-light mb-4 tracking-wide">
-                        Hendrey - Kendall White
-                    </h1>
-                    <p className="text-xl md:text-2xl text-left font-light mb-8 max-w-2xl ">
-                        Contemporary Painting
-                    </p>
-                    <Link
-                        href="/portfolio"
-                        className="inline-flex items-center gap-2 bg-white text-black px-8 py-3 rounded-none hover:bg-neutral-100 transition-colors duration-300"
-                    >
-                        View Works
-                        <ArrowRight size={18} />
-                    </Link>
+                <div className="relative z-10 text-center md:text-left text-neutral-700 px-4 max-w-7xl mx-auto w-full">
+                    <div className="md:max-w-lg">
+                        <h1 className="font-helvetica text-5xl md:text-5xl font-light mb-6 tracking-wide whitespace-nowrap">
+                            Hendrey - Kendall White
+                        </h1>
+                        <div className="bg-test-color">Test</div>
+                        <p className="text-xl md:text-2xl font-light mb-8 font-courier ">
+                            Contemporary Painting
+                        </p>
+                        <Link
+                            href="/portfolio"
+                            className="inline-flex items-center gap-2 bg-white text-black px-8 py-3 rounded-none hover:bg-neutral-100 transition-colors duration-300"
+                        >
+                            View Works
+                            <ArrowRight size={18} />
+                        </Link>
+                    </div>
                 </div>
             </section>
 

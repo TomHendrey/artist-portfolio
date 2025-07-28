@@ -58,7 +58,7 @@ export default function Contact() {
                                             className="text-neutral-600"
                                             style={{ fontFamily: "Courier New, monospace" }}
                                         >
-                                            your.email@hkwstudio.com
+                                            studio@hkw.com
                                         </p>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@ export default function Contact() {
                                             className="text-neutral-600"
                                             style={{ fontFamily: "Courier New, monospace" }}
                                         >
-                                            @whendreykendallwhite
+                                            @hendreykendallwhite
                                         </p>
                                     </div>
                                 </div>

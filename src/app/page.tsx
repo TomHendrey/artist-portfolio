@@ -10,7 +10,10 @@ export default function Home() {
                 className="relative h-screen flex items-center justify-center overflow-hidden"
                 style={{ backgroundColor: "#f0f1f1" }}
             >
-                <div className="absolute inset-0 z-0">
+                <div
+                    className="absolute inset-0 z-0 hidden md:block
+                    "
+                >
                     <div className="absolute right-8 md:right-16 lg:right-24 top-[53%] -translate-y-1/2 w-[600px] md:w-[750px] lg:w-[850px] h-[95vh]">
                         <Image
                             src="/images/Surface-1-bg5.jpg"
@@ -25,7 +28,7 @@ export default function Home() {
 
                 <div className="relative z-10 text-center md:text-left text-neutral-700 px-4 max-w-7xl mx-auto w-full">
                     <div className="md:max-w-lg">
-                        <h1 className="font-helvetica text-5xl md:text-5xl font-light mb-6 tracking-wide whitespace-nowrap">
+                        <h1 className="font-helvetica text-2xl md:text-5xl font-light mb-6 tracking-wide whitespace-nowrap">
                             Hendrey - Kendall White
                         </h1>
                         <p

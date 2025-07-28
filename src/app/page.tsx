@@ -11,7 +11,7 @@ export default function Home() {
                 style={{ backgroundColor: "#f0f1f1" }}
             >
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute right-8 md:right-16 lg:right-24 top-1/2 -translate-y-1/2 w-[600px] md:w-[750px] lg:w-[850px] h-[95vh]">
+                    <div className="absolute right-8 md:right-16 lg:right-24 top-[53%] -translate-y-1/2 w-[600px] md:w-[750px] lg:w-[850px] h-[95vh]">
                         <Image
                             src="/images/Surface-1-bg5.jpg"
                             alt="Featured artwork"
@@ -28,13 +28,15 @@ export default function Home() {
                         <h1 className="font-helvetica text-5xl md:text-5xl font-light mb-6 tracking-wide whitespace-nowrap">
                             Hendrey - Kendall White
                         </h1>
-                        <div className="bg-test-color">Test</div>
-                        <p className="text-xl md:text-2xl font-light mb-8 font-courier ">
+                        <p
+                            className="text-xl md:text-2xl font-light mb-8"
+                            style={{ fontFamily: "Courier New, monospace" }}
+                        >
                             Contemporary Painting
                         </p>
                         <Link
                             href="/portfolio"
-                            className="inline-flex items-center gap-2 bg-white text-black px-8 py-3 rounded-none hover:bg-neutral-100 transition-colors duration-300"
+                            className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
                         >
                             View Works
                             <ArrowRight size={18} />
@@ -75,10 +77,15 @@ export default function Home() {
                     <h2 className="text-3xl md:text-4xl font-light mb-8 text-neutral-800">
                         About the Artists
                     </h2>
-                    <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-                        Brief introduction about your artistic practice, inspiration, and
-                        background. Keep this concise but engaging to draw visitors into your full
-                        story.
+                    <p
+                        className="text-lg text-neutral-600 mb-8 leading-relaxed"
+                        style={{ fontFamily: "Courier New, monospace" }}
+                    >
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur.{" "}
                     </p>
                     <Link
                         href="/about"

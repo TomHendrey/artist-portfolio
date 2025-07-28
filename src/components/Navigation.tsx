@@ -19,7 +19,11 @@ export default function Navigation() {
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link href="/" className="text-xl font-light text-neutral-800">
+                    <Link
+                        href="/"
+                        className="text-xl font-light text-neutral-800"
+                        style={{ fontFamily: "Courier New, monospace" }}
+                    >
                         Hendrey - Kendall White
                     </Link>
 
@@ -30,6 +34,7 @@ export default function Navigation() {
                                 key={item.href}
                                 href={item.href}
                                 className="text-neutral-600 hover:text-neutral-800 transition-colors duration-200 font-light"
+                                style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 {item.label}
                             </Link>

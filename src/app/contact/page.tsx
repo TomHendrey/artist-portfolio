@@ -28,11 +28,14 @@ export default function Contact() {
     return (
         <div className="pt-16 min-h-screen bg-white">
             <div className="py-20 px-4 max-w-6xl mx-auto">
-                <div className="text-center mb-16">
+                <div className="text-left mb-16">
                     <h1 className="text-4xl md:text-5xl font-light mb-6 text-neutral-800">
                         Get in Touch
                     </h1>
-                    <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+                    <p
+                        className="text-lg text-neutral-600 max-w-2xl "
+                        style={{ fontFamily: "Courier New, monospace" }}
+                    >
                         Interested in this work? Have a question or want to discuss a commission? We
                         would love to hear from you.
                     </p>
@@ -42,16 +45,21 @@ export default function Contact() {
                     {/* Contact Info */}
                     <div className="space-y-8">
                         <div>
-                            <h2 className="text-2xl font-light mb-6 text-neutral-800">
+                            <h2 className="text-2xl font-light mb-10 text-neutral-800">
                                 Contact Information
                             </h2>
 
-                            <div className="space-y-4">
+                            <div className="space-y-4 mb-10">
                                 <div className="flex items-center gap-4">
                                     <Mail className="text-neutral-400" size={20} />
                                     <div>
                                         <p className="text-neutral-800">Email</p>
-                                        <p className="text-neutral-600">your.email@example.com</p>
+                                        <p
+                                            className="text-neutral-600"
+                                            style={{ fontFamily: "Courier New, monospace" }}
+                                        >
+                                            your.email@hkwstudio.com
+                                        </p>
                                     </div>
                                 </div>
 
@@ -59,7 +67,12 @@ export default function Contact() {
                                     <Instagram className="text-neutral-400" size={20} />
                                     <div>
                                         <p className="text-neutral-800">Instagram</p>
-                                        <p className="text-neutral-600">@yourarthandle</p>
+                                        <p
+                                            className="text-neutral-600"
+                                            style={{ fontFamily: "Courier New, monospace" }}
+                                        >
+                                            @whendreykendallwhite
+                                        </p>
                                     </div>
                                 </div>
 
@@ -67,7 +80,12 @@ export default function Contact() {
                                     <MapPin className="text-neutral-400" size={20} />
                                     <div>
                                         <p className="text-neutral-800">Location</p>
-                                        <p className="text-neutral-600">Your City, State</p>
+                                        <p
+                                            className="text-neutral-600"
+                                            style={{ fontFamily: "Courier New, monospace" }}
+                                        >
+                                            London, SW15
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +95,10 @@ export default function Contact() {
                             <h3 className="text-xl font-light mb-4 text-neutral-800">
                                 Studio Visits
                             </h3>
-                            <p className="text-neutral-600 leading-relaxed">
+                            <p
+                                className="text-neutral-600 leading-relaxed"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
                                 Studio visits are available by appointment. Please reach out if you
                                 would like to see works in person or discuss potential
                                 collaborations.
@@ -85,10 +106,16 @@ export default function Contact() {
                         </div>
 
                         <div>
-                            <h3 className="text-xl font-light mb-4 text-neutral-800">
+                            <h3
+                                className="text-xl font-light mb-4 text-neutral-800"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
                                 Commissions
                             </h3>
-                            <p className="text-neutral-600 leading-relaxed">
+                            <p
+                                className="text-neutral-600 leading-relaxed"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
                                 Commission work. Please include details about your project,
                                 timeline, and budget in your message.
                             </p>

@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 const config = {
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,12 +7,8 @@ const config = {
     ],
     theme: {
         extend: {
-            colors: {
-                "test-color": "#ff0000",
-            },
             fontFamily: {
-                helvetica: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
-                courier: ["Courier New", "monospace"],
+                courier: ["var(--font-courier)"],
             },
         },
     },

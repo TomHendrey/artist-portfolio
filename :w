@@ -6,27 +6,24 @@ export default function About() {
             <div className="py-20 px-4 max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     {/* Artist Photo */}
-                    {/* <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0"> */}
-                    {/*     <Image */}
-                    {/*         src="/images/artist-photo.jpg" // Replace with your photo */}
-                    {/*         alt="Artist portrait" */}
-                    {/*         fill */}
-                    {/*         className="object-cover" */}
-                    {/*         sizes="(max-width: 1024px) 100vw, 50vw" */}
-                    {/*     /> */}
-                    {/* </div> */}
+                    <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0">
+                        <Image
+                            src="/images/artist-photo.jpg" // Replace with your photo
+                            alt="Artist portrait"
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 1024px) 100vw, 50vw"
+                        />
+                    </div>
 
                     {/* Biography */}
                     <div className="space-y-8">
                         <div>
-                            <h1 className="text-4xl md:text-5xl font-light mb-16 text-neutral-800">
+                            <h1 className="text-4xl md:text-5xl font-light mb-6 text-neutral-800">
                                 About the Artist
                             </h1>
 
-                            <div
-                                className="space-y-6 text-neutral-600 leading-relaxed mb-16"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
+                            <div className="space-y-6 text-neutral-600 leading-relaxed">
                                 <p>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
                                     eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -44,10 +41,9 @@ export default function About() {
                                 </p>
 
                                 <p>
-                                    Consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo consequat.
+                                    Include your educational background, significant exhibitions, or
+                                    mentors who influenced your development as an artist. Keep it
+                                    engaging and authentic to your voice.
                                 </p>
                             </div>
                         </div>
@@ -55,33 +51,33 @@ export default function About() {
                         {/* Education & Exhibitions */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <h3 className="text-xl font-light mb-10 text-neutral-800">
+                                <h3 className="text-xl font-light mb-4 text-neutral-800">
                                     Education
                                 </h3>
                                 <div className="space-y-3 text-sm text-neutral-600">
                                     <div>
-                                        <p className="font-medium">BA Art Engineering</p>
-                                        <p>University Bartlet, 2013</p>
+                                        <p className="font-medium">MFA Fine Arts</p>
+                                        <p>University Name, 2020</p>
                                     </div>
                                     <div>
-                                        <p className="font-medium">BA Fine Arts</p>
-                                        <p>Univerity Of The Arts London, 2009</p>
+                                        <p className="font-medium">BFA Painting</p>
+                                        <p>Art School, 2018</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div>
-                                <h3 className="text-xl font-light mb-10 text-neutral-800">
+                                <h3 className="text-xl font-light mb-4 text-neutral-800">
                                     Recent Exhibitions
                                 </h3>
                                 <div className="space-y-3 text-sm text-neutral-600">
                                     <div>
                                         <p className="font-medium">Solo Exhibition</p>
-                                        <p>. . .</p>
+                                        <p>Gallery Name, 2024</p>
                                     </div>
                                     <div>
                                         <p className="font-medium">Group Show</p>
-                                        <p>. . .</p>
+                                        <p>Museum Name, 2023</p>
                                     </div>
                                 </div>
                             </div>
@@ -89,22 +85,22 @@ export default function About() {
 
                         {/* Artist Statement */}
                         <div>
-                            {/* <h3 className="text-xl font-light mb-4 text-neutral-800"> */}
-                            {/*     Artist Statement */}
-                            {/* </h3> */}
-                            {/* <div className="space-y-4 text-neutral-600 leading-relaxed text-sm bg-neutral-50 p-6"> */}
-                            {/*     <p> */}
-                            {/*         My work explores the intersection of memory and identity, using */}
-                            {/*         color and texture to create emotional landscapes that invite */}
-                            {/*         viewers to examine their own relationships with place and */}
-                            {/*         belonging. */}
-                            {/*     </p> */}
-                            {/*     <p> */}
-                            {/*         Through my practice, I aim to challenge conventional narratives */}
-                            {/*         and create space for nuanced conversations about contemporary */}
-                            {/*         life and the human experience. */}
-                            {/*     </p> */}
-                            {/* </div> */}
+                            <h3 className="text-xl font-light mb-4 text-neutral-800">
+                                Artist Statement
+                            </h3>
+                            <div className="space-y-4 text-neutral-600 leading-relaxed text-sm bg-neutral-50 p-6">
+                                <p>
+                                    My work explores the intersection of memory and identity, using
+                                    color and texture to create emotional landscapes that invite
+                                    viewers to examine their own relationships with place and
+                                    belonging.
+                                </p>
+                                <p>
+                                    Through my practice, I aim to challenge conventional narratives
+                                    and create space for nuanced conversations about contemporary
+                                    life and the human experience.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

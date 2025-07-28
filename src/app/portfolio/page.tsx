@@ -8,58 +8,58 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 const artworks = [
     {
         id: 1,
-        title: "Untitled I",
-        year: "2024",
-        medium: "Oil on canvas",
-        dimensions: "48 x 36 inches",
-        src: "/images/artwork-1.jpg",
-        description: "Description of the artwork, inspiration, or story behind it.",
+        title: "Surface I",
+        year: "2025",
+        medium: "Oil pastel on wood",
+        dimensions: "120 x 150 cm",
+        src: "/images/Surface-1-bg5.jpg",
+        description: "Study of the serface of Mars",
     },
     {
         id: 2,
-        title: "Urban Reflection",
-        year: "2023",
-        medium: "Acrylic on wood",
-        dimensions: "60 x 40 inches",
-        src: "/images/artwork-2.jpg",
-        description: "Another piece with its own story and context.",
+        title: "Surface II",
+        year: "2025",
+        medium: "Oil pastel on wood",
+        dimensions: "120 x 150 cm",
+        src: "/images/Surface-2-bg5.jpg",
+        description: "Study of the serface of Mars",
     },
     // Add more artworks...
     {
         id: 3,
-        title: "Abstract Study",
-        year: "2024",
-        medium: "Mixed media",
-        dimensions: "24 x 24 inches",
-        src: "/images/artwork-3.jpg",
-        description: "Exploration of color and form.",
+        title: "Surface III",
+        year: "2025",
+        medium: "Oil pastel on wood",
+        dimensions: "120 x 150 cm",
+        src: "/images/Surface-3-bg5.jpg",
+        description: "Study of the serface of Mars",
     },
     {
         id: 4,
-        title: "Landscape Memory",
-        year: "2023",
-        medium: "Oil on canvas",
-        dimensions: "36 x 48 inches",
-        src: "/images/artwork-4.jpg",
-        description: "Inspired by childhood landscapes.",
+        title: "Surface IV",
+        year: "2025",
+        medium: "Mixed media on wood",
+        dimensions: "120 x 150 cm",
+        src: "/images/Surface-7-bg5.jpg",
+        description: "Study of the serface of Mars",
     },
     {
         id: 5,
-        title: "Portrait Study",
-        year: "2024",
-        medium: "Charcoal on paper",
-        dimensions: "18 x 24 inches",
-        src: "/images/artwork-5.jpg",
-        description: "Character study in monochrome.",
+        title: "Surface V",
+        year: "2025",
+        medium: "Mixed media on wood",
+        dimensions: "120 x 150 cm",
+        src: "/images/Surface-5-bg5.jpg",
+        description: "Study of the serface of Mars",
     },
     {
         id: 6,
-        title: "Color Theory",
-        year: "2024",
-        medium: "Acrylic on canvas",
-        dimensions: "30 x 30 inches",
-        src: "/images/artwork-6.jpg",
-        description: "Exploration of complementary colors.",
+        title: "Surface VI",
+        year: "2025",
+        medium: "Mixed media on wood",
+        dimensions: "120 x 150 cm",
+        src: "/images/Surface-4-bg5.jpg",
+        description: "Study of the serface of Mars",
     },
 ];
 
@@ -106,18 +106,27 @@ export default function Portfolio() {
     return (
         <div className="pt-16 min-h-screen bg-white">
             {/* Header */}
-            <div className="py-20 px-4 text-center bg-neutral-50">
-                <h1 className="text-4xl md:text-5xl font-light mb-4 text-neutral-800">Portfolio</h1>
-                <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                    A collection of recent works exploring themes of identity, memory, and the human
-                    condition.
-                </p>
+            <div className="py-14 px-4 bg-neutral-50">
+                <div className="max-w-7xl mx-auto text-left">
+                    <div className="ml-4">
+                        <h1 className="text-4xl md:text-5xl font-light mb-4 text-neutral-800">
+                            Works
+                        </h1>
+                        <p
+                            className="text-lg text-neutral-600 max-w-2xl"
+                            style={{ fontFamily: "Courier New, monospace" }}
+                        >
+                            A collection of recent works exploring the use of technology, and the
+                            transformation of data in contemporary painting.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             {/* Filter Buttons */}
-            <div className="py-8 px-4 border-b border-neutral-200">
+            <div className="py-8 px-4  border-neutral-200">
                 <div className="max-w-7xl mx-auto">
-                    <div className="flex flex-wrap justify-center gap-4">
+                    <div className="flex flex-wrap gap-4 ml-4">
                         {filters.map((filterOption) => (
                             <button
                                 key={filterOption}

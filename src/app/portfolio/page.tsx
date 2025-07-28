@@ -149,10 +149,7 @@ export default function Portfolio() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredArtworks.map((artwork) => (
                         <div key={artwork.id} className="group cursor-pointer">
-                            <div
-                                className="relative aspect-[4/5] mb-4 overflow-hidden bg-neutral-100"
-                                onClick={() => openLightbox(artwork.id)}
-                            >
+                            <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-neutral-100">
                                 <Image
                                     src={artwork.src}
                                     alt={artwork.title}

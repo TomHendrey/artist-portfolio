@@ -88,15 +88,15 @@ export default function About() {
                             </h3>
                             <div className="space-y-4 text-neutral-600 leading-relaxed text-sm bg-neutral-50 p-6">
                                 <p>
-                                    "My work explores the intersection of memory and identity, using
+                                    My work explores the intersection of memory and identity, using
                                     color and texture to create emotional landscapes that invite
                                     viewers to examine their own relationships with place and
-                                    belonging."
+                                    belonging.
                                 </p>
                                 <p>
-                                    "Through my practice, I aim to challenge conventional narratives
+                                    Through my practice, I aim to challenge conventional narratives
                                     and create space for nuanced conversations about contemporary
-                                    life and the human experience."
+                                    life and the human experience.
                                 </p>
                             </div>
                         </div>

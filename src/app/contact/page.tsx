@@ -33,8 +33,8 @@ export default function Contact() {
                         Get in Touch
                     </h1>
                     <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                        Interested in my work? Have a question or want to discuss a commission? I'd
-                        love to hear from you.
+                        Interested in this work? Have a question or want to discuss a commission? We
+                        would love to hear from you.
                     </p>
                 </div>
 
@@ -78,8 +78,8 @@ export default function Contact() {
                                 Studio Visits
                             </h3>
                             <p className="text-neutral-600 leading-relaxed">
-                                Studio visits are available by appointment. Please reach out if
-                                you'd like to see works in person or discuss potential
+                                Studio visits are available by appointment. Please reach out if you
+                                would like to see works in person or discuss potential
                                 collaborations.
                             </p>
                         </div>
@@ -89,8 +89,8 @@ export default function Contact() {
                                 Commissions
                             </h3>
                             <p className="text-neutral-600 leading-relaxed">
-                                I accept select commission work. Please include details about your
-                                project, timeline, and budget in your message.
+                                Commission work. Please include details about your project,
+                                timeline, and budget in your message.
                             </p>
                         </div>
                     </div>

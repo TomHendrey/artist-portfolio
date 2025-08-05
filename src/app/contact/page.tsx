@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Mail, Instagram, MapPin } from "lucide-react";
 
 export default function Contact() {
+    const searchParams = useSearchParams();
+    const artworkTitle = searchParams.get("artwork");
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -11,11 +15,33 @@ export default function Contact() {
         message: "",
     });
 
+    // Pre-fill form if coming from artwork page
+    useEffect(() => {
+        if (artworkTitle) {
+            setFormData((prev) => ({
+                ...prev,
+                subject: `Inquiry about "${artworkTitle}"`,
+                message: `I'm interested in learning more about "${artworkTitle}". Please provide pricing information and additional details.\n\n`,
+            }));
+        }
+    }, [artworkTitle]);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Add your form submission logic here
         console.log("Form submitted:", formData);
         // You could use EmailJS, Formspree, or your own backend
+
+        // Example with EmailJS:
+        // emailjs.send('service_id', 'template_id', formData, 'public_key')
+        //   .then(() => {
+        //     alert('Message sent successfully!');
+        //     setFormData({ name: "", email: "", subject: "", message: "" });
+        //   })
+        //   .catch((error) => {
+        //     console.error('Error:', error);
+        //     alert('Failed to send message. Please try again.');
+        //   });
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,11 +59,12 @@ export default function Contact() {
                         Get in Touch
                     </h1>
                     <p
-                        className="text-lg text-neutral-600 max-w-2xl "
+                        className="text-lg text-neutral-600 max-w-2xl"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
-                        Interested in this work? Have a question or want to discuss a commission? We
-                        would love to hear from you.
+                        {artworkTitle
+                            ? `Interested in "${artworkTitle}"? Send us a message below.`
+                            : "Interested in this work? Have a question or want to discuss a commission? We would love to hear from you."}
                     </p>
                 </div>
 
@@ -54,12 +81,13 @@ export default function Contact() {
                                     <Mail className="text-neutral-400" size={20} />
                                     <div>
                                         <p className="text-neutral-800">Email</p>
-                                        <p
-                                            className="text-neutral-600"
+                                        <a
+                                            href="mailto:studio@hkw.com"
+                                            className="text-neutral-600 hover:text-neutral-800 transition-colors"
                                             style={{ fontFamily: "Courier New, monospace" }}
                                         >
                                             studio@hkw.com
-                                        </p>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -67,12 +95,15 @@ export default function Contact() {
                                     <Instagram className="text-neutral-400" size={20} />
                                     <div>
                                         <p className="text-neutral-800">Instagram</p>
-                                        <p
-                                            className="text-neutral-600"
+                                        <a
+                                            href="https://instagram.com/hendreykendallwhite"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-neutral-600 hover:text-neutral-800 transition-colors"
                                             style={{ fontFamily: "Courier New, monospace" }}
                                         >
                                             @hendreykendallwhite
-                                        </p>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -113,10 +144,31 @@ export default function Contact() {
                                 className="text-neutral-600 leading-relaxed"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
-                                Commission work. Please include details about your project,
-                                timeline, and budget in your message.
+                                Commission work available. Please include details about your
+                                project, timeline, and budget in your message.
                             </p>
                         </div>
+
+                        {artworkTitle && (
+                            <div className="bg-neutral-50 p-6">
+                                <h3 className="text-xl font-light mb-4 text-neutral-800">
+                                    Artwork Inquiry
+                                </h3>
+                                <p
+                                    className="text-neutral-600 leading-relaxed"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    You're inquiring about: <strong>"{artworkTitle}"</strong>
+                                </p>
+                                <p
+                                    className="text-neutral-600 leading-relaxed mt-2"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    We'll provide pricing, availability, and additional images upon
+                                    request.
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     {/* Contact Form */}
@@ -127,7 +179,7 @@ export default function Contact() {
                                     htmlFor="name"
                                     className="block text-sm font-medium text-neutral-700 mb-2"
                                 >
-                                    Name
+                                    Name *
                                 </label>
                                 <input
                                     type="text"
@@ -145,7 +197,7 @@ export default function Contact() {
                                     htmlFor="email"
                                     className="block text-sm font-medium text-neutral-700 mb-2"
                                 >
-                                    Email
+                                    Email *
                                 </label>
                                 <input
                                     type="email"
@@ -163,7 +215,7 @@ export default function Contact() {
                                     htmlFor="subject"
                                     className="block text-sm font-medium text-neutral-700 mb-2"
                                 >
-                                    Subject
+                                    Subject *
                                 </label>
                                 <input
                                     type="text"
@@ -181,7 +233,7 @@ export default function Contact() {
                                     htmlFor="message"
                                     className="block text-sm font-medium text-neutral-700 mb-2"
                                 >
-                                    Message
+                                    Message *
                                 </label>
                                 <textarea
                                     id="message"
@@ -191,6 +243,11 @@ export default function Contact() {
                                     required
                                     rows={6}
                                     className="w-full px-4 py-3 border border-neutral-300 focus:border-neutral-500 focus:outline-none transition-colors duration-200 resize-none"
+                                    placeholder={
+                                        artworkTitle
+                                            ? "Please include any specific questions about the artwork, pricing inquiries, or if you'd like to schedule a studio visit..."
+                                            : "Your message..."
+                                    }
                                 />
                             </div>
 
@@ -201,6 +258,11 @@ export default function Contact() {
                                 Send Message
                             </button>
                         </form>
+
+                        <p className="text-xs text-neutral-500 mt-4">
+                            * Required fields. We typically respond within 24 hours during business
+                            days.
+                        </p>
                     </div>
                 </div>
             </div>

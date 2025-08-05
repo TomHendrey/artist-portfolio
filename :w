@@ -16,7 +16,7 @@ export default function About() {
                         />
                     </div>
 
-                    {/* Biography */}
+                        {/* Biography */}
                     <div className="space-y-8">
                         <div>
                             <h1 className="text-4xl md:text-5xl font-light mb-6 text-neutral-800">

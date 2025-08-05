@@ -1,78 +1,29 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-
-// Sample artwork data - replace with your actual artwork
-const artworks = [
-    {
-        id: 1,
-        title: "Surface I",
-        year: "2025",
-        medium: "Oil pastel on wood",
-        dimensions: "120 x 150 cm",
-        src: "/images/Surface-1-bg5.jpg",
-        description: "Study of the serface of Mars",
-    },
-    {
-        id: 2,
-        title: "Surface II",
-        year: "2025",
-        medium: "Oil pastel on wood",
-        dimensions: "120 x 150 cm",
-        src: "/images/Surface-2-bg5.jpg",
-        description: "Study of the serface of Mars",
-    },
-    // Add more artworks...
-    {
-        id: 3,
-        title: "Surface III",
-        year: "2025",
-        medium: "Oil pastel on wood",
-        dimensions: "120 x 150 cm",
-        src: "/images/Surface-3-bg5.jpg",
-        description: "Study of the serface of Mars",
-    },
-    {
-        id: 4,
-        title: "Surface IV",
-        year: "2025",
-        medium: "Mixed media on wood",
-        dimensions: "120 x 150 cm",
-        src: "/images/Surface-7-bg5.jpg",
-        description: "Study of the serface of Mars",
-    },
-    {
-        id: 5,
-        title: "Surface V",
-        year: "2025",
-        medium: "Mixed media on wood",
-        dimensions: "120 x 150 cm",
-        src: "/images/Surface-5-bg5.jpg",
-        description: "Study of the serface of Mars",
-    },
-    {
-        id: 6,
-        title: "Surface VI",
-        year: "2025",
-        medium: "Mixed media on wood",
-        dimensions: "120 x 150 cm",
-        src: "/images/Surface-4-bg5.jpg",
-        description: "Study of the serface of Mars",
-    },
-];
+import { artworks, Artwork } from "@/data/artworks";
+import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 export default function Portfolio() {
     const [selectedArtwork, setSelectedArtwork] = useState<number | null>(null);
     const [filter, setFilter] = useState("all");
 
-    const filters = ["all", "2024", "2023", "oil", "acrylic", "mixed media"];
+    // Generate filters from artwork data
+    const allYears = [...new Set(artworks.map((art) => art.year))].sort().reverse();
+    const allCategories = [...new Set(artworks.map((art) => art.category).filter(Boolean))];
+    const allMediums = [...new Set(artworks.map((art) => art.medium.split(" ")[0].toLowerCase()))];
+
+    const filters = ["all", ...allYears, ...allCategories, ...allMediums];
 
     const filteredArtworks = artworks.filter((artwork) => {
         if (filter === "all") return true;
         return (
-            artwork.year === filter || artwork.medium.toLowerCase().includes(filter.toLowerCase())
+            artwork.year === filter ||
+            artwork.category === filter ||
+            artwork.medium.toLowerCase().includes(filter.toLowerCase())
         );
     });
 
@@ -124,7 +75,7 @@ export default function Portfolio() {
             </div>
 
             {/* Filter Buttons */}
-            <div className="py-8 px-4  border-neutral-200">
+            <div className="py-8 px-4 border-neutral-200">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-wrap gap-4 ml-4">
                         {filters.map((filterOption) => (
@@ -148,27 +99,41 @@ export default function Portfolio() {
             <div className="py-12 px-4 max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredArtworks.map((artwork) => (
-                        <div key={artwork.id} className="group cursor-pointer">
-                            <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-neutral-100">
-                                <Image
-                                    src={artwork.src}
-                                    alt={artwork.title}
-                                    fill
-                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                            </div>
+                        <div key={artwork.id} className="group">
+                            {/* Link to individual artwork page */}
+                            <Link href={`/portfolio/${artwork.slug}`} className="block">
+                                <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-neutral-100">
+                                    <Image
+                                        src={getCloudinaryUrl(artwork.images.main, "medium")}
+                                        alt={artwork.title}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        priority={artwork.id <= 6} // Prioritize first 6 images
+                                    />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                                </div>
+                            </Link>
 
                             <div className="space-y-1">
-                                <h3 className="text-lg font-light text-neutral-800">
-                                    {artwork.title}
-                                </h3>
+                                <Link href={`/portfolio/${artwork.slug}`}>
+                                    <h3 className="text-lg font-light text-neutral-800 hover:text-neutral-600 transition-colors">
+                                        {artwork.title}
+                                    </h3>
+                                </Link>
                                 <p className="text-sm text-neutral-600">
                                     {artwork.year} • {artwork.medium}
                                 </p>
                                 <p className="text-sm text-neutral-500">{artwork.dimensions}</p>
                             </div>
+
+                            {/* Quick view button */}
+                            <button
+                                onClick={() => openLightbox(artwork.id)}
+                                className="mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors"
+                            >
+                                Quick View
+                            </button>
                         </div>
                     ))}
                 </div>
@@ -201,7 +166,7 @@ export default function Portfolio() {
                     <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center gap-8">
                         <div className="flex-1 relative max-h-[80vh]">
                             <Image
-                                src={selectedArt.src}
+                                src={getCloudinaryUrl(selectedArt.images.main, "large")}
                                 alt={selectedArt.title}
                                 width={800}
                                 height={1000}
@@ -216,10 +181,19 @@ export default function Portfolio() {
                                 <p>{selectedArt.year}</p>
                                 <p>{selectedArt.medium}</p>
                                 <p>{selectedArt.dimensions}</p>
+                                {selectedArt.available && (
+                                    <p className="text-green-400">Available for Purchase</p>
+                                )}
                             </div>
                             <p className="text-neutral-300 leading-relaxed">
                                 {selectedArt.description}
                             </p>
+                            <Link
+                                href={`/portfolio/${selectedArt.slug}`}
+                                className="inline-block mt-4 text-white border border-white px-4 py-2 hover:bg-white hover:text-black transition-colors"
+                            >
+                                View Full Details
+                            </Link>
                         </div>
                     </div>
                 </div>

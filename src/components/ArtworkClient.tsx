@@ -19,6 +19,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [zoomLevel, setZoomLevel] = useState(1);
     const [imageLoading, setImageLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         setImageLoading(true);
@@ -42,10 +43,25 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
     return (
         <div className="pt-16 min-h-screen" style={{ backgroundColor: "#f4f4f4" }}>
+            {/* Mobile toggle button at top */}
+            <div className="md:hidden p-4 bg-white border-b border-neutral-200">
+                <button
+                    className="text-sm text-neutral-600 underline"
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    {isOpen ? "Hide Details" : "Show Details"}
+                </button>
+            </div>
+
             <div className="flex min-h-screen pb-20">
-                <div className="w-90 flex-shrink-0 p-8 bg-white border-r border-neutral-200">
+                {/* Left Sidebar - collapsible on mobile */}
+                <div
+                    className={`flex-shrink-0 p-8 bg-white border-r border-neutral-200 transition-all duration-300 ease-in-out 
+            ${isOpen ? "w-80 opacity-100" : "w-0 opacity-0 overflow-hidden"} 
+            md:w-90 md:opacity-100 md:overflow-visible`}
+                >
                     {/* Back Navigation */}
-                    <div className="py-8  max-w-7xl mx-auto">
+                    <div className="py-8 max-w-7xl mx-auto">
                         <Link
                             href="/portfolio"
                             className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -61,16 +77,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             <h1 className="text-4xl md:text-5xl font-light mb-4 text-neutral-800">
                                 {artwork.title}
                             </h1>
-
                             <div className="space-y-2 text-neutral-600 mb-8">
                                 <p className="text-lg">{artwork.year}</p>
                                 <p>{artwork.medium}</p>
                                 <p>{artwork.dimensions}</p>
-                                {/* {artwork.available && ( */}
-                                {/*     <p className="text-green-600 font-medium"> */}
-                                {/*         Available for Purchase */}
-                                {/*     </p> */}
-                                {/* )} */}
                             </div>
                         </div>
 
@@ -106,41 +116,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 Contact About This Work
                             </Link>
                         </div>
-
-                        {/* Artwork Details */}
-                        {/* <div className="border-t border-neutral-200 pt-8"> */}
-                        {/*     <h3 className="text-xl font-light mb-4 text-neutral-800"> */}
-                        {/*         Work Details */}
-                        {/*     </h3> */}
-                        {/*     <div className="space-y-2 text-sm text-neutral-600"> */}
-                        {/*         <div className="flex justify-between"> */}
-                        {/*             <span>Medium:</span> */}
-                        {/*             <span>{artwork.medium}</span> */}
-                        {/*         </div> */}
-                        {/*         <div className="flex justify-between"> */}
-                        {/*             <span>Dimensions:</span> */}
-                        {/*             <span>{artwork.dimensions}</span> */}
-                        {/*         </div> */}
-                        {/*         <div className="flex justify-between"> */}
-                        {/*             <span>Year:</span> */}
-                        {/*             <span>{artwork.year}</span> */}
-                        {/*         </div> */}
-                        {/*         <div className="flex justify-between"> */}
-                        {/*             <span>Status:</span> */}
-                        {/*             <span */}
-                        {/*                 className={ */}
-                        {/*                     artwork.available ? "text-green-600" : "text-red-600" */}
-                        {/*                 } */}
-                        {/*             > */}
-                        {/*                 {artwork.available */}
-                        {/*                     ? "Available" */}
-                        {/*                     : "Sold/Private Collection"} */}
-                        {/*             </span> */}
-                        {/*         </div> */}
-                        {/*     </div> */}
-                        {/* </div> */}
                     </div>
-                </div>
+                </div>{" "}
                 <div className="flex-1 p-8 ">
                     {/* Images Section */}
                     <div className="max-w-4xl mx-auto">

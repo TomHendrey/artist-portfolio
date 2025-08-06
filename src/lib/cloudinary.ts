@@ -4,9 +4,6 @@ export const getCloudinaryUrl = (
 ) => {
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
-    console.log("Input imagePath:", imagePath);
-    console.log("Cloud name:", cloudName);
-
     if (!cloudName) {
         console.warn("Cloudinary cloud name not found");
         return imagePath;
@@ -19,10 +16,9 @@ export const getCloudinaryUrl = (
         ultra: "",
     };
 
+    // Clean the path - remove leading slash but keep version and extension
     const cleanPath = imagePath.replace(/^\//, "");
-    const finalUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${transforms[size]}/${cleanPath}`;
 
-    console.log("Final generated URL:", finalUrl);
-
-    return finalUrl;
+    // Return the full Cloudinary URL
+    return `https://res.cloudinary.com/${cloudName}/image/upload/${transforms[size]}/${cleanPath}`;
 };

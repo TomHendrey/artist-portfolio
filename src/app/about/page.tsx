@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function About() {
     return (
         <div className="pt-16 min-h-screen bg-white">

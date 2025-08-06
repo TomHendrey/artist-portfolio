@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { ArrowLeft, X, ZoomIn } from "lucide-react";
-import { getArtworkBySlug, artworks, Artwork } from "@/data/artworks";
+import { Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
-import { notFound } from "next/navigation";
+// import { artworks } from "@/data/artworks";
 
 interface ArtworkClientProps {
     artwork: Artwork;

@@ -4,19 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { artworks, Artwork } from "@/data/artworks";
+import { artworks } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 export default function Portfolio() {
     const [selectedArtwork, setSelectedArtwork] = useState<number | null>(null);
-    const [filter, setFilter] = useState("all");
+    const [filter, setFilter] = useState<string>("all");
 
     // Generate filters from artwork data
-    const allYears = [...new Set(artworks.map((art) => art.year))].sort().reverse();
-    const allCategories = [...new Set(artworks.map((art) => art.category).filter(Boolean))];
+    const allYears = [...new Set(artworks.map((art) => art.year))].sort().reverse().map(String);
+    const allCategories = [...new Set(artworks.map((art) => art.category).filter(Boolean))].map(
+        String,
+    );
     const allMediums = [...new Set(artworks.map((art) => art.medium.split(" ")[0].toLowerCase()))];
 
-    const filters = ["all", ...allYears, ...allCategories, ...allMediums];
+    const filters: string[] = ["all", ...allYears, ...allCategories, ...allMediums];
 
     const filteredArtworks = artworks.filter((artwork) => {
         if (filter === "all") return true;

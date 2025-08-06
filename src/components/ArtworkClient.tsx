@@ -43,9 +43,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     return (
         <div className="pt-16 min-h-screen" style={{ backgroundColor: "#f4f4f4" }}>
             <div className="flex min-h-screen pb-20">
-                <div className="w-80 flex-shrink-0 p-8 bg-white border-r border-neutral-200">
+                <div className="w-100 flex-shrink-0 p-8 bg-white border-r border-neutral-200">
                     {/* Back Navigation */}
-                    <div className="py-8 px-4 max-w-7xl mx-auto">
+                    <div className="py-8  max-w-7xl mx-auto">
                         <Link
                             href="/portfolio"
                             className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -56,7 +56,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
 
                     {/* Details Section */}
-                    <div className="space-y-8">
+                    <div className="space-y-10">
                         <div>
                             <h1 className="text-4xl md:text-5xl font-light mb-4 text-neutral-800">
                                 {artwork.title}
@@ -66,11 +66,11 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 <p className="text-lg">{artwork.year}</p>
                                 <p>{artwork.medium}</p>
                                 <p>{artwork.dimensions}</p>
-                                {artwork.available && (
-                                    <p className="text-green-600 font-medium">
-                                        Available for Purchase
-                                    </p>
-                                )}
+                                {/* {artwork.available && ( */}
+                                {/*     <p className="text-green-600 font-medium"> */}
+                                {/*         Available for Purchase */}
+                                {/*     </p> */}
+                                {/* )} */}
                             </div>
                         </div>
 
@@ -93,7 +93,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 Inquire About This Work
                             </h3>
                             <p
-                                className="text-neutral-600 mb-4"
+                                className="text-neutral-600 mb-8"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 For pricing information, additional images, or to arrange a studio
@@ -101,44 +101,44 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             </p>
                             <Link
                                 href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
-                                className="inline-block bg-neutral-800 text-white px-6 py-3 hover:bg-neutral-700 transition-colors"
+                                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
                             >
                                 Contact About This Work
                             </Link>
                         </div>
 
                         {/* Artwork Details */}
-                        <div className="border-t border-neutral-200 pt-8">
-                            <h3 className="text-xl font-light mb-4 text-neutral-800">
-                                Work Details
-                            </h3>
-                            <div className="space-y-2 text-sm text-neutral-600">
-                                <div className="flex justify-between">
-                                    <span>Medium:</span>
-                                    <span>{artwork.medium}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Dimensions:</span>
-                                    <span>{artwork.dimensions}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Year:</span>
-                                    <span>{artwork.year}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Status:</span>
-                                    <span
-                                        className={
-                                            artwork.available ? "text-green-600" : "text-red-600"
-                                        }
-                                    >
-                                        {artwork.available
-                                            ? "Available"
-                                            : "Sold/Private Collection"}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        {/* <div className="border-t border-neutral-200 pt-8"> */}
+                        {/*     <h3 className="text-xl font-light mb-4 text-neutral-800"> */}
+                        {/*         Work Details */}
+                        {/*     </h3> */}
+                        {/*     <div className="space-y-2 text-sm text-neutral-600"> */}
+                        {/*         <div className="flex justify-between"> */}
+                        {/*             <span>Medium:</span> */}
+                        {/*             <span>{artwork.medium}</span> */}
+                        {/*         </div> */}
+                        {/*         <div className="flex justify-between"> */}
+                        {/*             <span>Dimensions:</span> */}
+                        {/*             <span>{artwork.dimensions}</span> */}
+                        {/*         </div> */}
+                        {/*         <div className="flex justify-between"> */}
+                        {/*             <span>Year:</span> */}
+                        {/*             <span>{artwork.year}</span> */}
+                        {/*         </div> */}
+                        {/*         <div className="flex justify-between"> */}
+                        {/*             <span>Status:</span> */}
+                        {/*             <span */}
+                        {/*                 className={ */}
+                        {/*                     artwork.available ? "text-green-600" : "text-red-600" */}
+                        {/*                 } */}
+                        {/*             > */}
+                        {/*                 {artwork.available */}
+                        {/*                     ? "Available" */}
+                        {/*                     : "Sold/Private Collection"} */}
+                        {/*             </span> */}
+                        {/*         </div> */}
+                        {/*     </div> */}
+                        {/* </div> */}
                     </div>
                 </div>
                 <div className="flex-1 p-8 ">

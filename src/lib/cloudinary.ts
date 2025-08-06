@@ -13,7 +13,7 @@ export const getCloudinaryUrl = (
         thumbnail: "w_300,q_auto,f_auto",
         medium: "w_1200,q_auto,f_auto",
         large: "w_2400,q_90,f_auto",
-        ultra: "q_95,f_auto", // Original size, optimized quality
+        ultra: "", // Original size, optimized quality
     };
 
     // Remove any leading slash and file extension from imagePath

@@ -16,8 +16,8 @@ export const getCloudinaryUrl = (
         ultra: "", // Original size, optimized quality
     };
 
-    // Remove any leading slash and file extension from imagePath
-    const cleanPath = imagePath.replace(/^\//, "").replace(/\.[^/.]+$/, "");
+    // Remove any leading slash but keep the full path including version and extension
+    const cleanPath = imagePath.replace(/^\//, "");
 
     return `https://res.cloudinary.com/${cloudName}/image/upload/${transforms[size]}/${cleanPath}`;
 };

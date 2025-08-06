@@ -4,30 +4,25 @@ export const getCloudinaryUrl = (
 ) => {
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
+    console.log("Input imagePath:", imagePath);
+    console.log("Cloud name:", cloudName);
+
     if (!cloudName) {
         console.warn("Cloudinary cloud name not found");
-        return imagePath; // fallback to original path
+        return imagePath;
     }
 
     const transforms = {
         thumbnail: "w_300,q_auto,f_auto",
         medium: "w_1200,q_auto,f_auto",
         large: "w_2400,q_90,f_auto",
-        ultra: "", // Original size, optimized quality
+        ultra: "",
     };
 
-    // Remove any leading slash but keep the full path including version and extension
     const cleanPath = imagePath.replace(/^\//, "");
+    const finalUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${transforms[size]}/${cleanPath}`;
 
-    return `https://res.cloudinary.com/${cloudName}/image/upload/${transforms[size]}/${cleanPath}`;
-};
+    console.log("Final generated URL:", finalUrl);
 
-// Helper to get multiple sizes for responsive images
-export const getResponsiveCloudinaryUrls = (imagePath: string) => {
-    return {
-        thumbnail: getCloudinaryUrl(imagePath, "thumbnail"),
-        medium: getCloudinaryUrl(imagePath, "medium"),
-        large: getCloudinaryUrl(imagePath, "large"),
-        ultra: getCloudinaryUrl(imagePath, "ultra"),
-    };
+    return finalUrl;
 };

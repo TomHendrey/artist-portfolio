@@ -27,7 +27,7 @@ export const artworks: Artwork[] = [
         description:
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
         images: {
-            main: "surface1-main-1", // Cloudinary filename without extension
+            main: "surface-1-main", // Cloudinary filename without extension
             details: ["surface1-detail-1", "surface1-detail-2"], // Optional detail shots
         },
         category: "surfaces",
@@ -43,7 +43,7 @@ export const artworks: Artwork[] = [
         description:
             "Continuation of the Mars surface study series, focusing on the interplay between scientific observation and artistic interpretation.",
         images: {
-            main: "surface2-main",
+            main: "surface-2-main",
         },
         category: "surfaces",
         available: true,
@@ -58,7 +58,7 @@ export const artworks: Artwork[] = [
         description:
             "The third piece in the Mars surface exploration, delving deeper into the abstraction of planetary data.",
         images: {
-            main: "surface3-main",
+            main: "surface-3-main",
         },
         category: "surfaces",
         available: true,
@@ -73,7 +73,7 @@ export const artworks: Artwork[] = [
         description:
             "Mixed media interpretation of Martian terrain, incorporating both digital and analog techniques.",
         images: {
-            main: "surface4-main",
+            main: "surface-4-main",
         },
         category: "surfaces",
         available: true,
@@ -88,7 +88,7 @@ export const artworks: Artwork[] = [
         description:
             "Advanced exploration of surface textures using contemporary mixed media approaches.",
         images: {
-            main: "surface5-main",
+            main: "surface-5-main",
         },
         category: "surfaces",
         available: true,
@@ -103,7 +103,7 @@ export const artworks: Artwork[] = [
         description:
             "Final piece in the current Mars surface series, synthesizing all previous explorations.",
         images: {
-            main: "surface6-main",
+            main: "surface-6-main",
         },
         category: "surfaces",
         available: true,
@@ -118,7 +118,7 @@ export const artworks: Artwork[] = [
         description:
             "Marks the beginning of a new series focused on Venusian landscapes, reinterpreting dense atmospheric data into vibrant surface expressions.",
         images: {
-            main: "surface7-main",
+            main: "surface-7-main",
         },
         category: "surfaces",
         available: true,
@@ -133,7 +133,7 @@ export const artworks: Artwork[] = [
         description:
             "Captures the intense heat and pressure of Venus through layered textures and fiery hues, continuing the series' planetary theme.",
         images: {
-            main: "surface8-main",
+            main: "surface-8-main",
         },
         category: "surfaces",
         available: false,
@@ -148,7 +148,7 @@ export const artworks: Artwork[] = [
         description:
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition’s forms.",
         images: {
-            main: "surface9-main",
+            main: "surface-9-main",
         },
         category: "surfaces",
         available: true,
@@ -163,7 +163,7 @@ export const artworks: Artwork[] = [
         description:
             "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
         images: {
-            main: "surface10-main",
+            main: "surface-10-main",
         },
         category: "surfaces",
         available: true,
@@ -178,7 +178,7 @@ export const artworks: Artwork[] = [
         description:
             "Combines analog texture with digital prints of planetary data to create a hybrid surface aesthetic.",
         images: {
-            main: "surface11-main",
+            main: "surface-11-main",
         },
         category: "surfaces",
         available: true,
@@ -193,7 +193,7 @@ export const artworks: Artwork[] = [
         description:
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
         images: {
-            main: "surface12-main",
+            main: "surface-12-main",
             details: ["surface12-detail-1", "Surface12-detail-2"],
         },
         category: "surfaces",

@@ -13,12 +13,12 @@ export default function Home() {
             {/* Hero Section */}
             <section
                 className="relative h-screen flex items-center justify-center overflow-hidden"
-                style={{ backgroundColor: "#f5f5f5" }}
+                style={{ backgroundColor: "#f4f4f4" }}
             >
                 <div className="absolute inset-0 z-0 hidden md:block">
                     <div className="absolute right-8 md:right-16 lg:right-24 top-[53%] -translate-y-1/2 w-[600px] md:w-[750px] lg:w-[850px] h-[95vh]">
                         <Image
-                            src={getCloudinaryUrl("surface1-m-1", "large")}
+                            src={getCloudinaryUrl("surface-1-main", "large")}
                             alt="Featured artwork"
                             fill
                             className="object-contain"

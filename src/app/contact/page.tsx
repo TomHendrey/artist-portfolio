@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { Mail, Instagram, MapPin } from "lucide-react";
 
 export default function Contact() {
-    const searchParams = useSearchParams();
-    const artworkTitle = searchParams.get("artwork");
+    const [artworkTitle, setArtworkTitle] = useState<string | null>(null);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setArtworkTitle(params.get("artwork"));
+    }, []);
 
     const [formData, setFormData] = useState({
         name: "",

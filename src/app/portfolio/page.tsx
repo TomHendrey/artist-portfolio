@@ -57,7 +57,7 @@ export default function Portfolio() {
     const selectedArt = selectedArtwork ? artworks.find((art) => art.id === selectedArtwork) : null;
 
     return (
-        <div className="pt-16 min-h-screen bg-white">
+        <div className="pt-16 min-h-screen bg-white overflow-auto">
             {/* Header */}
             <div className="py-14 px-4 bg-neutral-50">
                 <div className="max-w-7xl mx-auto text-left">

@@ -9,6 +9,7 @@ export interface Artwork {
     description: string;
     images: {
         main: string; // Main image filename (with Cloudinary path)
+        cropped?: string;
         details?: string[]; // Additional detail shots
     };
     category?: string;
@@ -28,7 +29,8 @@ export const artworks: Artwork[] = [
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
         images: {
             main: "v1754426003/surface-1-main.jpg",
-            details: ["surface1-detail-1", "surface1-detail-2"], // Optional detail shots
+            cropped: "v1754497636/surface-1-cropped.jpg",
+            details: [], // Optional detail shots
         },
         category: "surfaces",
         available: true,

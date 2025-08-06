@@ -43,7 +43,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     return (
         <div className="pt-16 min-h-screen" style={{ backgroundColor: "#f4f4f4" }}>
             <div className="flex min-h-screen pb-20">
-                <div className="w-100 flex-shrink-0 p-8 bg-white border-r border-neutral-200">
+                <div className="w-90 flex-shrink-0 p-8 bg-white border-r border-neutral-200">
                     {/* Back Navigation */}
                     <div className="py-8  max-w-7xl mx-auto">
                         <Link

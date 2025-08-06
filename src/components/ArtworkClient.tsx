@@ -29,11 +29,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     // Create array of all images (main + details)
     const allImages = [artwork.images.main, ...(artwork.images.details || [])];
 
-    // Get related artworks (same category, excluding current)
-    const relatedArtworks = artworks
-        .filter((art) => art.category === artwork.category && art.id !== artwork.id)
-        .slice(0, 3);
-
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
         setLightboxOpen(true);

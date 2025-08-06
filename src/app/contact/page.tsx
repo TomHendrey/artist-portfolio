@@ -149,26 +149,26 @@ export default function Contact() {
                             </p>
                         </div>
 
-                        {artworkTitle && (
-                            <div className="bg-neutral-50 p-6">
-                                <h3 className="text-xl font-light mb-4 text-neutral-800">
-                                    Artwork Inquiry
-                                </h3>
-                                <p
-                                    className="text-neutral-600 leading-relaxed"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                >
-                                    You're inquiring about: <strong>"{artworkTitle}"</strong>
-                                </p>
-                                <p
-                                    className="text-neutral-600 leading-relaxed mt-2"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                >
-                                    We'll provide pricing, availability, and additional images upon
-                                    request.
-                                </p>
-                            </div>
-                        )}
+                        {/* {artworkTitle && ( */}
+                        {/*     <div className="bg-neutral-50 p-6"> */}
+                        {/*         <h3 className="text-xl font-light mb-4 text-neutral-800"> */}
+                        {/*             Artwork Inquiry */}
+                        {/*         </h3> */}
+                        {/*         <p */}
+                        {/*             className="text-neutral-600 leading-relaxed" */}
+                        {/*             style={{ fontFamily: "Courier New, monospace" }} */}
+                        {/*         > */}
+                        {/*             You&apos;re inquiring about: <strong>"{artworkTitle}"</strong> */}
+                        {/*         </p> */}
+                        {/*         <p */}
+                        {/*             className="text-neutral-600 leading-relaxed mt-2" */}
+                        {/*             style={{ fontFamily: "Courier New, monospace" }} */}
+                        {/*         > */}
+                        {/*             We'll provide pricing, availability, and additional images upon */}
+                        {/*             request. */}
+                        {/*         </p> */}
+                        {/*     </div> */}
+                        {/* )} */}
                     </div>
 
                     {/* Contact Form */}

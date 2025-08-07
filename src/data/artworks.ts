@@ -9,14 +9,15 @@ export interface Artwork {
     description: string;
     images: {
         main: string; // Main image filename (with Cloudinary path)
-        cropped?: string;
+        cropped: string; // Primary cropped version for artwork pages
+        croppedAlts?: string[]; // Alternative crop options
         details?: string[]; // Additional detail shots
     };
     category?: string;
     available?: boolean;
 }
 
-// Updated artwork data - using full Cloudinary paths with version numbers
+// Updated artwork data - with all cropped versions
 export const artworks: Artwork[] = [
     {
         id: 1,
@@ -29,8 +30,9 @@ export const artworks: Artwork[] = [
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
         images: {
             main: "v1754426003/surface-1-main.jpg",
-            cropped: "v1754497636/surface-1-cropped.jpg",
-            details: [], // Optional detail shots
+            cropped: "v1754566147/surface-1-cropped.jpg",
+            croppedAlts: ["v1754566286/surface-1-cropped-b.jpg"],
+            details: [],
         },
         category: "surfaces",
         available: true,
@@ -46,6 +48,8 @@ export const artworks: Artwork[] = [
             "Continuation of the Mars surface study series, focusing on the interplay between scientific observation and artistic interpretation.",
         images: {
             main: "v1754469887/surface-2-main.jpg",
+            cropped: "v1754566277/surface-2-cropped.jpg",
+            croppedAlts: ["v1754566145/surface-2-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -61,6 +65,8 @@ export const artworks: Artwork[] = [
             "The third piece in the Mars surface exploration, delving deeper into the abstraction of planetary data.",
         images: {
             main: "v1754469896/surface-3-main.jpg",
+            cropped: "v1754566299/surface-3-cropped.jpg",
+            croppedAlts: ["v1754566269/surface-3-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -76,6 +82,8 @@ export const artworks: Artwork[] = [
             "Mixed media interpretation of Martian terrain, incorporating both digital and analog techniques.",
         images: {
             main: "v1754469920/surface-4-main.jpg",
+            cropped: "v1754566323/surface-4-cropped.jpg",
+            croppedAlts: ["v1754566293/surface-4-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -91,6 +99,11 @@ export const artworks: Artwork[] = [
             "Advanced exploration of surface textures using contemporary mixed media approaches.",
         images: {
             main: "v1754469940/surface-5-main.jpg",
+            cropped: "v1754566328/surface-5-cropped.jpg",
+            croppedAlts: [
+                "v1754566290/surface-5-cropped-b.jpg",
+                "v1754566310/surface-5-cropped-c.jpg",
+            ],
         },
         category: "surfaces",
         available: true,
@@ -106,6 +119,8 @@ export const artworks: Artwork[] = [
             "Final piece in the current Mars surface series, synthesizing all previous explorations.",
         images: {
             main: "v1754469949/surface-6-main.jpg",
+            cropped: "v1754566326/surface-6-cropped.jpg",
+            croppedAlts: ["v1754566340/surface-6-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -121,6 +136,8 @@ export const artworks: Artwork[] = [
             "Marks the beginning of a new series focused on Venusian landscapes, reinterpreting dense atmospheric data into vibrant surface expressions.",
         images: {
             main: "v1754469975/surface-7-main.jpg",
+            cropped: "v1754566340/surface-7-cropped.jpg",
+            croppedAlts: ["v1754566342/surface-7-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -136,9 +153,11 @@ export const artworks: Artwork[] = [
             "Captures the intense heat and pressure of Venus through layered textures and fiery hues, continuing the series' planetary theme.",
         images: {
             main: "v1754469961/surface-8-main.jpg",
+            cropped: "v1754566148/surface-8-cropped.jpg",
+            croppedAlts: ["v1754566271/surface-8-cropped-b.jpg"],
         },
         category: "surfaces",
-        available: true,
+        available: false,
     },
     {
         id: 9,
@@ -151,6 +170,8 @@ export const artworks: Artwork[] = [
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition's forms.",
         images: {
             main: "v1754469997/surface-9-main.jpg",
+            cropped: "v1754566309/surface-9-cropped.jpg",
+            croppedAlts: ["v1754566330/surface-9-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -166,6 +187,8 @@ export const artworks: Artwork[] = [
             "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
         images: {
             main: "v1754469986/surface-10-main.jpg",
+            cropped: "v1754566306/surface-10-cropped.jpg",
+            croppedAlts: ["v1754566329/surface-10-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -181,6 +204,8 @@ export const artworks: Artwork[] = [
             "Combines analog texture with digital prints of planetary data to create a hybrid surface aesthetic.",
         images: {
             main: "v1754470008/surface-11-main.jpg",
+            cropped: "v1754566332/surface-11-cropped.jpg",
+            croppedAlts: ["v1754566285/surface-11-cropped-b.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -196,7 +221,9 @@ export const artworks: Artwork[] = [
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
         images: {
             main: "v1754470021/surface-12-main.jpg",
-            details: ["surface12-detail-1", "Surface12-detail-2"],
+            cropped: "v1754566308/surface-12-cropped.jpg",
+            croppedAlts: ["v1754566303/surface-12-cropped-b.jpg"],
+            details: ["surface12-detail-1", "surface12-detail-2"],
         },
         category: "surfaces",
         available: true,

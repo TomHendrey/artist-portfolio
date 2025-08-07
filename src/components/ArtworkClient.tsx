@@ -28,7 +28,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     }, [zoomLevel]);
 
     // Create array of all images (main + details)
-    const allImages = [artwork.images.main, ...(artwork.images.details || [])];
+    const allImages = [
+        artwork.images.cropped || artwork.images.main, // Use cropped version for main display
+        ...(artwork.images.croppedAlts || []), // Include alternative crops
+        artwork.images.main, // Include original main image as option
+        ...(artwork.images.details || []), // Include any detail shots
+    ];
 
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
@@ -39,6 +44,25 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const closeLightbox = () => {
         setLightboxOpen(false);
         document.body.style.overflow = "unset";
+    };
+
+    const zoomIn = () => {
+        setZoomLevel((prev) => Math.min(4, prev + 0.5)); // Max 4x zoom, increment by 0.5
+    };
+
+    const zoomOut = () => {
+        setZoomLevel((prev) => Math.max(0.65, prev - 0.5)); // Min 0.75x zoom
+    };
+
+    const resetZoom = () => {
+        setZoomLevel(1);
+    };
+
+    const getImageSizeForZoom = (zoomLevel: number) => {
+        if (zoomLevel >= 2) {
+            return "ultra"; // Use original size for 200%+ zoom
+        }
+        return "large"; // Use 2400px max for lower zooms
     };
 
     return (
@@ -122,12 +146,16 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     {/* Images Section */}
                     <div className="max-w-4xl mx-auto">
                         {/* Main Image */}
-                        <div className="relative h-[90vh] bg-neutral-100 overflow-auto">
+                        <div className="relative h-[70vh] md:h-[85vh] bg-neutral-100 flex items-center justify-center">
                             <Image
-                                src={getCloudinaryUrl(allImages[selectedImageIndex], "large")}
-                                alt={`${artwork.title} - View ${selectedImageIndex + 1}`}
-                                fill
-                                className="w-full h-full object-cover cursor-zoom-in"
+                                src={getCloudinaryUrl(
+                                    artwork.images.cropped || artwork.images.main,
+                                    "large",
+                                )}
+                                alt={`${artwork.title} - Featured View`}
+                                width={1200}
+                                height={800}
+                                className="max-w-full max-h-full object-contain cursor-zoom-in"
                                 onClick={() => openLightbox(selectedImageIndex)}
                                 priority
                             />
@@ -169,31 +197,58 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {/* Lightbox */}
             {lightboxOpen && (
                 <div
-                    className="fixed inset-0 z-50  flex items-center justify-center p-4 overflow-auto"
+                    className="fixed inset-0 z-50 overflow-auto"
                     style={{ backgroundColor: "#f4f4f4" }}
                 >
+                    {/* Close button - fixed to viewport */}
                     <button
                         onClick={closeLightbox}
-                        className="absolute top-4 right-4 text-neutral-800 hover:text-neutral-600 z-10"
+                        className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-20"
                     >
                         <X size={32} />
                     </button>
 
-                    <div className="max-w-[90vw] max-h-[90vh] relative ">
+                    {/* Zoom controls - fixed to viewport */}
+                    <div className="fixed top-4 left-4 flex flex-col gap-2 z-20">
+                        <button
+                            onClick={zoomIn}
+                            className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                        >
+                            +
+                        </button>
+                        <button
+                            onClick={zoomOut}
+                            className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                        >
+                            -
+                        </button>
+                        <button
+                            onClick={resetZoom}
+                            className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                        >
+                            Reset
+                        </button>
+                        <div className="text-neutral-800 text-xs text-center bg-white/80 px-2 py-1 rounded">
+                            {Math.round(zoomLevel * 100)}%
+                        </div>
+                    </div>
+
+                    <div
+                        className="p-4"
+                        style={{
+                            width: `${1200 * zoomLevel}px`,
+                            height: `${1500 * zoomLevel}px`,
+                            margin: "0 auto",
+                        }}
+                    >
                         <Image
                             src={getCloudinaryUrl(allImages[selectedImageIndex], "ultra")}
                             alt={`${artwork.title} - Full Resolution`}
                             width={1200 * zoomLevel}
                             height={1500 * zoomLevel}
-                            className="max-w-full max-h-full object-contain cursor-zoom-in"
-                            onClick={() => setZoomLevel(zoomLevel === 1 ? 2 : 1)}
+                            className="cursor-default"
                             priority
                         />
-                        {imageLoading && (
-                            <div className="absolute inset-0 flex items-center justify-center ">
-                                <div className="w-8 h-8 border-2 border-neutral-400 border-t-transparent rounded-full animate-spin"></div>
-                            </div>
-                        )}
                     </div>
                 </div>
             )}

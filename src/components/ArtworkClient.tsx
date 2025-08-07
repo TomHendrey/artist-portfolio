@@ -27,6 +27,28 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         return () => clearTimeout(timer);
     }, [zoomLevel]);
 
+    // Add this with your other useEffects
+    useEffect(() => {
+        // Cleanup function - runs when component unmounts
+        return () => {
+            document.body.style.overflow = "unset"; // Always restore scrolling when component unmounts
+        };
+    }, []);
+
+    // Also add this to handle browser back button specifically
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            document.body.style.overflow = "unset";
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+            document.body.style.overflow = "unset"; // Restore on cleanup
+        };
+    }, []);
+
     // Create array of all images (main + details)
     const allImages = [
         artwork.images.cropped || artwork.images.main, // Use cropped version for main display
@@ -51,7 +73,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const zoomOut = () => {
-        setZoomLevel((prev) => Math.max(0.65, prev - 0.5)); // Min 0.75x zoom
+        setZoomLevel((prev) => Math.max(0.6, prev - 0.5)); // Min 0.75x zoom
     };
 
     const resetZoom = () => {
@@ -142,11 +164,19 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
                     </div>
                 </div>{" "}
-                <div className="flex-1 p-8 ">
+                <div className="flex-1 p-8">
+                    {" "}
+                    {/* Remove relative */}
+                    <button
+                        onClick={() => openLightbox(selectedImageIndex)}
+                        className="fixed top-20 right-8  border  border-neutral-300  rounded-sm text-neutral-800 px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm font-light z-50"
+                    >
+                        View High Resolution
+                    </button>
                     {/* Images Section */}
-                    <div className="max-w-4xl mx-auto">
+                    <div className="w-full">
                         {/* Main Image */}
-                        <div className="relative h-[70vh] md:h-[85vh] bg-neutral-100 flex items-center justify-center">
+                        <div className="relative h-[75vh] md:h-[90vh] bg-neutral-100 flex items-center justify-center">
                             <Image
                                 src={getCloudinaryUrl(
                                     artwork.images.cropped || artwork.images.main,
@@ -159,35 +189,31 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 onClick={() => openLightbox(selectedImageIndex)}
                                 priority
                             />
-                            <button
-                                onClick={() => openLightbox(selectedImageIndex)}
-                                className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                            >
-                                <ZoomIn size={20} />
-                            </button>
                         </div>
-
-                        {/* Thumbnail Navigation */}
-                        {allImages.length > 1 && (
-                            <div className="flex gap-2 overflow-x-auto pb-2">
-                                {allImages.map((image, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => setSelectedImageIndex(index)}
-                                        className={`flex-shrink-0 w-20 h-20 relative overflow-hidden border-2 transition-colors ${
-                                            selectedImageIndex === index
-                                                ? "border-neutral-800"
-                                                : "border-neutral-200 hover:border-neutral-400"
-                                        }`}
-                                    >
-                                        <Image
-                                            src={getCloudinaryUrl(image, "thumbnail")}
-                                            alt={`${artwork.title} thumbnail ${index + 1}`}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </button>
-                                ))}
+                        {/* Detail Images Section */}
+                        {artwork.images.details && artwork.images.details.length > 0 && (
+                            <div className="mt-16 pt-8 border-t border-neutral-200">
+                                <h3 className="text-2xl font-light mb-8 text-neutral-800">
+                                    Detail Views
+                                </h3>
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                    {artwork.images.details.map((detail, index) => (
+                                        <div
+                                            key={detail}
+                                            className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-zoom-in"
+                                        >
+                                            <Image
+                                                src={getCloudinaryUrl(detail, "medium")}
+                                                alt={`${artwork.title} - Detail ${index + 1}`}
+                                                fill
+                                                className="object-cover hover:scale-105 transition-transform duration-500"
+                                                onClick={() =>
+                                                    openLightbox(allImages.indexOf(detail))
+                                                }
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>

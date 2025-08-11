@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { ArrowLeft, X, ZoomIn } from "lucide-react";
+import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 import { Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
 // import { artworks } from "@/data/artworks";
@@ -20,6 +20,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [zoomLevel, setZoomLevel] = useState(1);
     const [imageLoading, setImageLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [detailLightboxOpen, setDetailLightboxOpen] = useState(false);
+    const [selectedDetailIndex, setSelectedDetailIndex] = useState(0);
 
     useEffect(() => {
         setImageLoading(true);
@@ -87,6 +89,27 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         return "large"; // Use 2400px max for lower zooms
     };
 
+    // Detail lightbox functions
+    const openDetailLightbox = (index: number) => {
+        setSelectedDetailIndex(index);
+        setDetailLightboxOpen(true);
+        document.body.style.overflow = "hidden";
+    };
+
+    const closeDetailLightbox = () => {
+        setDetailLightboxOpen(false);
+        document.body.style.overflow = "unset";
+    };
+
+    const navigateDetail = (direction: "prev" | "next") => {
+        const detailsLength = artwork.images.details?.length || 0;
+        if (direction === "prev") {
+            setSelectedDetailIndex((prev) => (prev > 0 ? prev - 1 : detailsLength - 1));
+        } else {
+            setSelectedDetailIndex((prev) => (prev < detailsLength - 1 ? prev + 1 : 0));
+        }
+    };
+
     return (
         <div className="pt-16 min-h-screen" style={{ backgroundColor: "#f4f4f4" }}>
             {/* Mobile toggle button at top */}
@@ -98,16 +121,11 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     {isOpen ? "Hide Details" : "Show Details"}
                 </button>
             </div>
-
-            <div className="flex min-h-screen pb-20">
-                {/* Left Sidebar - collapsible on mobile */}
-                <div
-                    className={`flex-shrink-0 p-8 bg-white border-r border-neutral-200 transition-all duration-300 ease-in-out 
-            ${isOpen ? "w-80 opacity-100" : "w-0 opacity-0 overflow-hidden"} 
-            md:w-90 md:opacity-100 md:overflow-visible`}
-                >
+            <div className="flex pb-20">
+                {/* Left Sidebar - Fix the className */}
+                <div className="w-80 flex-shrink-0 p-8 bg-white border-r border-neutral-200">
                     {/* Back Navigation */}
-                    <div className="py-8 max-w-7xl mx-auto">
+                    <div className="mb-8">
                         <Link
                             href="/portfolio"
                             className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -118,7 +136,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
 
                     {/* Details Section */}
-                    <div className="space-y-10">
+                    <div className="space-y-8">
                         <div>
                             <h1 className="text-4xl md:text-5xl font-light mb-4 text-neutral-800">
                                 {artwork.title}
@@ -163,16 +181,16 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             </Link>
                         </div>
                     </div>
-                </div>{" "}
+                </div>
+
                 <div className="flex-1 p-8">
-                    {" "}
-                    {/* Remove relative */}
                     <button
                         onClick={() => openLightbox(selectedImageIndex)}
-                        className="fixed top-20 right-8  border  border-neutral-300  rounded-sm text-neutral-800 px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm font-light z-50"
+                        className="fixed top-20 right-8 border border-neutral-300 rounded-sm text-neutral-800 px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm font-light z-50"
                     >
                         View High Resolution
                     </button>
+
                     {/* Images Section */}
                     <div className="w-full">
                         {/* Main Image */}
@@ -190,36 +208,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 priority
                             />
                         </div>
-                        {/* Detail Images Section */}
-                        {artwork.images.details && artwork.images.details.length > 0 && (
-                            <div className="mt-16 pt-8 border-t border-neutral-200">
-                                <h3 className="text-2xl font-light mb-8 text-neutral-800">
-                                    Detail Views
-                                </h3>
-                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                                    {artwork.images.details.map((detail, index) => (
-                                        <div
-                                            key={detail}
-                                            className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-zoom-in"
-                                        >
-                                            <Image
-                                                src={getCloudinaryUrl(detail, "medium")}
-                                                alt={`${artwork.title} - Detail ${index + 1}`}
-                                                fill
-                                                className="object-cover hover:scale-105 transition-transform duration-500"
-                                                onClick={() =>
-                                                    openLightbox(allImages.indexOf(detail))
-                                                }
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
-
             {/* Lightbox */}
             {lightboxOpen && (
                 <div
@@ -273,6 +264,82 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             width={1200 * zoomLevel}
                             height={1500 * zoomLevel}
                             className="cursor-default"
+                            priority
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* Detail Images Section */}
+            {artwork.images.details && artwork.images.details.length > 0 && (
+                <div className="w-full bg-white py-36 px-8 border-t border-neutral-200">
+                    <div className="max-w-7xl mx-auto">
+                        <h3 className="text-3xl font-light mb-12 text-neutral-800">Gallery</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                            {artwork.images.details.map((detail, index) => (
+                                <div
+                                    key={detail}
+                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-zoom-in hover:shadow-lg transition-shadow duration-300"
+                                    onClick={() => openDetailLightbox(index)}
+                                >
+                                    <Image
+                                        src={getCloudinaryUrl(detail, "medium")}
+                                        alt={`${artwork.title} - Detail ${index + 1}`}
+                                        fill
+                                        className="object-cover hover:scale-105 transition-transform duration-500"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Detail Images Lightbox - Simple version */}
+            {detailLightboxOpen && artwork.images.details && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center py-20"
+                    style={{ backgroundColor: "#f4f4f4" }}
+                >
+                    {/* Close button - change to dark colors */}
+                    <button
+                        onClick={closeDetailLightbox}
+                        className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-60"
+                    >
+                        <X size={32} />
+                    </button>
+
+                    {/* Previous button - change to dark colors */}
+                    {artwork.images.details.length > 1 && (
+                        <button
+                            onClick={() => navigateDetail("prev")}
+                            className="fixed left-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-60"
+                        >
+                            <ChevronLeft size={48} />
+                        </button>
+                    )}
+
+                    {/* Next button - change to dark colors */}
+                    {artwork.images.details.length > 1 && (
+                        <button
+                            onClick={() => navigateDetail("next")}
+                            className="fixed right-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-60"
+                        >
+                            <ChevronRight size={48} />
+                        </button>
+                    )}
+
+                    {/* Detail Image - now has forced gaps */}
+                    <div className="max-w-[85vw] h-[95vh] flex items-center justify-center">
+                        <Image
+                            src={getCloudinaryUrl(
+                                artwork.images.details[selectedDetailIndex],
+                                "large",
+                            )}
+                            alt={`${artwork.title} - Detail ${selectedDetailIndex + 1}`}
+                            width={800}
+                            height={1200}
+                            className="max-w-full max-h-full object-contain"
                             priority
                         />
                     </div>

@@ -236,6 +236,24 @@ export const artworks: Artwork[] = [
         category: "surfaces",
         available: true,
     },
+    {
+        id: 13,
+        slug: "surface13",
+        title: "Surface XIII",
+        year: "2025",
+        medium: "Oil pastel on wood",
+        dimensions: "120 x 150 cm",
+        description:
+            "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
+        images: {
+            main: "v1754946548/surface-13-main.jpg",
+            cropped: "v1754946556/surface-13-cropped.jpg",
+            croppedAlts: [""],
+            details: [],
+        },
+        category: "surfaces",
+        available: true,
+    },
 ];
 
 // Helper function to get artwork by slug

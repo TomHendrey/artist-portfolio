@@ -1,0 +1,12 @@
+{
+    "functions": {
+        "app/api/upload-blob/route.ts": {
+            "maxDuration": 300
+        }
+    },
+    "api": {
+        "bodyParser": {
+            "sizeLimit": "100mb"
+        }
+    }
+}

@@ -1,45 +1,39 @@
 "use client";
 
-import LargeImageUploader from "@/components/LargeImageUploader";
+import BlobImageUploader from "@/components/BlobImageUploader";
+import Image from "next/image";
 import { useState } from "react";
 
 interface UploadedImage {
-    public_id: string;
     url: string;
-    width: number;
-    height: number;
-    bytes: number;
+    filename: string;
+    size: number;
+    folder: string;
 }
 
-export default function UploadTestPage() {
+export default function BlobUploadPage() {
     const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
 
     const handleUploadComplete = (result: UploadedImage) => {
-        console.log("Upload complete:", result);
+        console.log("Blob upload complete:", result);
         setUploadedImages((prev) => [...prev, result]);
-
-        // Here you could also:
-        // 1. Update your artworks data
-        // 2. Save to a database
-        // 3. Add to your local data files
     };
 
     const handleUploadError = (error: string) => {
-        console.error("Upload error:", error);
-        // Handle error (show toast, etc.)
+        console.error("Blob upload error:", error);
     };
 
     return (
         <div className="min-h-screen bg-neutral-50 py-16 px-4">
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-3xl font-light text-neutral-800 mb-8 text-center">
-                    Upload Large Composite Images
+                    Upload High-Resolution Images to Vercel Blob
                 </h1>
 
-                <LargeImageUploader
+                <BlobImageUploader
                     onUploadComplete={handleUploadComplete}
                     onUploadError={handleUploadError}
-                    folder="composite-details" // Organize your uploads
+                    folder="composite-details"
                     className="mb-12"
                 />
 
@@ -53,33 +47,40 @@ export default function UploadTestPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {uploadedImages.map((image, index) => (
                                 <div key={index} className="bg-white p-4 rounded-lg border">
-                                    <img
-                                        src={image.url}
-                                        alt={`Upload ${index + 1}`}
-                                        className="w-full h-48 object-cover rounded mb-3"
-                                    />
+                                    <div className="relative w-full h-48 rounded mb-3 overflow-hidden">
+                                        <Image
+                                            src={image.url}
+                                            alt={`Upload ${index + 1}`}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </div>
                                     <div className="text-sm text-neutral-600 space-y-1">
                                         <p>
-                                            <strong>Public ID:</strong> {image.public_id}
-                                        </p>
-                                        <p>
-                                            <strong>Dimensions:</strong> {image.width} ×{" "}
-                                            {image.height}px
+                                            <strong>File:</strong> {image.filename}
                                         </p>
                                         <p>
                                             <strong>Size:</strong>{" "}
-                                            {(image.bytes / (1024 * 1024)).toFixed(2)} MB
+                                            {(image.size / (1024 * 1024)).toFixed(2)} MB
+                                        </p>
+                                        <p>
+                                            <strong>URL:</strong>{" "}
+                                            <a
+                                                href={image.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-blue-600 hover:underline break-all"
+                                            >
+                                                {image.url}
+                                            </a>
                                         </p>
                                     </div>
 
-                                    {/* Copy public_id for easy use in your artwork data */}
                                     <button
-                                        onClick={() =>
-                                            navigator.clipboard.writeText(image.public_id)
-                                        }
+                                        onClick={() => navigator.clipboard.writeText(image.url)}
                                         className="mt-2 text-xs bg-neutral-100 hover:bg-neutral-200 px-2 py-1 rounded"
                                     >
-                                        Copy Public ID
+                                        Copy URL
                                     </button>
                                 </div>
                             ))}

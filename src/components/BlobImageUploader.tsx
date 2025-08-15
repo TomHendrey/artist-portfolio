@@ -2,37 +2,30 @@
 
 import React, { useState, useCallback } from "react";
 import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
-import {
-    uploadLargeImageToCloudinary,
-    validateImageFile,
-    formatFileSize,
-} from "@/lib/cloudinary-upload";
+import { formatFileSize } from "@/lib/cloudinary-upload";
 
 interface UploadResult {
-    public_id: string;
     url: string;
-    secure_url: string;
-    width: number;
-    height: number;
-    bytes: number;
+    filename: string;
+    size: number;
+    folder: string;
 }
 
-interface LargeImageUploaderProps {
+interface BlobImageUploaderProps {
     onUploadComplete?: (result: UploadResult) => void;
     onUploadError?: (error: string) => void;
     folder?: string;
     className?: string;
 }
 
-export default function LargeImageUploader({
+export default function BlobImageUploader({
     onUploadComplete,
     onUploadError,
-    folder = "artworks",
+    folder = "high-res",
     className = "",
-}: LargeImageUploaderProps) {
+}: BlobImageUploaderProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
-    const [uploadProgress, setUploadProgress] = useState(0);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [uploadResult, setUploadResult] = useState<UploadResult | null>(null);
     const [error, setError] = useState<string>("");
@@ -68,9 +61,11 @@ export default function LargeImageUploader({
         setError("");
         setUploadResult(null);
 
-        const validation = validateImageFile(file);
-        if (!validation.valid) {
-            setError(validation.error || "Invalid file");
+        // Allow large files for Vercel Blob
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+        if (!allowedTypes.includes(file.type)) {
+            setError("Please select a valid image file (JPEG, PNG, or WebP)");
             return;
         }
 
@@ -81,19 +76,26 @@ export default function LargeImageUploader({
         if (!selectedFile) return;
 
         setIsUploading(true);
-        setUploadProgress(0);
         setError("");
 
         try {
-            const result = await uploadLargeImageToCloudinary(selectedFile, {
-                folder,
-                onProgress: setUploadProgress,
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+            formData.append("folder", folder);
+
+            const response = await fetch("/api/upload-blob", {
+                method: "POST",
+                body: formData,
             });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || "Upload failed");
+            }
 
             setUploadResult(result);
             onUploadComplete?.(result);
-
-            // Clear the selected file after successful upload
             setSelectedFile(null);
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : "Upload failed";
@@ -101,7 +103,6 @@ export default function LargeImageUploader({
             onUploadError?.(errorMessage);
         } finally {
             setIsUploading(false);
-            setUploadProgress(0);
         }
     };
 
@@ -127,20 +128,20 @@ export default function LargeImageUploader({
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    onClick={() => document.getElementById("file-input")?.click()}
+                    onClick={() => document.getElementById("blob-file-input")?.click()}
                 >
                     <Upload className="mx-auto mb-4 text-neutral-400" size={48} />
                     <h3 className="text-lg font-medium text-neutral-700 mb-2">
-                        Upload Large Composite Image
+                        Upload High-Resolution Images
                     </h3>
                     <p className="text-neutral-500 mb-4">
-                        Drag and drop your image here, or click to browse
+                        Drag and drop your large composite images here, or click to browse
                     </p>
                     <p className="text-sm text-neutral-400">
-                        Supports JPEG, PNG, WebP • Up to 100MB
+                        Supports JPEG, PNG, WebP • No size limits!
                     </p>
                     <input
-                        id="file-input"
+                        id="blob-file-input"
                         type="file"
                         accept="image/*"
                         onChange={handleFileInput}
@@ -172,7 +173,7 @@ export default function LargeImageUploader({
                             onClick={startUpload}
                             className="flex-1 bg-neutral-800 text-white px-4 py-2 rounded hover:bg-neutral-700 transition-colors"
                         >
-                            Upload Image
+                            Upload to Vercel Blob
                         </button>
                         <button
                             onClick={clearSelection}
@@ -189,17 +190,11 @@ export default function LargeImageUploader({
                 <div className="border rounded-lg p-6">
                     <div className="flex items-center gap-3 mb-4">
                         <div className="animate-spin rounded-full h-6 w-6 border-2 border-neutral-300 border-t-neutral-600"></div>
-                        <span className="font-medium">Uploading {selectedFile?.name}...</span>
+                        <span className="font-medium">Uploading to Vercel Blob...</span>
                     </div>
-
-                    <div className="w-full bg-neutral-200 rounded-full h-2">
-                        <div
-                            className="bg-neutral-600 h-2 rounded-full transition-all duration-300"
-                            style={{ width: `${uploadProgress}%` }}
-                        ></div>
-                    </div>
-
-                    <p className="text-sm text-neutral-500 mt-2">{uploadProgress}% complete</p>
+                    <p className="text-sm text-neutral-500">
+                        This may take a moment for large files...
+                    </p>
                 </div>
             )}
 
@@ -213,15 +208,29 @@ export default function LargeImageUploader({
 
                     <div className="text-sm text-green-700 space-y-1">
                         <p>
-                            <strong>Public ID:</strong> {uploadResult.public_id}
+                            <strong>File:</strong> {uploadResult.filename}
                         </p>
                         <p>
-                            <strong>Dimensions:</strong> {uploadResult.width} ×{" "}
-                            {uploadResult.height}px
+                            <strong>Size:</strong> {formatFileSize(uploadResult.size)}
                         </p>
                         <p>
-                            <strong>Size:</strong> {formatFileSize(uploadResult.bytes)}
+                            <strong>URL:</strong>{" "}
+                            <a
+                                href={uploadResult.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline"
+                            >
+                                {uploadResult.url}
+                            </a>
                         </p>
+                    </div>
+
+                    <div className="mt-4 p-3 bg-white rounded border text-xs">
+                        <p className="font-medium mb-1">Add to your artwork data:</p>
+                        <code className="text-green-800">
+                            details: [&quot;{uploadResult.url}&quot;]
+                        </code>
                     </div>
 
                     <button

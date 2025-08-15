@@ -26,13 +26,16 @@ export async function POST(request: NextRequest) {
         console.log("📝 Request body:", { timestamp, folder });
 
         // Create the signature using Cloudinary's utility
+        // Important: Only include parameters that will be sent to Cloudinary
+        const params_to_sign = {
+            timestamp: timestamp,
+            folder: folder,
+        };
+
+        console.log("📝 Parameters being signed:", params_to_sign);
+
         const signature = cloudinary.utils.api_sign_request(
-            {
-                timestamp: timestamp,
-                folder: folder,
-                resource_type: "image",
-                type: "upload",
-            },
+            params_to_sign,
             process.env.CLOUDINARY_API_SECRET!,
         );
 

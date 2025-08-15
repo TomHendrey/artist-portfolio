@@ -1,6 +1,7 @@
+// app/admin/blob-upload/page.tsx
 "use client";
 
-import BlobImageUploader from "@/components/BlobImageUploader";
+import DirectBlobUploader from "@/components/DirectBlobUploader";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -15,7 +16,7 @@ export default function BlobUploadPage() {
     const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
 
     const handleUploadComplete = (result: UploadedImage) => {
-        console.log("Blob upload complete:", result);
+        console.log("Direct blob upload complete:", result);
         setUploadedImages((prev) => [...prev, result]);
     };
 
@@ -30,7 +31,7 @@ export default function BlobUploadPage() {
                     Upload High-Resolution Images to Vercel Blob
                 </h1>
 
-                <BlobImageUploader
+                <DirectBlobUploader
                     onUploadComplete={handleUploadComplete}
                     onUploadError={handleUploadError}
                     folder="composite-details"

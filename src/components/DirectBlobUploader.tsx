@@ -1,7 +1,9 @@
+// components/DirectBlobUploader.tsx
 "use client";
 
 import React, { useState, useCallback } from "react";
 import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
+import { put } from "@vercel/blob";
 
 // Helper function to format file sizes
 function formatFileSize(bytes: number): string {
@@ -19,21 +21,22 @@ interface UploadResult {
     folder: string;
 }
 
-interface BlobImageUploaderProps {
+interface DirectBlobUploaderProps {
     onUploadComplete?: (result: UploadResult) => void;
     onUploadError?: (error: string) => void;
     folder?: string;
     className?: string;
 }
 
-export default function BlobImageUploader({
+export default function DirectBlobUploader({
     onUploadComplete,
     onUploadError,
     folder = "high-res",
     className = "",
-}: BlobImageUploaderProps) {
+}: DirectBlobUploaderProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [uploadResult, setUploadResult] = useState<UploadResult | null>(null);
     const [error, setError] = useState<string>("");
@@ -69,7 +72,7 @@ export default function BlobImageUploader({
         setError("");
         setUploadResult(null);
 
-        // Allow large files for Vercel Blob
+        // Allow large files for direct Vercel Blob upload
         const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
         if (!allowedTypes.includes(file.type)) {
@@ -85,32 +88,50 @@ export default function BlobImageUploader({
 
         setIsUploading(true);
         setError("");
+        setUploadProgress(0);
 
         try {
-            const formData = new FormData();
-            formData.append("file", selectedFile);
-            formData.append("folder", folder);
+            const token = process.env.NEXT_PUBLIC_BLOB_READ_WRITE_TOKEN;
 
-            const response = await fetch("/api/upload-blob", {
-                method: "POST",
-                body: formData,
+            if (!token) {
+                throw new Error("Blob storage token not configured");
+            }
+
+            console.log(
+                `📤 Starting direct upload of ${selectedFile.name} (${formatFileSize(selectedFile.size)})`,
+            );
+
+            // Direct upload to Vercel Blob (bypasses API entirely)
+            const blob = await put(`${folder}/${selectedFile.name}`, selectedFile, {
+                access: "public",
+                token: token,
+                onUploadProgress: (progress) => {
+                    const percentage = Math.round((progress.loaded / progress.total) * 100);
+                    setUploadProgress(percentage);
+                    console.log(`📊 Upload progress: ${percentage}%`);
+                },
             });
 
-            const result = await response.json();
+            console.log("✅ Direct upload successful:", blob.url);
 
-            if (!response.ok) {
-                throw new Error(result.error || "Upload failed");
-            }
+            const result = {
+                url: blob.url,
+                filename: selectedFile.name,
+                size: selectedFile.size,
+                folder: folder,
+            };
 
             setUploadResult(result);
             onUploadComplete?.(result);
             setSelectedFile(null);
         } catch (err) {
+            console.error("❌ Direct upload failed:", err);
             const errorMessage = err instanceof Error ? err.message : "Upload failed";
             setError(errorMessage);
             onUploadError?.(errorMessage);
         } finally {
             setIsUploading(false);
+            setUploadProgress(0);
         }
     };
 
@@ -136,20 +157,20 @@ export default function BlobImageUploader({
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    onClick={() => document.getElementById("blob-file-input")?.click()}
+                    onClick={() => document.getElementById("direct-blob-file-input")?.click()}
                 >
                     <Upload className="mx-auto mb-4 text-neutral-400" size={48} />
                     <h3 className="text-lg font-medium text-neutral-700 mb-2">
-                        Upload High-Resolution Images
+                        Direct Upload to Vercel Blob
                     </h3>
                     <p className="text-neutral-500 mb-4">
                         Drag and drop your large composite images here, or click to browse
                     </p>
                     <p className="text-sm text-neutral-400">
-                        Supports JPEG, PNG, WebP • No size limits!
+                        Supports JPEG, PNG, WebP • No size limits! (Direct upload)
                     </p>
                     <input
-                        id="blob-file-input"
+                        id="direct-blob-file-input"
                         type="file"
                         accept="image/*"
                         onChange={handleFileInput}
@@ -181,7 +202,7 @@ export default function BlobImageUploader({
                             onClick={startUpload}
                             className="flex-1 bg-neutral-800 text-white px-4 py-2 rounded hover:bg-neutral-700 transition-colors"
                         >
-                            Upload to Vercel Blob
+                            Direct Upload to Blob
                         </button>
                         <button
                             onClick={clearSelection}
@@ -198,10 +219,18 @@ export default function BlobImageUploader({
                 <div className="border rounded-lg p-6">
                     <div className="flex items-center gap-3 mb-4">
                         <div className="animate-spin rounded-full h-6 w-6 border-2 border-neutral-300 border-t-neutral-600"></div>
-                        <span className="font-medium">Uploading to Vercel Blob...</span>
+                        <span className="font-medium">Uploading directly to Vercel Blob...</span>
                     </div>
+
+                    <div className="w-full bg-neutral-200 rounded-full h-2 mb-2">
+                        <div
+                            className="bg-neutral-600 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${uploadProgress}%` }}
+                        ></div>
+                    </div>
+
                     <p className="text-sm text-neutral-500">
-                        This may take a moment for large files...
+                        {uploadProgress}% complete • Direct upload (no API limits)
                     </p>
                 </div>
             )}
@@ -211,7 +240,9 @@ export default function BlobImageUploader({
                 <div className="border border-green-200 bg-green-50 rounded-lg p-6">
                     <div className="flex items-center gap-3 mb-4">
                         <CheckCircle className="text-green-600" size={24} />
-                        <span className="font-medium text-green-800">Upload Successful!</span>
+                        <span className="font-medium text-green-800">
+                            Direct Upload Successful!
+                        </span>
                     </div>
 
                     <div className="text-sm text-green-700 space-y-1">
@@ -227,7 +258,7 @@ export default function BlobImageUploader({
                                 href={uploadResult.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="underline"
+                                className="underline break-all"
                             >
                                 {uploadResult.url}
                             </a>
@@ -236,7 +267,7 @@ export default function BlobImageUploader({
 
                     <div className="mt-4 p-3 bg-white rounded border text-xs">
                         <p className="font-medium mb-1">Add to your artwork data:</p>
-                        <code className="text-green-800">
+                        <code className="text-green-800 break-all">
                             details: [&quot;{uploadResult.url}&quot;]
                         </code>
                     </div>

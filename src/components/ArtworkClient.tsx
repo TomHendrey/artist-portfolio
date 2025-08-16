@@ -22,6 +22,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [detailLightboxOpen, setDetailLightboxOpen] = useState(false);
     const [selectedDetailIndex, setSelectedDetailIndex] = useState(0);
+    const [currentImageQuality, setCurrentImageQuality] = useState<"base" | "medium" | "ultra">(
+        "base",
+    );
+    const [mediumResLoaded, setMediumResLoaded] = useState(false);
+    const [ultraResLoaded, setUltraResLoaded] = useState(false);
+    const [isLoadingHighRes, setIsLoadingHighRes] = useState(false);
+    const [loadingProgress, setLoadingProgress] = useState<string>("");
 
     useEffect(() => {
         setImageLoading(true);
@@ -29,9 +36,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         return () => clearTimeout(timer);
     }, [zoomLevel]);
 
-    // Add this with your other useEffects
+    // Cleanup function - runs when component unmounts
     useEffect(() => {
-        // Cleanup function - runs when component unmounts
         return () => {
             document.body.style.overflow = "unset"; // Always restore scrolling when component unmounts
         };
@@ -51,13 +57,93 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         };
     }, []);
 
-    // Create array of all images (main + details)
-    const allImages = [
-        artwork.images.cropped || artwork.images.main, // Use cropped version for main display
-        ...(artwork.images.croppedAlts || []), // Include alternative crops
-        artwork.images.main, // Include original main image as option
-        ...(artwork.images.details || []), // Include any detail shots
-    ];
+    // Enhanced progressive loading useEffect with better ultra quality triggers
+    useEffect(() => {
+        if (lightboxOpen && artwork.images.highRes) {
+            console.log("🚀 Starting progressive loading for", artwork.title);
+            setIsLoadingHighRes(true);
+            setMediumResLoaded(false);
+            setUltraResLoaded(false);
+            setCurrentImageQuality("base");
+
+            // Start with base quality (8MB Cloudinary)
+            setLoadingProgress("Showing base quality (8MB)");
+
+            // Load medium quality (18MB) in background
+            if (artwork.images.highRes.medium) {
+                setLoadingProgress("Loading high quality (18MB)...");
+                preloadImage(artwork.images.highRes.medium, "Medium (18MB)")
+                    .then(() => {
+                        setMediumResLoaded(true);
+                        setCurrentImageQuality("medium");
+                        setLoadingProgress("High quality loaded!");
+
+                        // Start ultra quality load after medium is ready - faster trigger
+                        if (artwork.images.highRes?.ultra) {
+                            setTimeout(() => {
+                                setLoadingProgress("Loading ultra quality (46MB)...");
+                                preloadImage(artwork.images.highRes!.ultra!, "Ultra (46MB)")
+                                    .then(() => {
+                                        setUltraResLoaded(true);
+                                        setIsLoadingHighRes(false);
+                                        setLoadingProgress(
+                                            "Ultra quality ready! Try 400-600% zoom!",
+                                        );
+                                        setTimeout(() => setLoadingProgress(""), 3000); // Show message longer
+                                    })
+                                    .catch((error) => {
+                                        console.error("Ultra res load failed:", error);
+                                        setIsLoadingHighRes(false);
+                                        setLoadingProgress("Ultra quality failed to load");
+                                    });
+                            }, 500); // Faster ultra load trigger
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Medium res load failed:", error);
+                        setLoadingProgress("High quality failed to load");
+                    });
+            }
+        }
+
+        // Cleanup when lightbox closes
+        if (!lightboxOpen) {
+            setMediumResLoaded(false);
+            setUltraResLoaded(false);
+            setIsLoadingHighRes(false);
+            setCurrentImageQuality("base");
+            setLoadingProgress("");
+        }
+    }, [lightboxOpen, artwork.images.highRes]);
+
+    // Enhanced zoom-triggered ultra quality loading
+    useEffect(() => {
+        // Trigger ultra quality loading when user zooms to 2.5x or higher
+        if (
+            lightboxOpen &&
+            zoomLevel >= 2.5 &&
+            artwork.images.highRes?.ultra &&
+            !ultraResLoaded &&
+            !isLoadingHighRes
+        ) {
+            console.log("🔍 High zoom detected, prioritizing ultra quality load");
+            setIsLoadingHighRes(true);
+            setLoadingProgress("Loading ultra quality for zoom...");
+
+            preloadImage(artwork.images.highRes.ultra, "Ultra (46MB)")
+                .then(() => {
+                    setUltraResLoaded(true);
+                    setIsLoadingHighRes(false);
+                    setLoadingProgress("Ultra quality ready for detailed viewing!");
+                    setTimeout(() => setLoadingProgress(""), 2000);
+                })
+                .catch((error) => {
+                    console.error("Ultra res load failed:", error);
+                    setIsLoadingHighRes(false);
+                    setLoadingProgress("");
+                });
+        }
+    }, [zoomLevel, lightboxOpen, ultraResLoaded, isLoadingHighRes]);
 
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
@@ -70,12 +156,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         document.body.style.overflow = "unset";
     };
 
+    // EXTREME ZOOM TEST - Push the limits to find optimal maximum
     const zoomIn = () => {
-        setZoomLevel((prev) => Math.min(4, prev + 0.5)); // Max 4x zoom, increment by 0.5
+        setZoomLevel((prev) => Math.min(10, prev + 0.5)); // Test up to 10x zoom (1000%!)
     };
 
     const zoomOut = () => {
-        setZoomLevel((prev) => Math.max(0.6, prev - 0.5)); // Min 0.75x zoom
+        setZoomLevel((prev) => Math.max(0.25, prev - 0.5)); // Go even smaller for overview
     };
 
     const resetZoom = () => {
@@ -109,6 +196,89 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             setSelectedDetailIndex((prev) => (prev < detailsLength - 1 ? prev + 1 : 0));
         }
     };
+
+    // Preload function with progress tracking - FIXED TypeScript error
+    const preloadImage = (url: string, quality: string): Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+            // Fix: Use HTMLImageElement constructor explicitly
+            const img = document.createElement("img") as HTMLImageElement;
+
+            img.onload = () => {
+                console.log(`✅ ${quality} quality loaded successfully`);
+                resolve();
+            };
+
+            img.onerror = (error: string | Event) => {
+                console.error(`❌ ${quality} quality failed to load:`, error);
+                reject(new Error(`Failed to load ${quality} image`));
+            };
+
+            img.src = url;
+            console.log(`🔄 Starting ${quality} quality load...`);
+        });
+    };
+
+    // More aggressive ultra quality triggers for extreme zoom testing
+    const getCurrentImageUrl = () => {
+        const hasHighRes = artwork.images.highRes;
+
+        if (!hasHighRes) {
+            return getCloudinaryUrl(allImages[selectedImageIndex], "ultra");
+        }
+
+        // For ANY zoom above 1.5x, prioritize ultra quality if available
+        if (zoomLevel >= 1.5) {
+            if (hasHighRes.ultra && ultraResLoaded) {
+                return hasHighRes.ultra;
+            } else if (hasHighRes.medium && mediumResLoaded) {
+                return hasHighRes.medium;
+            }
+        }
+
+        // For zoom between 1.2x-1.5x, use medium if available
+        if (zoomLevel >= 1.2 && hasHighRes.medium && mediumResLoaded) {
+            return hasHighRes.medium;
+        }
+
+        // Base quality for normal zoom
+        if (hasHighRes.base) {
+            return getCloudinaryUrl(hasHighRes.base, "large");
+        }
+
+        return getCloudinaryUrl(allImages[selectedImageIndex], "large");
+    };
+
+    // Function to manually trigger ultra quality
+    const loadUltraQuality = () => {
+        if (artwork.images.highRes?.ultra && ultraResLoaded) {
+            setCurrentImageQuality("ultra");
+        }
+    };
+
+    // Function to get quality description
+    const getQualityDescription = () => {
+        const currentUrl = getCurrentImageUrl();
+
+        if (currentUrl.includes("surface-1-composite-cropped-46")) {
+            return "Ultra Quality (46MB)";
+        } else if (currentUrl.includes("surface-1-composite-cropped-18")) {
+            return "High Quality (18MB)";
+        } else if (currentUrl.includes("surface-1-composite-cropped-8")) {
+            return "Base Quality (8MB)";
+        } else if (currentUrl.includes("blob.vercel-storage.com")) {
+            return "High Resolution";
+        } else {
+            return "Standard Quality";
+        }
+    };
+
+    // Create array of all images (main + details)
+    const allImages = [
+        artwork.images.cropped || artwork.images.main, // Use cropped version for main display
+        ...(artwork.images.croppedAlts || []), // Include alternative crops
+        artwork.images.main, // Include original main image as option
+        ...(artwork.images.details || []), // Include any detail shots
+    ];
 
     return (
         <div className="pt-16 min-h-screen" style={{ backgroundColor: "#f4f4f4" }}>
@@ -211,7 +381,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
                 </div>
             </div>
-            {/* Lightbox */}
+            {/* Enhanced Lightbox with Progressive Loading */}
             {lightboxOpen && (
                 <div
                     className="fixed inset-0 z-50 overflow-auto"
@@ -225,30 +395,110 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         <X size={32} />
                     </button>
 
-                    {/* Zoom controls - fixed to viewport */}
+                    {/* Enhanced Zoom controls - fixed to viewport */}
                     <div className="fixed top-4 left-4 flex flex-col gap-2 z-20">
                         <button
                             onClick={zoomIn}
                             className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
                         >
-                            +
+                            + Zoom In
                         </button>
                         <button
                             onClick={zoomOut}
                             className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
                         >
-                            -
+                            - Zoom Out
                         </button>
                         <button
                             onClick={resetZoom}
                             className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
                         >
-                            Reset
+                            Reset (100%)
                         </button>
-                        <div className="text-neutral-800 text-xs text-center bg-white/80 px-2 py-1 rounded">
-                            {Math.round(zoomLevel * 100)}%
+
+                        {/* Enhanced zoom level display with more info */}
+                        <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded space-y-1">
+                            <div className="font-bold">{Math.round(zoomLevel * 100)}%</div>
+                            <div className="text-xs opacity-75">
+                                {zoomLevel >= 8
+                                    ? "🔬 Microscope"
+                                    : zoomLevel >= 6
+                                      ? "🔍 Extreme Detail"
+                                      : zoomLevel >= 4
+                                        ? "👁️ Fine Detail"
+                                        : zoomLevel >= 2
+                                          ? "📐 Close Study"
+                                          : "👀 Normal View"}
+                            </div>
+                        </div>
+
+                        {/* Debug: Show actual image dimensions at current zoom */}
+                        <div className="text-neutral-800 text-xs bg-white/90 px-2 py-1 rounded">
+                            <div>
+                                Image: {Math.round(1200 * zoomLevel)}×{Math.round(1500 * zoomLevel)}
+                                px
+                            </div>
                         </div>
                     </div>
+
+                    {/* NEW: Progressive Loading Controls - positioned top-right */}
+                    {/* {artwork.images.highRes && ( */}
+                    {/*     <div className="fixed top-4 right-20 flex flex-col gap-2 z-20 max-w-xs"> */}
+                    {/*         {/* Quality indicator */}
+                    {/*         <div className="bg-white/90 px-3 py-2 rounded text-xs shadow-lg"> */}
+                    {/*             <div className="flex items-center gap-2"> */}
+                    {/*                 {getCurrentImageUrl().includes("46") ? ( */}
+                    {/*                     <div className="w-2 h-2 bg-green-500 rounded-full"></div> */}
+                    {/*                 ) : getCurrentImageUrl().includes("18") ? ( */}
+                    {/*                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div> */}
+                    {/*                 ) : ( */}
+                    {/*                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div> */}
+                    {/*                 )} */}
+                    {/*                 <span className="font-medium">{getQualityDescription()}</span> */}
+                    {/*             </div> */}
+                    {/*         </div> */}
+                    {/**/}
+                    {/*         {/* Loading progress */}
+                    {/*         {loadingProgress && ( */}
+                    {/*             <div className="bg-white/90 px-3 py-2 rounded text-xs shadow-lg"> */}
+                    {/*                 <div className="flex items-center gap-2"> */}
+                    {/*                     {isLoadingHighRes && ( */}
+                    {/*                         <div className="animate-spin w-3 h-3 border border-neutral-400 border-t-transparent rounded-full"></div> */}
+                    {/*                     )} */}
+                    {/*                     <span>{loadingProgress}</span> */}
+                    {/*                 </div> */}
+                    {/*             </div> */}
+                    {/*         )} */}
+                    {/**/}
+                    {/*         {/* Enhanced Ultra quality upgrade button */}
+                    {/*         {artwork.images.highRes?.ultra && */}
+                    {/*             ultraResLoaded && */}
+                    {/*             zoomLevel >= 2 && */}
+                    {/*             !getCurrentImageUrl().includes("46") && ( */}
+                    {/*                 <button */}
+                    {/*                     onClick={() => setCurrentImageQuality("ultra")} */}
+                    {/*                     className="bg-green-600 text-white px-4 py-3 rounded text-sm hover:bg-green-700 shadow-lg font-medium" */}
+                    {/*                 > */}
+                    {/*                     🔍 Switch to Ultra Quality */}
+                    {/*                     <div className="text-xs opacity-90"> */}
+                    {/*                         Perfect for {Math.round(zoomLevel * 100)}% zoom */}
+                    {/*                     </div> */}
+                    {/*                 </button> */}
+                    {/*             )} */}
+                    {/**/}
+                    {/*         {/* Enhanced Help text with zoom recommendations */}
+                    {/*         <div className="bg-white/90 px-3 py-2 rounded text-xs text-neutral-600 shadow-lg"> */}
+                    {/*             <div className="space-y-1"> */}
+                    {/*                 <div>🟡 Base (100%): Fast loading</div> */}
+                    {/*                 <div>🔵 High (150%+): Better detail</div> */}
+                    {/*                 <div>🟢 Ultra (250%+): Maximum quality</div> */}
+                    {/*                 <div className="text-xs opacity-75 mt-1"> */}
+                    {/*                     Try 400-600% zoom for incredible detail! */}
+                    {/*                 </div> */}
+                    {/*             </div> */}
+                    {/*         </div> */}
+                    {/*     </div> */}
+                    {/* )} */}
 
                     <div
                         className="p-4"
@@ -259,12 +509,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         }}
                     >
                         <Image
-                            src={getCloudinaryUrl(allImages[selectedImageIndex], "ultra")}
-                            alt={`${artwork.title} - Full Resolution`}
+                            src={getCurrentImageUrl()} // ← Updated to use progressive loading
+                            alt={`${artwork.title} - ${getQualityDescription()}`}
                             width={1200 * zoomLevel}
                             height={1500 * zoomLevel}
                             className="cursor-default"
                             priority
+                            quality={95}
                         />
                     </div>
                 </div>

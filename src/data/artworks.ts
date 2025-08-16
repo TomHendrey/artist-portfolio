@@ -1,4 +1,4 @@
-// src/data/artworks.ts
+// src/data/artworks.ts - Updated interface only
 export interface Artwork {
     id: number;
     slug: string;
@@ -9,9 +9,14 @@ export interface Artwork {
     description: string;
     images: {
         main: string; // Main image filename (with Cloudinary path)
-        cropped: string; // Primary cropped version for artwork pages
-        croppedAlts?: string[]; // Alternative crop options
+        cropped?: string;
+        croppedAlts?: string[]; // Alternative cropped versions
         details?: string[]; // Additional detail shots
+        highRes?: {
+            base?: string; // 8MB Cloudinary version (fast loading)
+            medium?: string; // ~18MB Blob version (background preload)
+            ultra?: string; // ~46MB Blob version (on-demand ultra quality)
+        };
     };
     category?: string;
     available?: boolean;
@@ -30,9 +35,14 @@ export const artworks: Artwork[] = [
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
         images: {
             main: "v1754426003/surface-1-main.jpg",
-            cropped: "v1754566147/surface-1-cropped.jpg",
+            cropped: "v1755300286/surface-1-composite-cropped-8.jpg",
             croppedAlts: ["v1754566286/surface-1-cropped-b.jpg"],
             details: [],
+            highRes: {
+                base: "v1755300286/surface-1-composite-cropped-8.jpg", // 8MB Cloudinary
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite-details/surface-1-composite-cropped-18.jpg", // 18MB Blob
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite-details/surface-1-composite-cropped-46.jpg", // 46MB Blob
+            },
         },
         category: "surfaces",
         available: true,

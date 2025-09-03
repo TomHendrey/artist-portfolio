@@ -34,14 +34,14 @@ export const artworks: Artwork[] = [
         description:
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
         images: {
-            main: "v1754426003/surface-1-main.jpg",
-            cropped: "v1755300286/surface-1-composite-cropped-8.jpg",
-            croppedAlts: ["v1754566286/surface-1-cropped-b.jpg"],
+            main: "v1756914516/surface-1-composite-main-7.jpg",
+            cropped: "v1756228968/surface-1-composite-cropped-8.jpg",
+            croppedAlts: ["v1756914541/surface-2-composite-cropped-8.jpg"],
             details: [],
             highRes: {
-                base: "v1755300286/surface-1-composite-cropped-8.jpg", // 8MB Cloudinary
-                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite-details/surface-1-composite-cropped-18.jpg", // 18MB Blob
-                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite-details/surface-1-composite-cropped-46.jpg", // 46MB Blob
+                base: "v1756228968/surface-1-composite-cropped-8.jpg", // 8MB Cloudinary
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-composite-cropped-19.jpg", // 18MB Blob
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-composite-cropped-48.jpg", // 46MB Blob
             },
         },
         category: "surfaces",
@@ -57,9 +57,22 @@ export const artworks: Artwork[] = [
         description:
             "Continuation of the Mars surface study series, focusing on the interplay between scientific observation and artistic interpretation.",
         images: {
-            main: "v1754469887/surface-2-main.jpg",
-            cropped: "v1754566277/surface-2-cropped.jpg",
-            croppedAlts: ["v1754566145/surface-2-cropped-b.jpg"],
+            main: "v1756914529/surface-2-composite-main-7.jpg",
+            cropped: "v1756914541/surface-2-composite-cropped-8.jpg",
+            croppedAlts: [],
+            details: [
+                "v1754587352/surface-3-detail-1.jpg",
+                "v1754587348/surface-3-detail-2.jpg",
+                "v1754587360/surface-3-detail-3.jpg",
+                "v1754587448/surface-3-detail-4.jpg",
+                "v1754587451/surface-3-detail-5.jpg",
+                "v1754587357/surface-3-detail-6.jpg",
+            ],
+            highRes: {
+                base: "v1756914541/surface-2-composite-cropped-8.jpg", // 8MB Cloudinary
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-2-composite-cropped-18.jpg", // 18MB Blob
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-2-composite-cropped-47.jpg", // 46MB Blob
+            },
         },
         category: "surfaces",
         available: true,
@@ -74,17 +87,15 @@ export const artworks: Artwork[] = [
         description:
             "The third piece in the Mars surface exploration, delving deeper into the abstraction of planetary data.",
         images: {
-            main: "v1754469896/surface-3-main.jpg",
-            cropped: "v1754566299/surface-3-cropped.jpg",
-            croppedAlts: ["v1754566269/surface-3-cropped-b.jpg"],
-            details: [
-                "v1754587352/surface-3-detail-1.jpg",
-                "v1754587348/surface-3-detail-2.jpg",
-                "v1754587360/surface-3-detail-3.jpg",
-                "v1754587448/surface-3-detail-4.jpg",
-                "v1754587451/surface-3-detail-5.jpg",
-                "v1754587357/surface-3-detail-6.jpg",
-            ],
+            main: "v1756914553/surface-3-composite-main-7.jpg",
+            cropped: "v1756914548/surface-3-composite-cropped-8.jpg",
+            croppedAlts: ["v1756914548/surface-3-composite-cropped-8.jpg"],
+            details: [],
+            highRes: {
+                base: "v1756229155/surface-3-composite-cropped-8.jpg", // 8MB Cloudinary
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-3-composite-cropped-18.jpg", // 18MB Blob
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-3-composite-cropped-57.jpg", // 46MB Blob
+            },
         },
         category: "surfaces",
         available: true,
@@ -99,9 +110,15 @@ export const artworks: Artwork[] = [
         description:
             "Mixed media interpretation of Martian terrain, incorporating both digital and analog techniques.",
         images: {
-            main: "v1754469920/surface-4-main.jpg",
-            cropped: "v1754566323/surface-4-cropped.jpg",
-            croppedAlts: ["v1754566293/surface-4-cropped-b.jpg"],
+            main: "v1756916166/surface-4-composite-main-8.jpg",
+            cropped: "v1756916173/surface-4-composite-cropped-8.jpg",
+            croppedAlts: ["v1756916173/surface-4-composite-cropped-8.jpg"],
+            details: [],
+            highRes: {
+                base: "v1756916173/surface-4-composite-cropped-8.jpg", // 8MB Cloudinary
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-composite-cropped-19.jpg", // 18MB Blob
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-composite-cropped-27.jpg", // 46MB Blob
+            },
         },
         category: "surfaces",
         available: true,
@@ -116,12 +133,15 @@ export const artworks: Artwork[] = [
         description:
             "Advanced exploration of surface textures using contemporary mixed media approaches.",
         images: {
-            main: "v1754469940/surface-5-main.jpg",
-            cropped: "v1754566328/surface-5-cropped.jpg",
-            croppedAlts: [
-                "v1754566290/surface-5-cropped-b.jpg",
-                "v1754566310/surface-5-cropped-c.jpg",
-            ],
+            main: "v1756914575/surface-5-composite-main-4.jpg",
+            cropped: "v1756914592/surface-5-composite-cropped-5.jpg",
+            croppedAlts: ["v1756914592/surface-5-composite-cropped-5.jpg"],
+            details: [],
+            highRes: {
+                base: "v1756914588/surface-5-composite-cropped-8.jpg", // 8MB Cloudinary
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-5-composite-cropped-16.jpg", // 18MB Blob
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-5-composite-cropped-16.jpg", // 46MB Blob
+            },
         },
         category: "surfaces",
         available: true,
@@ -153,9 +173,9 @@ export const artworks: Artwork[] = [
         description:
             "Marks the beginning of a new series focused on Venusian landscapes, reinterpreting dense atmospheric data into vibrant surface expressions.",
         images: {
-            main: "v1754469975/surface-7-main.jpg",
+            main: "v1754566340/surface-7-cropped.jpg",
             cropped: "v1754566340/surface-7-cropped.jpg",
-            croppedAlts: ["v1754566342/surface-7-cropped-b.jpg"],
+            croppedAlts: ["v1754566340/surface-7-cropped.jpg"],
         },
         category: "surfaces",
         available: true,
@@ -170,9 +190,14 @@ export const artworks: Artwork[] = [
         description:
             "Captures the intense heat and pressure of Venus through layered textures and fiery hues, continuing the series' planetary theme.",
         images: {
-            main: "v1754469961/surface-8-main.jpg",
-            cropped: "v1754566148/surface-8-cropped.jpg",
-            croppedAlts: ["v1754566271/surface-8-cropped-b.jpg"],
+            main: "v1756914603/surface-8-composite-main-4.jpg",
+            cropped: "v1756914598/surface-8-composite-cropped-5.jpg",
+            croppedAlts: ["v1756914598/surface-8-composite-cropped-5.jpg"],
+            highRes: {
+                base: "v1756914598/surface-8-composite-cropped-5.jpg", // 8MB Cloudinary
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-8-composite-cropped-17.jpg",
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-8-composite-cropped-44.jpg",
+            },
         },
         category: "surfaces",
         available: false,

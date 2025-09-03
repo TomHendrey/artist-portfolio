@@ -421,14 +421,14 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             <div className="font-bold">{Math.round(zoomLevel * 100)}%</div>
                             <div className="text-xs opacity-75">
                                 {zoomLevel >= 8
-                                    ? "🔬 Microscope"
+                                    ? " Microscope"
                                     : zoomLevel >= 6
-                                      ? "🔍 Extreme Detail"
+                                      ? " Extreme Detail"
                                       : zoomLevel >= 4
-                                        ? "👁️ Fine Detail"
+                                        ? " Fine Detail"
                                         : zoomLevel >= 2
-                                          ? "📐 Close Study"
-                                          : "👀 Normal View"}
+                                          ? " Close Study"
+                                          : " Normal View"}
                             </div>
                         </div>
 

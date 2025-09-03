@@ -18,10 +18,13 @@ export default function Home() {
                 <div className="absolute inset-0 z-0 hidden md:block">
                     <div className="absolute right-8 md:right-16 lg:right-24 top-[53%] -translate-y-1/2 w-[600px] md:w-[750px] lg:w-[850px] h-[95vh]">
                         <Image
-                            src={getCloudinaryUrl("surface-1-main", "large")}
+                            src={getCloudinaryUrl(
+                                "v1756228968/surface-1-composite-cropped-8.jpg",
+                                "large",
+                            )}
                             alt="Featured artwork"
                             fill
-                            className="object-contain"
+                            className="object-contain py-4"
                             priority
                             quality={90}
                         />

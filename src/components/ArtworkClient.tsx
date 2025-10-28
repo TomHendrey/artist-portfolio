@@ -6,20 +6,16 @@ import { useState, useEffect } from "react";
 import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 import { Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
-// import { artworks } from "@/data/artworks";
 
 interface ArtworkClientProps {
     artwork: Artwork;
 }
-
-// Trigger when zoom level changes
 
 export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [zoomLevel, setZoomLevel] = useState(1);
     const [imageLoading, setImageLoading] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
     const [detailLightboxOpen, setDetailLightboxOpen] = useState(false);
     const [selectedDetailIndex, setSelectedDetailIndex] = useState(0);
     const [currentImageQuality, setCurrentImageQuality] = useState<"base" | "medium" | "ultra">(
@@ -32,18 +28,16 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
     useEffect(() => {
         setImageLoading(true);
-        const timer = setTimeout(() => setImageLoading(false), 1000); // Minimum loading time
+        const timer = setTimeout(() => setImageLoading(false), 1000);
         return () => clearTimeout(timer);
     }, [zoomLevel]);
 
-    // Cleanup function - runs when component unmounts
     useEffect(() => {
         return () => {
-            document.body.style.overflow = "unset"; // Always restore scrolling when component unmounts
+            document.body.style.overflow = "unset";
         };
     }, []);
 
-    // Also add this to handle browser back button specifically
     useEffect(() => {
         const handleBeforeUnload = () => {
             document.body.style.overflow = "unset";
@@ -53,11 +47,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
         return () => {
             window.removeEventListener("beforeunload", handleBeforeUnload);
-            document.body.style.overflow = "unset"; // Restore on cleanup
+            document.body.style.overflow = "unset";
         };
     }, []);
 
-    // Enhanced progressive loading useEffect with better ultra quality triggers
     useEffect(() => {
         if (lightboxOpen && artwork.images.highRes) {
             console.log("🚀 Starting progressive loading for", artwork.title);
@@ -66,10 +59,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             setUltraResLoaded(false);
             setCurrentImageQuality("base");
 
-            // Start with base quality (8MB Cloudinary)
             setLoadingProgress("Showing base quality (8MB)");
 
-            // Load medium quality (18MB) in background
             if (artwork.images.highRes.medium) {
                 setLoadingProgress("Loading high quality (18MB)...");
                 preloadImage(artwork.images.highRes.medium, "Medium (18MB)")
@@ -78,7 +69,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         setCurrentImageQuality("medium");
                         setLoadingProgress("High quality loaded!");
 
-                        // Start ultra quality load after medium is ready - faster trigger
                         if (artwork.images.highRes?.ultra) {
                             setTimeout(() => {
                                 setLoadingProgress("Loading ultra quality (46MB)...");
@@ -89,14 +79,14 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                         setLoadingProgress(
                                             "Ultra quality ready! Try 400-600% zoom!",
                                         );
-                                        setTimeout(() => setLoadingProgress(""), 3000); // Show message longer
+                                        setTimeout(() => setLoadingProgress(""), 3000);
                                     })
                                     .catch((error) => {
                                         console.error("Ultra res load failed:", error);
                                         setIsLoadingHighRes(false);
                                         setLoadingProgress("Ultra quality failed to load");
                                     });
-                            }, 500); // Faster ultra load trigger
+                            }, 500);
                         }
                     })
                     .catch((error) => {
@@ -106,7 +96,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             }
         }
 
-        // Cleanup when lightbox closes
         if (!lightboxOpen) {
             setMediumResLoaded(false);
             setUltraResLoaded(false);
@@ -116,9 +105,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         }
     }, [lightboxOpen, artwork.images.highRes]);
 
-    // Enhanced zoom-triggered ultra quality loading
     useEffect(() => {
-        // Trigger ultra quality loading when user zooms to 2.5x or higher
         if (
             lightboxOpen &&
             zoomLevel >= 2.5 &&
@@ -158,13 +145,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         document.body.style.backgroundColor = "";
     };
 
-    // EXTREME ZOOM TEST - Push the limits to find optimal maximum
     const zoomIn = () => {
-        setZoomLevel((prev) => Math.min(10, prev + 0.5)); // Test up to 10x zoom (1000%!)
+        setZoomLevel((prev) => Math.min(10, prev + 0.5));
     };
 
     const zoomOut = () => {
-        setZoomLevel((prev) => Math.max(0.25, prev - 0.5)); // Go even smaller for overview
+        setZoomLevel((prev) => Math.max(0.25, prev - 0.5));
     };
 
     const resetZoom = () => {
@@ -173,12 +159,11 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
     const getImageSizeForZoom = (zoomLevel: number) => {
         if (zoomLevel >= 2) {
-            return "ultra"; // Use original size for 200%+ zoom
+            return "ultra";
         }
-        return "large"; // Use 2400px max for lower zooms
+        return "large";
     };
 
-    // Detail lightbox functions
     const openDetailLightbox = (index: number) => {
         setSelectedDetailIndex(index);
         setDetailLightboxOpen(true);
@@ -201,10 +186,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         }
     };
 
-    // Preload function with progress tracking - FIXED TypeScript error
     const preloadImage = (url: string, quality: string): Promise<void> => {
         return new Promise<void>((resolve, reject) => {
-            // Fix: Use HTMLImageElement constructor explicitly
             const img = document.createElement("img") as HTMLImageElement;
 
             img.onload = () => {
@@ -222,7 +205,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         });
     };
 
-    // More aggressive ultra quality triggers for extreme zoom testing
     const getCurrentImageUrl = () => {
         const hasHighRes = artwork.images.highRes;
 
@@ -230,7 +212,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             return getCloudinaryUrl(allImages[selectedImageIndex], "ultra");
         }
 
-        // For ANY zoom above 1.5x, prioritize ultra quality if available
         if (zoomLevel >= 1.5) {
             if (hasHighRes.ultra && ultraResLoaded) {
                 return hasHighRes.ultra;
@@ -239,12 +220,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             }
         }
 
-        // For zoom between 1.2x-1.5x, use medium if available
         if (zoomLevel >= 1.2 && hasHighRes.medium && mediumResLoaded) {
             return hasHighRes.medium;
         }
 
-        // Base quality for normal zoom
         if (hasHighRes.base) {
             return getCloudinaryUrl(hasHighRes.base, "large");
         }
@@ -252,14 +231,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         return getCloudinaryUrl(allImages[selectedImageIndex], "large");
     };
 
-    // Function to manually trigger ultra quality
     const loadUltraQuality = () => {
         if (artwork.images.highRes?.ultra && ultraResLoaded) {
             setCurrentImageQuality("ultra");
         }
     };
 
-    // Function to get quality description
     const getQualityDescription = () => {
         const currentUrl = getCurrentImageUrl();
 
@@ -276,30 +253,57 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         }
     };
 
-    // Create array of all images (main + details)
     const allImages = [
-        artwork.images.cropped || artwork.images.main, // Use cropped version for main display
-        ...(artwork.images.croppedAlts || []), // Include alternative crops
-        artwork.images.main, // Include original main image as option
-        ...(artwork.images.details || []), // Include any detail shots
+        artwork.images.cropped || artwork.images.main,
+        ...(artwork.images.croppedAlts || []),
+        artwork.images.main,
+        ...(artwork.images.details || []),
     ];
 
     return (
         <div className="min-h-screen" style={{ backgroundColor: "#e9e9e9" }}>
-            {/* Mobile toggle button at top */}
-            <div className="md:hidden p-4 bg-white border-b border-neutral-200">
-                <button
-                    className="text-sm text-neutral-600 underline"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    {isOpen ? "Hide Details" : "Show Details"}
-                </button>
-            </div>
-            <div className="flex pb-20">
-                {/* Left Sidebar - Fix the className */}
-                <div className="w-[28rem] flex-shrink-0 p-12 bg-white">
+            {/* Main Layout: Image first on mobile (order-1), sidebar second (order-2); side-by-side on desktop */}
+            <div className="flex flex-col lg:flex-row">
+                {/* IMAGE SECTION - Shows first on mobile, on right on desktop - HIGH PRIORITY, doesn't shrink */}
+                <div className="w-full lg:flex-1 lg:flex-shrink-0 order-1 lg:order-2">
+                    <button
+                        onClick={() => openLightbox(selectedImageIndex)}
+                        className="fixed top-4 lg:top-8 right-4 lg:right-12 border border-neutral-300 rounded-sm text-neutral-800 px-3 lg:px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-xs lg:text-sm font-light z-50 bg-white"
+                    >
+                        View High Resolution
+                    </button>
+
+                    {/* Image Container with white padding frame on desktop */}
+                    <div className="w-full h-[70vh] lg:h-screen bg-white">
+                        {/* White padding wrapper - adds frame on desktop */}
+                        <div className="w-full h-full flex items-center justify-center py-6 px-2 sm:py-8 sm:px-4 md:py-10 md:px-8 lg:py-12 lg:px-12 lg:pr-24 xl:py-12 xl:px-16 xl:pr-40">
+                            {/* Gray container */}
+                            <div
+                                className="relative w-full h-full flex items-center justify-center"
+                                style={{ backgroundColor: "#e9e9e9" }}
+                            >
+                                <Image
+                                    src={getCloudinaryUrl(
+                                        artwork.images.cropped || artwork.images.main,
+                                        "large",
+                                    )}
+                                    alt={`${artwork.title} - Featured View`}
+                                    width={1200}
+                                    height={1500}
+                                    className="max-w-full max-h-full object-contain cursor-zoom-in"
+                                    style={{ width: "auto", height: "auto" }}
+                                    onClick={() => openLightbox(selectedImageIndex)}
+                                    priority
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
+                <div className="w-full lg:w-[28rem] lg:flex-shrink-1 lg:min-w-[16rem] p-8 lg:p-12 bg-white order-2 lg:order-1">
                     {/* Back Navigation */}
-                    <div className="mb-12">
+                    <div className="mb-8 lg:mb-12">
                         <Link
                             href="/portfolio"
                             className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -310,25 +314,25 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
 
                     {/* Details Section */}
-                    <div className="space-y-12">
+                    <div className="space-y-8 lg:space-y-12">
                         <div>
-                            <h1 className="text-5xl font-light mb-6 text-neutral-800 leading-tight">
+                            <h1 className="text-4xl lg:text-5xl font-light mb-4 lg:mb-6 text-neutral-800 leading-tight">
                                 {artwork.title}
                             </h1>
-                            <div className="space-y-3 text-neutral-600 mb-8">
-                                <p className="text-lg">{artwork.year}</p>
-                                <p className="text-base">{artwork.medium}</p>
-                                <p className="text-base">{artwork.dimensions}</p>
+                            <div className="space-y-2 lg:space-y-3 text-neutral-600 mb-6 lg:mb-8">
+                                <p className="text-base lg:text-lg">{artwork.year}</p>
+                                <p className="text-sm lg:text-base">{artwork.medium}</p>
+                                <p className="text-sm lg:text-base">{artwork.dimensions}</p>
                             </div>
                         </div>
 
                         {/* Description */}
                         <div>
-                            <h3 className="text-xl font-light mb-6 text-neutral-800">
+                            <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
                                 About this Work
                             </h3>
                             <p
-                                className="text-neutral-600 leading-relaxed text-base"
+                                className="text-neutral-600 leading-relaxed text-sm lg:text-base"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 {artwork.description}
@@ -337,11 +341,11 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                         {/* Contact for Purchase */}
                         <div>
-                            <h3 className="text-xl font-light mb-6 text-neutral-800">
+                            <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
                                 Inquire About This Work
                             </h3>
                             <p
-                                className="text-neutral-600 mb-8 leading-relaxed text-base"
+                                className="text-neutral-600 mb-6 lg:mb-8 leading-relaxed text-sm lg:text-base"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 For pricing information, additional images, or to arrange a studio
@@ -349,54 +353,21 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             </p>
                             <Link
                                 href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
-                                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-6 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+                                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-4 lg:px-6 py-2 lg:py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm lg:text-base"
                             >
                                 Contact About This Work
                             </Link>
                         </div>
                     </div>
                 </div>
-
-                <div className="flex-1">
-                    <button
-                        onClick={() => openLightbox(selectedImageIndex)}
-                        className="fixed top-8 right-12 border border-neutral-300 rounded-sm text-neutral-800 px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm font-light z-50"
-                    >
-                        View High Resolution
-                    </button>
-
-                    {/* Images Section */}
-                    <div className="w-full h-screen">
-                        {/* Main Image with white matting effect - portrait oriented padding */}
-                        <div className="relative h-full flex items-center justify-center bg-white py-12 px-40">
-                            <div
-                                className="relative w-full h-full flex items-center justify-center px-10 py-4"
-                                style={{ backgroundColor: "#e9e9e9" }}
-                            >
-                                <Image
-                                    src={getCloudinaryUrl(
-                                        artwork.images.cropped || artwork.images.main,
-                                        "large",
-                                    )}
-                                    alt={`${artwork.title} - Featured View`}
-                                    width={1200}
-                                    height={800}
-                                    className="max-w-full max-h-full object-contain cursor-zoom-in"
-                                    onClick={() => openLightbox(selectedImageIndex)}
-                                    priority
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            {/* Enhanced Lightbox with Progressive Loading */}
+
+            {/* Lightbox */}
             {lightboxOpen && (
                 <div
                     className="fixed inset-0 z-50 overflow-auto"
                     style={{ backgroundColor: "#e9e9e9" }}
                 >
-                    {/* Close button - fixed to viewport */}
                     <button
                         onClick={closeLightbox}
                         className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-20"
@@ -404,7 +375,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         <X size={32} />
                     </button>
 
-                    {/* Enhanced Zoom controls - fixed to viewport */}
                     <div className="fixed top-4 left-4 flex flex-col gap-2 z-20">
                         <button
                             onClick={zoomIn}
@@ -425,7 +395,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             Reset (100%)
                         </button>
 
-                        {/* Enhanced zoom level display with more info */}
                         <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded space-y-1">
                             <div className="font-bold">{Math.round(zoomLevel * 100)}%</div>
                             <div className="text-xs opacity-75">
@@ -441,7 +410,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             </div>
                         </div>
 
-                        {/* Debug: Show actual image dimensions at current zoom */}
                         <div className="text-neutral-800 text-xs bg-white/90 px-2 py-1 rounded">
                             <div>
                                 Image: {Math.round(1200 * zoomLevel)}×{Math.round(1500 * zoomLevel)}
@@ -450,27 +418,35 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
                     </div>
 
-                    <div className="w-full" style={{ textAlign: "center" }}>
-                        <Image
-                            src={getCurrentImageUrl()} // ← Updated to use progressive loading
-                            alt={`${artwork.title} - ${getQualityDescription()}`}
-                            width={1200 * zoomLevel}
-                            height={1500 * zoomLevel}
-                            className="cursor-default"
-                            style={{ display: "inline-block", maxWidth: "none", maxHeight: "none" }}
-                            priority
-                            quality={95}
-                        />
+                    {/* Lightbox image - no padding wrapper, starts at left edge */}
+                    <div className="w-full h-full flex items-center justify-center pl-0 pr-2 sm:pr-4 md:pr-12 lg:pr-24 xl:pr-40">
+                        <div
+                            className="relative w-full h-full flex items-center justify-center"
+                            style={{ backgroundColor: "#e9e9e9" }}
+                        >
+                            <Image
+                                src={getCurrentImageUrl()}
+                                alt={`${artwork.title} - ${getQualityDescription()}`}
+                                width={1200 * zoomLevel}
+                                height={1500 * zoomLevel}
+                                className="cursor-default"
+                                style={{ maxWidth: "none", maxHeight: "none" }}
+                                priority
+                                quality={95}
+                            />
+                        </div>
                     </div>
                 </div>
             )}
 
             {/* Detail Images Section */}
             {artwork.images.details && artwork.images.details.length > 0 && (
-                <div className="w-full bg-white py-36 px-8 border-t border-neutral-200">
+                <div className="w-full bg-white py-20 lg:py-36 px-4 lg:px-8 border-t border-neutral-200">
                     <div className="max-w-7xl mx-auto">
-                        <h3 className="text-3xl font-light mb-12 text-neutral-800">Gallery</h3>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                        <h3 className="text-2xl lg:text-3xl font-light mb-8 lg:mb-12 text-neutral-800">
+                            Gallery
+                        </h3>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 lg:gap-4">
                             {artwork.images.details.map((detail, index) => (
                                 <div
                                     key={detail}
@@ -490,13 +466,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 </div>
             )}
 
-            {/* Detail Images Lightbox - Simple version */}
+            {/* Detail Images Lightbox */}
             {detailLightboxOpen && artwork.images.details && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center py-20"
+                    className="fixed inset-0 z-50 flex items-center justify-center py-10 lg:py-20"
                     style={{ backgroundColor: "#e9e9e9" }}
                 >
-                    {/* Close button - change to dark colors */}
                     <button
                         onClick={closeDetailLightbox}
                         className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-60"
@@ -504,7 +479,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         <X size={32} />
                     </button>
 
-                    {/* Previous button - change to dark colors */}
                     {artwork.images.details.length > 1 && (
                         <button
                             onClick={() => navigateDetail("prev")}
@@ -514,7 +488,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </button>
                     )}
 
-                    {/* Next button - change to dark colors */}
                     {artwork.images.details.length > 1 && (
                         <button
                             onClick={() => navigateDetail("next")}
@@ -524,8 +497,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </button>
                     )}
 
-                    {/* Detail Image - now has forced gaps */}
-                    <div className="max-w-[85vw] h-[95vh] flex items-center justify-center">
+                    <div className="max-w-[90vw] lg:max-w-[85vw] h-[85vh] lg:h-[95vh] flex items-center justify-center">
                         <Image
                             src={getCloudinaryUrl(
                                 artwork.images.details[selectedDetailIndex],

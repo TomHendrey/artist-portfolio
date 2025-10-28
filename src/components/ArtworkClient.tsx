@@ -285,7 +285,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     ];
 
     return (
-        <div className="pt-16 min-h-screen" style={{ backgroundColor: "#e9e9e9" }}>
+        <div className="min-h-screen" style={{ backgroundColor: "#e9e9e9" }}>
             {/* Mobile toggle button at top */}
             <div className="md:hidden p-4 bg-white border-b border-neutral-200">
                 <button
@@ -297,9 +297,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             </div>
             <div className="flex pb-20">
                 {/* Left Sidebar - Fix the className */}
-                <div className="w-80 flex-shrink-0 p-8 bg-white border-r border-neutral-200">
+                <div className="w-[28rem] flex-shrink-0 p-12 bg-white">
                     {/* Back Navigation */}
-                    <div className="mb-8">
+                    <div className="mb-12">
                         <Link
                             href="/portfolio"
                             className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -310,25 +310,25 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
 
                     {/* Details Section */}
-                    <div className="space-y-8">
+                    <div className="space-y-12">
                         <div>
-                            <h1 className="text-4xl md:text-5xl font-light mb-4 text-neutral-800">
+                            <h1 className="text-5xl font-light mb-6 text-neutral-800 leading-tight">
                                 {artwork.title}
                             </h1>
-                            <div className="space-y-2 text-neutral-600 mb-8">
+                            <div className="space-y-3 text-neutral-600 mb-8">
                                 <p className="text-lg">{artwork.year}</p>
-                                <p>{artwork.medium}</p>
-                                <p>{artwork.dimensions}</p>
+                                <p className="text-base">{artwork.medium}</p>
+                                <p className="text-base">{artwork.dimensions}</p>
                             </div>
                         </div>
 
                         {/* Description */}
                         <div>
-                            <h3 className="text-xl font-light mb-4 text-neutral-800">
+                            <h3 className="text-xl font-light mb-6 text-neutral-800">
                                 About this Work
                             </h3>
                             <p
-                                className="text-neutral-600 leading-relaxed"
+                                className="text-neutral-600 leading-relaxed text-base"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 {artwork.description}
@@ -337,11 +337,11 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                         {/* Contact for Purchase */}
                         <div>
-                            <h3 className="text-xl font-light mb-4 text-neutral-800">
+                            <h3 className="text-xl font-light mb-6 text-neutral-800">
                                 Inquire About This Work
                             </h3>
                             <p
-                                className="text-neutral-600 mb-8"
+                                className="text-neutral-600 mb-8 leading-relaxed text-base"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 For pricing information, additional images, or to arrange a studio
@@ -349,7 +349,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             </p>
                             <Link
                                 href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
-                                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+                                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-6 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
                             >
                                 Contact About This Work
                             </Link>
@@ -357,33 +357,35 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
                 </div>
 
-                <div className="flex-1 p-8">
+                <div className="flex-1">
                     <button
                         onClick={() => openLightbox(selectedImageIndex)}
-                        className="fixed top-20 right-8 border border-neutral-300 rounded-sm text-neutral-800 px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm font-light z-50"
+                        className="fixed top-8 right-12 border border-neutral-300 rounded-sm text-neutral-800 px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm font-light z-50"
                     >
                         View High Resolution
                     </button>
 
                     {/* Images Section */}
-                    <div className="w-full">
-                        {/* Main Image */}
-                        <div
-                            className="relative h-[75vh] md:h-[90vh] flex items-center justify-center"
-                            style={{ backgroundColor: "#e9e9e9" }}
-                        >
-                            <Image
-                                src={getCloudinaryUrl(
-                                    artwork.images.cropped || artwork.images.main,
-                                    "large",
-                                )}
-                                alt={`${artwork.title} - Featured View`}
-                                width={1200}
-                                height={800}
-                                className="max-w-full max-h-full object-contain cursor-zoom-in"
-                                onClick={() => openLightbox(selectedImageIndex)}
-                                priority
-                            />
+                    <div className="w-full h-screen">
+                        {/* Main Image with white matting effect - portrait oriented padding */}
+                        <div className="relative h-full flex items-center justify-center bg-white py-12 px-40">
+                            <div
+                                className="relative w-full h-full flex items-center justify-center px-10 py-4"
+                                style={{ backgroundColor: "#e9e9e9" }}
+                            >
+                                <Image
+                                    src={getCloudinaryUrl(
+                                        artwork.images.cropped || artwork.images.main,
+                                        "large",
+                                    )}
+                                    alt={`${artwork.title} - Featured View`}
+                                    width={1200}
+                                    height={800}
+                                    className="max-w-full max-h-full object-contain cursor-zoom-in"
+                                    onClick={() => openLightbox(selectedImageIndex)}
+                                    priority
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -448,79 +450,14 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
                     </div>
 
-                    {/* NEW: Progressive Loading Controls - positioned top-right */}
-                    {/* {artwork.images.highRes && ( */}
-                    {/*     <div className="fixed top-4 right-20 flex flex-col gap-2 z-20 max-w-xs"> */}
-                    {/*         {/* Quality indicator */}
-                    {/*         <div className="bg-white/90 px-3 py-2 rounded text-xs shadow-lg"> */}
-                    {/*             <div className="flex items-center gap-2"> */}
-                    {/*                 {getCurrentImageUrl().includes("46") ? ( */}
-                    {/*                     <div className="w-2 h-2 bg-green-500 rounded-full"></div> */}
-                    {/*                 ) : getCurrentImageUrl().includes("18") ? ( */}
-                    {/*                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div> */}
-                    {/*                 ) : ( */}
-                    {/*                     <div className="w-2 h-2 bg-yellow-500 rounded-full"></div> */}
-                    {/*                 )} */}
-                    {/*                 <span className="font-medium">{getQualityDescription()}</span> */}
-                    {/*             </div> */}
-                    {/*         </div> */}
-                    {/**/}
-                    {/*         {/* Loading progress */}
-                    {/*         {loadingProgress && ( */}
-                    {/*             <div className="bg-white/90 px-3 py-2 rounded text-xs shadow-lg"> */}
-                    {/*                 <div className="flex items-center gap-2"> */}
-                    {/*                     {isLoadingHighRes && ( */}
-                    {/*                         <div className="animate-spin w-3 h-3 border border-neutral-400 border-t-transparent rounded-full"></div> */}
-                    {/*                     )} */}
-                    {/*                     <span>{loadingProgress}</span> */}
-                    {/*                 </div> */}
-                    {/*             </div> */}
-                    {/*         )} */}
-                    {/**/}
-                    {/*         {/* Enhanced Ultra quality upgrade button */}
-                    {/*         {artwork.images.highRes?.ultra && */}
-                    {/*             ultraResLoaded && */}
-                    {/*             zoomLevel >= 2 && */}
-                    {/*             !getCurrentImageUrl().includes("46") && ( */}
-                    {/*                 <button */}
-                    {/*                     onClick={() => setCurrentImageQuality("ultra")} */}
-                    {/*                     className="bg-green-600 text-white px-4 py-3 rounded text-sm hover:bg-green-700 shadow-lg font-medium" */}
-                    {/*                 > */}
-                    {/*                     🔍 Switch to Ultra Quality */}
-                    {/*                     <div className="text-xs opacity-90"> */}
-                    {/*                         Perfect for {Math.round(zoomLevel * 100)}% zoom */}
-                    {/*                     </div> */}
-                    {/*                 </button> */}
-                    {/*             )} */}
-                    {/**/}
-                    {/*         {/* Enhanced Help text with zoom recommendations */}
-                    {/*         <div className="bg-white/90 px-3 py-2 rounded text-xs text-neutral-600 shadow-lg"> */}
-                    {/*             <div className="space-y-1"> */}
-                    {/*                 <div>🟡 Base (100%): Fast loading</div> */}
-                    {/*                 <div>🔵 High (150%+): Better detail</div> */}
-                    {/*                 <div>🟢 Ultra (250%+): Maximum quality</div> */}
-                    {/*                 <div className="text-xs opacity-75 mt-1"> */}
-                    {/*                     Try 400-600% zoom for incredible detail! */}
-                    {/*                 </div> */}
-                    {/*             </div> */}
-                    {/*         </div> */}
-                    {/*     </div> */}
-                    {/* )} */}
-
-                    <div
-                        className="p-4"
-                        style={{
-                            width: `${1200 * zoomLevel}px`,
-                            height: `${1500 * zoomLevel}px`,
-                            margin: "0 auto",
-                        }}
-                    >
+                    <div className="w-full" style={{ textAlign: "center" }}>
                         <Image
                             src={getCurrentImageUrl()} // ← Updated to use progressive loading
                             alt={`${artwork.title} - ${getQualityDescription()}`}
                             width={1200 * zoomLevel}
                             height={1500 * zoomLevel}
                             className="cursor-default"
+                            style={{ display: "inline-block", maxWidth: "none", maxHeight: "none" }}
                             priority
                             quality={95}
                         />

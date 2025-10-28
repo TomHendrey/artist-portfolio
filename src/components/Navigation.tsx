@@ -2,10 +2,21 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
+    const pathname = usePathname();
+
+    // Hide navigation on artwork detail pages (e.g., /portfolio/surface-i)
+    // But show it on the portfolio grid page (/portfolio)
+    const isArtworkPage = pathname?.startsWith("/portfolio/") && pathname !== "/portfolio";
+
+    // Don't render anything if we're on an artwork detail page
+    if (isArtworkPage) {
+        return null;
+    }
 
     const navItems = [
         { href: "/", label: "Home" },

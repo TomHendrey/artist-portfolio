@@ -149,11 +149,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         setSelectedImageIndex(index);
         setLightboxOpen(true);
         document.body.style.overflow = "hidden";
+        document.body.style.backgroundColor = "#e9e9e9";
     };
 
     const closeLightbox = () => {
         setLightboxOpen(false);
         document.body.style.overflow = "unset";
+        document.body.style.backgroundColor = "";
     };
 
     // EXTREME ZOOM TEST - Push the limits to find optimal maximum
@@ -181,11 +183,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         setSelectedDetailIndex(index);
         setDetailLightboxOpen(true);
         document.body.style.overflow = "hidden";
+        document.body.style.backgroundColor = "#e9e9e9";
     };
 
     const closeDetailLightbox = () => {
         setDetailLightboxOpen(false);
         document.body.style.overflow = "unset";
+        document.body.style.backgroundColor = "";
     };
 
     const navigateDetail = (direction: "prev" | "next") => {
@@ -281,7 +285,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     ];
 
     return (
-        <div className="pt-16 min-h-screen" style={{ backgroundColor: "#f4f4f4" }}>
+        <div className="pt-16 min-h-screen" style={{ backgroundColor: "#e9e9e9" }}>
             {/* Mobile toggle button at top */}
             <div className="md:hidden p-4 bg-white border-b border-neutral-200">
                 <button
@@ -364,7 +368,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     {/* Images Section */}
                     <div className="w-full">
                         {/* Main Image */}
-                        <div className="relative h-[75vh] md:h-[90vh] bg-neutral-100 flex items-center justify-center">
+                        <div
+                            className="relative h-[75vh] md:h-[90vh] flex items-center justify-center"
+                            style={{ backgroundColor: "#e9e9e9" }}
+                        >
                             <Image
                                 src={getCloudinaryUrl(
                                     artwork.images.cropped || artwork.images.main,
@@ -385,7 +392,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {lightboxOpen && (
                 <div
                     className="fixed inset-0 z-50 overflow-auto"
-                    style={{ backgroundColor: "#f4f4f4" }}
+                    style={{ backgroundColor: "#e9e9e9" }}
                 >
                     {/* Close button - fixed to viewport */}
                     <button
@@ -550,7 +557,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {detailLightboxOpen && artwork.images.details && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center py-20"
-                    style={{ backgroundColor: "#f4f4f4" }}
+                    style={{ backgroundColor: "#e9e9e9" }}
                 >
                     {/* Close button - change to dark colors */}
                     <button

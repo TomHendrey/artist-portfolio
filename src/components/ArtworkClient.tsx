@@ -265,46 +265,43 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {/* Main Layout: Image first on mobile (order-1), sidebar second (order-2); side-by-side on desktop */}
             <div className="flex flex-col md:flex-row transition-all duration-300 ease-in-out">
                 {/* IMAGE SECTION - Shows first on mobile, on right on desktop - HIGH PRIORITY, doesn't shrink */}
-                <div className="w-full lg:flex-[2] lg:min-w-[400px] order-1 lg:order-2 transition-all duration-300 ease-in-out">
-                    <button
-                        onClick={() => openLightbox(selectedImageIndex)}
-                        className="fixed top-4 lg:top-8 right-4 lg:right-12 border border-neutral-300 rounded-sm text-neutral-800 px-3 lg:px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-xs lg:text-sm font-light z-50 bg-white"
-                    >
-                        View High Resolution
-                    </button>
+                <div className="w-full lg:flex-[2] lg:min-w-[400px] order-1 md:order-2 transition-all duration-300 ease-in-out">
+                    {/* Mobile: White top padding with Back to Portfolio (left) and View HD (right) */}
+                    <div className="md:hidden bg-white px-6 py-6 flex items-center justify-between">
+                        <Link
+                            href="/portfolio"
+                            className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
+                        >
+                            <ArrowLeft size={20} />
+                            Back to Portfolio
+                        </Link>
+                        <button
+                            onClick={() => openLightbox(selectedImageIndex)}
+                            className="border border-neutral-300 rounded-sm text-neutral-800 px-3 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-xs font-light"
+                        >
+                            View HD
+                        </button>
+                    </div>
 
-                    {/* Image Container with white padding frame on desktop */}
-                    <div className="w-full h-[70vh] lg:h-screen bg-white">
-                        {/* White padding wrapper - adds frame on desktop */}
-                        <div className="w-full h-full flex items-center justify-center py-6 px-2 sm:py-8 sm:px-4 md:py-10 md:px-8 lg:py-12 lg:px-12 lg:pr-24 xl:py-8 xl:px-8 xl:pr-40">
-                            {/* Gray container */}
-                            <div
-                                className="relative w-full h-full flex items-center justify-center py-4"
-                                style={{ backgroundColor: "#e9e9e9" }}
-                            >
-                                <Image
-                                    src={getCloudinaryUrl(
-                                        artwork.images.cropped || artwork.images.main,
-                                        "large",
-                                    )}
-                                    alt={`${artwork.title} - Featured View`}
-                                    width={1200}
-                                    height={1500}
-                                    className="max-w-full max-h-full object-contain cursor-zoom-in"
-                                    style={{ width: "auto", height: "auto" }}
-                                    onClick={() => openLightbox(selectedImageIndex)}
-                                    priority
-                                />
-                            </div>
-                        </div>
+                    {/* Image Container - MOBILE: full size no constraints, TABLET/DESKTOP: height + padding */}
+                    <div className="w-full h-auto md:h-[70vh] lg:h-screen bg-white flex items-center justify-center md:py-8 md:px-4 lg:py-12 lg:px-6">
+                        <Image
+                            src={getCloudinaryUrl(artwork.images.main, "large")}
+                            alt={`${artwork.title} - Featured View`}
+                            width={1200}
+                            height={1500}
+                            className="w-full h-auto md:w-auto md:h-auto md:max-w-full md:max-h-full object-contain cursor-zoom-in"
+                            onClick={() => openLightbox(selectedImageIndex)}
+                            priority
+                        />
                     </div>
                 </div>
 
                 {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
-                <div className="w-full lg:flex-[0.7] lg:min-w-[220px] p-8 lg:p-12 bg-white order-2 lg:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
+                <div className="w-full lg:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
                     <div className="w-full max-w-[85%] transform lg:-translate-x-[50px]">
-                        {/* Back Navigation */}
-                        <div className="mb-8 lg:mb-12">
+                        {/* Back Navigation - Desktop only, moved to top on mobile */}
+                        <div className="hidden md:block mb-8 lg:mb-12">
                             <Link
                                 href="/portfolio"
                                 className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -340,24 +337,23 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 </p>
                             </div>
 
-                            {/* Contact for Purchase */}
-                            <div>
-                                <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
-                                    Inquire About This Work
-                                </h3>
-                                <p
-                                    className="text-neutral-600 mb-6 lg:mb-8 leading-relaxed text-sm lg:text-base"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                >
-                                    For pricing information, additional images, or to arrange a
-                                    studio visit, please get in touch.
-                                </p>
+                            {/* Buttons section - elegant, compact, side by side */}
+                            <div className="flex gap-3">
+                                {/* Inquire button - filled/primary */}
                                 <Link
                                     href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
-                                    className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-4 lg:px-6 py-2 lg:py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm lg:text-base"
+                                    className="inline-flex items-center justify-center bg-neutral-800 text-white px-4 py-2 hover:bg-neutral-700 transition-colors duration-300 text-xs lg:text-sm font-light"
                                 >
-                                    Contact About This Work
+                                    Inquire
                                 </Link>
+
+                                {/* View High Resolution - Desktop only (mobile has it in top padding) - outline/secondary */}
+                                <button
+                                    onClick={() => openLightbox(selectedImageIndex)}
+                                    className="hidden md:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
+                                >
+                                    View HD
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -420,23 +416,17 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
                     </div>
 
-                    {/* Lightbox image - no padding wrapper, starts at left edge */}
-                    <div className="w-full h-full flex items-center justify-center pl-0 pr-2 sm:pr-4 md:pr-12 lg:pr-24 xl:pr-40">
-                        <div
-                            className="relative w-full h-full flex items-center justify-center"
-                            style={{ backgroundColor: "#e9e9e9" }}
-                        >
-                            <Image
-                                src={getCurrentImageUrl()}
-                                alt={`${artwork.title} - ${getQualityDescription()}`}
-                                width={1200 * zoomLevel}
-                                height={1500 * zoomLevel}
-                                className="cursor-default"
-                                style={{ maxWidth: "none", maxHeight: "none" }}
-                                priority
-                                quality={95}
-                            />
-                        </div>
+                    <div className="w-full" style={{ textAlign: "center" }}>
+                        <Image
+                            src={getCurrentImageUrl()}
+                            alt={`${artwork.title} - ${getQualityDescription()}`}
+                            width={1200 * zoomLevel}
+                            height={1500 * zoomLevel}
+                            className="cursor-default"
+                            style={{ display: "inline-block", maxWidth: "none", maxHeight: "none" }}
+                            priority
+                            quality={95}
+                        />
                     </div>
                 </div>
             )}

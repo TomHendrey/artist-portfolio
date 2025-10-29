@@ -110,8 +110,8 @@ export const artworks: Artwork[] = [
         description:
             "Mixed media interpretation of Martian terrain, incorporating both digital and analog techniques.",
         images: {
-            main: "v1761674575/surface-4-main-7.jpg",
-            cropped: "v1761674574/surface-4-cropped-9.jpg",
+            main: "v1761674574/surface-4-cropped-9.jpg",
+            cropped: "v1761674575/surface-4-main-7.jpg",
             croppedAlts: [],
             details: [],
             highRes: {

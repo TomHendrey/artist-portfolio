@@ -263,9 +263,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     return (
         <div className="min-h-screen" style={{ backgroundColor: "#e9e9e9" }}>
             {/* Main Layout: Image first on mobile (order-1), sidebar second (order-2); side-by-side on desktop */}
-            <div className="flex flex-col lg:flex-row">
+            <div className="flex flex-col md:flex-row transition-all duration-300 ease-in-out">
                 {/* IMAGE SECTION - Shows first on mobile, on right on desktop - HIGH PRIORITY, doesn't shrink */}
-                <div className="w-full lg:flex-1 lg:flex-shrink-0 order-1 lg:order-2">
+                <div className="w-full lg:flex-[2] lg:min-w-[400px] order-1 lg:order-2 transition-all duration-300 ease-in-out">
                     <button
                         onClick={() => openLightbox(selectedImageIndex)}
                         className="fixed top-4 lg:top-8 right-4 lg:right-12 border border-neutral-300 rounded-sm text-neutral-800 px-3 lg:px-4 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-xs lg:text-sm font-light z-50 bg-white"
@@ -276,10 +276,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     {/* Image Container with white padding frame on desktop */}
                     <div className="w-full h-[70vh] lg:h-screen bg-white">
                         {/* White padding wrapper - adds frame on desktop */}
-                        <div className="w-full h-full flex items-center justify-center py-6 px-2 sm:py-8 sm:px-4 md:py-10 md:px-8 lg:py-12 lg:px-12 lg:pr-24 xl:py-12 xl:px-16 xl:pr-40">
+                        <div className="w-full h-full flex items-center justify-center py-6 px-2 sm:py-8 sm:px-4 md:py-10 md:px-8 lg:py-12 lg:px-12 lg:pr-24 xl:py-8 xl:px-8 xl:pr-40">
                             {/* Gray container */}
                             <div
-                                className="relative w-full h-full flex items-center justify-center"
+                                className="relative w-full h-full flex items-center justify-center py-4"
                                 style={{ backgroundColor: "#e9e9e9" }}
                             >
                                 <Image
@@ -301,62 +301,64 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 </div>
 
                 {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
-                <div className="w-full lg:w-[28rem] lg:flex-shrink-1 lg:min-w-[16rem] p-8 lg:p-12 bg-white order-2 lg:order-1">
-                    {/* Back Navigation */}
-                    <div className="mb-8 lg:mb-12">
-                        <Link
-                            href="/portfolio"
-                            className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
-                        >
-                            <ArrowLeft size={20} />
-                            Back to Portfolio
-                        </Link>
-                    </div>
-
-                    {/* Details Section */}
-                    <div className="space-y-8 lg:space-y-12">
-                        <div>
-                            <h1 className="text-4xl lg:text-5xl font-light mb-4 lg:mb-6 text-neutral-800 leading-tight">
-                                {artwork.title}
-                            </h1>
-                            <div className="space-y-2 lg:space-y-3 text-neutral-600 mb-6 lg:mb-8">
-                                <p className="text-base lg:text-lg">{artwork.year}</p>
-                                <p className="text-sm lg:text-base">{artwork.medium}</p>
-                                <p className="text-sm lg:text-base">{artwork.dimensions}</p>
-                            </div>
-                        </div>
-
-                        {/* Description */}
-                        <div>
-                            <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
-                                About this Work
-                            </h3>
-                            <p
-                                className="text-neutral-600 leading-relaxed text-sm lg:text-base"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                {artwork.description}
-                            </p>
-                        </div>
-
-                        {/* Contact for Purchase */}
-                        <div>
-                            <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
-                                Inquire About This Work
-                            </h3>
-                            <p
-                                className="text-neutral-600 mb-6 lg:mb-8 leading-relaxed text-sm lg:text-base"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                For pricing information, additional images, or to arrange a studio
-                                visit, please get in touch.
-                            </p>
+                <div className="w-full lg:flex-[0.7] lg:min-w-[220px] p-8 lg:p-12 bg-white order-2 lg:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
+                    <div className="w-full max-w-[85%] transform lg:-translate-x-[50px]">
+                        {/* Back Navigation */}
+                        <div className="mb-8 lg:mb-12">
                             <Link
-                                href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
-                                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-4 lg:px-6 py-2 lg:py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm lg:text-base"
+                                href="/portfolio"
+                                className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
                             >
-                                Contact About This Work
+                                <ArrowLeft size={20} />
+                                Back to Portfolio
                             </Link>
+                        </div>
+
+                        {/* Details Section After Changes*/}
+                        <div className="space-y-8 lg:space-y-12">
+                            <div>
+                                <h1 className="text-4xl lg:text-5xl font-light mb-4 lg:mb-6 text-neutral-800 leading-tight">
+                                    {artwork.title}
+                                </h1>
+                                <div className="space-y-2 lg:space-y-3 text-neutral-600 mb-6 lg:mb-8">
+                                    <p className="text-base lg:text-lg">{artwork.year}</p>
+                                    <p className="text-sm lg:text-base">{artwork.medium}</p>
+                                    <p className="text-sm lg:text-base">{artwork.dimensions}</p>
+                                </div>
+                            </div>
+
+                            {/* Description */}
+                            <div>
+                                <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
+                                    About this Work
+                                </h3>
+                                <p
+                                    className="text-neutral-600 leading-relaxed text-sm lg:text-base"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    {artwork.description}
+                                </p>
+                            </div>
+
+                            {/* Contact for Purchase */}
+                            <div>
+                                <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
+                                    Inquire About This Work
+                                </h3>
+                                <p
+                                    className="text-neutral-600 mb-6 lg:mb-8 leading-relaxed text-sm lg:text-base"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    For pricing information, additional images, or to arrange a
+                                    studio visit, please get in touch.
+                                </p>
+                                <Link
+                                    href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
+                                    className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-4 lg:px-6 py-2 lg:py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-sm lg:text-base"
+                                >
+                                    Contact About This Work
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

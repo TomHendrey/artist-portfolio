@@ -299,9 +299,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                 {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
                 <div className="w-full lg:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
-                    <div className="w-full max-w-[85%] transform lg:-translate-x-[50px]">
+                    <div className="w-full max-w-[85%] transform lg:-translate-x-[30px]">
                         {/* Back Navigation - Desktop only, moved to top on mobile */}
-                        <div className="hidden md:block mb-8 lg:mb-12">
+                        <div className="hidden md:block mb-8 lg:mb-16">
                             <Link
                                 href="/portfolio"
                                 className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -312,21 +312,24 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
 
                         {/* Details Section After Changes*/}
-                        <div className="space-y-8 lg:space-y-12">
+                        <div className="space-y-6 lg:space-y-8 md:mt-24 lg:mt-32">
                             <div>
-                                <h1 className="text-4xl lg:text-5xl font-light mb-4 lg:mb-6 text-neutral-800 leading-tight">
+                                <h1 className="text-3xl lg:text-4xl font-light mb-3 lg:mb-4 text-neutral-800 leading-tight">
                                     {artwork.title}
                                 </h1>
-                                <div className="space-y-2 lg:space-y-3 text-neutral-600 mb-6 lg:mb-8">
-                                    <p className="text-base lg:text-lg">{artwork.year}</p>
-                                    <p className="text-sm lg:text-base">{artwork.medium}</p>
-                                    <p className="text-sm lg:text-base">{artwork.dimensions}</p>
+                                <div
+                                    className="space-y-1 lg:space-y-1.5 text-neutral-600 mb-4 lg:mb-6"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    <p className="text-sm lg:text-base">{artwork.year}</p>
+                                    <p className="text-xs lg:text-sm">{artwork.medium}</p>
+                                    <p className="text-xs lg:text-sm">{artwork.dimensions}</p>
                                 </div>
                             </div>
 
                             {/* Description */}
                             <div>
-                                <h3 className="text-lg lg:text-xl font-light mb-4 lg:mb-6 text-neutral-800">
+                                <h3 className="text-lg lg:text-xl font-light mb-3 lg:mb-4 text-neutral-800">
                                     About this Work
                                 </h3>
                                 <p

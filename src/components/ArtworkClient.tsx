@@ -215,10 +215,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const getCurrentImageUrl = () => {
-        // Mobile detection - under 768px bypasses progressive loading
-        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+        // Mobile/Tablet detection - under 1024px bypasses progressive loading
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
-        // On mobile, use completely raw URL with no transformations
+        // On mobile/tablet, use completely raw URL with no transformations
         // Images are already optimized, so no processing needed
         if (isMobile) {
             const cloudName = "dutoeewfl"; // Your cloud name
@@ -287,8 +287,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             <div className="flex flex-col md:flex-row transition-all duration-300 ease-in-out">
                 {/* IMAGE SECTION - Shows first on mobile, on right on desktop - HIGH PRIORITY, doesn't shrink */}
                 <div className="w-full lg:flex-[2] lg:min-w-[400px] order-1 md:order-2 transition-all duration-300 ease-in-out">
-                    {/* Mobile: White top padding with Back to Portfolio (left) and View HD (right) */}
-                    <div className="md:hidden bg-white px-6 py-6 flex items-center justify-between">
+                    {/* Mobile + Tablet: White top padding with Back to Portfolio (left) and View HD (right) */}
+                    <div className="lg:hidden bg-white px-6 py-6 flex items-center justify-between">
                         <Link
                             href="/portfolio"
                             className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -298,7 +298,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </Link>
                         <button
                             onClick={() => {
-                                // Mobile: Open raw Cloudinary URL in new tab for perfect quality
+                                // Mobile/Tablet: Open raw Cloudinary URL in new tab for perfect quality
                                 const cloudName = "dutoeewfl";
                                 const cleanPath = allImages[selectedImageIndex].replace(/^\//, "");
                                 const rawUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${cleanPath}`;
@@ -319,8 +319,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             height={1500}
                             className={`w-full h-auto md:w-auto md:h-auto md:max-w-full md:max-h-full object-contain cursor-zoom-in transition-opacity duration-500 ${isImageTransitioning ? "opacity-0" : "opacity-100"}`}
                             onClick={() => {
-                                // Mobile: Open raw URL in new tab, Desktop: Open lightbox
-                                if (typeof window !== "undefined" && window.innerWidth < 768) {
+                                // Mobile/Tablet: Open raw URL in new tab, Desktop: Open lightbox
+                                if (typeof window !== "undefined" && window.innerWidth < 1024) {
                                     const cloudName = "dutoeewfl";
                                     const cleanPath = allImages[selectedImageIndex].replace(
                                         /^\//,
@@ -340,8 +340,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
                 <div className="w-full lg:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
                     <div className="w-full max-w-[85%] transform lg:-translate-x-[30px]">
-                        {/* Back Navigation - Desktop only, moved to top on mobile */}
-                        <div className="hidden md:block mb-8 lg:mb-16">
+                        {/* Back Navigation - Desktop only, moved to top on mobile/tablet */}
+                        <div className="hidden lg:block mb-8 lg:mb-16">
                             <Link
                                 href="/portfolio"
                                 className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -390,10 +390,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     Inquire
                                 </Link>
 
-                                {/* View High Resolution - Desktop only (mobile has it in top padding) - outline/secondary */}
+                                {/* View High Resolution - Desktop only (mobile/tablet has it in top padding) - outline/secondary */}
                                 <button
                                     onClick={() => openLightbox(selectedImageIndex)}
-                                    className="hidden md:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
+                                    className="hidden lg:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
                                 >
                                     View HD
                                 </button>
@@ -464,8 +464,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         <X size={32} />
                     </button>
 
-                    {/* Zoom controls - Desktop only, hidden on mobile */}
-                    <div className="hidden md:flex fixed top-4 left-4 flex-col gap-2 z-20">
+                    {/* Zoom controls - Desktop only (1024px+), hidden on mobile/tablet */}
+                    <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
                         <button
                             onClick={zoomIn}
                             className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"

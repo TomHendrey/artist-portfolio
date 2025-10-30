@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { artworks } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
+import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
     // Get first 3 artworks for featured section
@@ -10,48 +11,8 @@ export default function Home() {
 
     return (
         <div className="min-h-screen">
-            {/* Hero Section */}
-            <section
-                className="relative h-screen flex items-center justify-center overflow-hidden"
-                style={{ backgroundColor: "#f4f4f4" }}
-            >
-                <div className="absolute inset-0 z-0 hidden md:block">
-                    <div className="absolute right-8 md:right-16 lg:right-24 top-[53%] -translate-y-1/2 w-[600px] md:w-[750px] lg:w-[850px] h-[95vh]">
-                        <Image
-                            src={getCloudinaryUrl(
-                                "v1756228968/surface-1-composite-cropped-8.jpg",
-                                "large",
-                            )}
-                            alt="Featured artwork"
-                            fill
-                            className="object-contain py-4"
-                            priority
-                            quality={90}
-                        />
-                    </div>
-                </div>
-
-                <div className="relative z-10 text-center md:text-left text-neutral-700 px-4 max-w-7xl mx-auto w-full">
-                    <div className="md:max-w-lg">
-                        <h1 className="font-helvetica text-2xl md:text-5xl font-light mb-6 tracking-wide whitespace-nowrap">
-                            Hendrey - Kendall White
-                        </h1>
-                        <p
-                            className="text-xl md:text-2xl font-light mb-8"
-                            style={{ fontFamily: "Courier New, monospace" }}
-                        >
-                            Contemporary Painting
-                        </p>
-                        <Link
-                            href="/portfolio"
-                            className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
-                        >
-                            View Works
-                            <ArrowRight size={18} />
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            {/* Dynamic Hero Section with rotating images */}
+            <HeroSection />
 
             {/* Featured Works Preview */}
             <section className="py-60 px-4 max-w-7xl mx-auto">

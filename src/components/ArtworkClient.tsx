@@ -312,7 +312,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
 
                         {/* Details Section After Changes*/}
-                        <div className="space-y-6 lg:space-y-8 md:mt-24 lg:mt-32">
+                        <div className="space-y-6 lg:space-y-8 md:mt-12 lg:mt-32">
                             <div>
                                 <h1 className="text-3xl lg:text-4xl font-light mb-3 lg:mb-4 text-neutral-800 leading-tight">
                                     {artwork.title}
@@ -358,6 +358,47 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     View HD
                                 </button>
                             </div>
+
+                            {/* Gallery Section */}
+                            {artwork.images.details && artwork.images.details.length > 0 && (
+                                <div className="mt-8 lg:mt-12">
+                                    {/* Desktop/Tablet: Thumbnail grid - 6 columns, small and consistent */}
+                                    <div className="hidden md:grid md:grid-cols-6 gap-1.5">
+                                        {artwork.images.details.map((detail, index) => (
+                                            <div
+                                                key={detail}
+                                                className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                                                onClick={() => openDetailLightbox(index)}
+                                            >
+                                                <Image
+                                                    src={getCloudinaryUrl(detail, "medium")}
+                                                    alt={`${artwork.title} - Detail ${index + 1}`}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Mobile: Full-width images stacked vertically */}
+                                    <div className="md:hidden mt-12 space-y-8">
+                                        {artwork.images.details.map((detail, index) => (
+                                            <div
+                                                key={detail}
+                                                className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-4"
+                                            >
+                                                <Image
+                                                    src={getCloudinaryUrl(detail, "large")}
+                                                    alt={`${artwork.title} - Detail ${index + 1}`}
+                                                    width={1200}
+                                                    height={1500}
+                                                    className="w-full h-auto"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -376,7 +417,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         <X size={32} />
                     </button>
 
-                    <div className="fixed top-4 left-4 flex flex-col gap-2 z-20">
+                    {/* Zoom controls - Desktop only, hidden on mobile */}
+                    <div className="hidden md:flex fixed top-4 left-4 flex-col gap-2 z-20">
                         <button
                             onClick={zoomIn}
                             className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
@@ -430,33 +472,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             priority
                             quality={95}
                         />
-                    </div>
-                </div>
-            )}
-
-            {/* Detail Images Section */}
-            {artwork.images.details && artwork.images.details.length > 0 && (
-                <div className="w-full bg-white py-20 lg:py-36 px-4 lg:px-8 border-t border-neutral-200">
-                    <div className="max-w-7xl mx-auto">
-                        <h3 className="text-2xl lg:text-3xl font-light mb-8 lg:mb-12 text-neutral-800">
-                            Gallery
-                        </h3>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 lg:gap-4">
-                            {artwork.images.details.map((detail, index) => (
-                                <div
-                                    key={detail}
-                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-zoom-in hover:shadow-lg transition-shadow duration-300"
-                                    onClick={() => openDetailLightbox(index)}
-                                >
-                                    <Image
-                                        src={getCloudinaryUrl(detail, "medium")}
-                                        alt={`${artwork.title} - Detail ${index + 1}`}
-                                        fill
-                                        className="object-cover hover:scale-105 transition-transform duration-500"
-                                    />
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 </div>
             )}

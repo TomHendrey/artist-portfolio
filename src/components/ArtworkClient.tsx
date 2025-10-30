@@ -218,10 +218,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         // Mobile detection - under 768px bypasses progressive loading
         const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
-        // On mobile, always use "ultra" quality (no compression) for sharp HD images
-        // This matches user expectation when clicking "View HD" button
+        // On mobile, use completely raw URL with no transformations
+        // Images are already optimized, so no processing needed
         if (isMobile) {
-            return getCloudinaryUrl(allImages[selectedImageIndex], "ultra");
+            const cloudName = "dutoeewfl"; // Your cloud name
+            const cleanPath = allImages[selectedImageIndex].replace(/^\//, "");
+            return `https://res.cloudinary.com/${cloudName}/image/upload/${cleanPath}`;
         }
 
         // DESKTOP ONLY: Progressive loading system below

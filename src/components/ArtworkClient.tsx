@@ -297,7 +297,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             Back to Portfolio
                         </Link>
                         <button
-                            onClick={() => openLightbox(selectedImageIndex)}
+                            onClick={() => {
+                                // Mobile: Open raw Cloudinary URL in new tab for perfect quality
+                                const cloudName = "dutoeewfl";
+                                const cleanPath = allImages[selectedImageIndex].replace(/^\//, "");
+                                const rawUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${cleanPath}`;
+                                window.open(rawUrl, "_blank");
+                            }}
                             className="border border-neutral-300 rounded-sm text-neutral-800 px-3 py-2 hover:bg-neutral-800 hover:text-white transition-colors duration-300 text-xs font-light"
                         >
                             View HD
@@ -312,7 +318,20 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             width={1200}
                             height={1500}
                             className={`w-full h-auto md:w-auto md:h-auto md:max-w-full md:max-h-full object-contain cursor-zoom-in transition-opacity duration-500 ${isImageTransitioning ? "opacity-0" : "opacity-100"}`}
-                            onClick={() => openLightbox(selectedImageIndex)}
+                            onClick={() => {
+                                // Mobile: Open raw URL in new tab, Desktop: Open lightbox
+                                if (typeof window !== "undefined" && window.innerWidth < 768) {
+                                    const cloudName = "dutoeewfl";
+                                    const cleanPath = allImages[selectedImageIndex].replace(
+                                        /^\//,
+                                        "",
+                                    );
+                                    const rawUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${cleanPath}`;
+                                    window.open(rawUrl, "_blank");
+                                } else {
+                                    openLightbox(selectedImageIndex);
+                                }
+                            }}
                             priority
                         />
                     </div>

@@ -215,6 +215,16 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const getCurrentImageUrl = () => {
+        // Mobile detection - under 768px bypasses progressive loading
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+        // On mobile, always use "ultra" quality (no compression) for sharp HD images
+        // This matches user expectation when clicking "View HD" button
+        if (isMobile) {
+            return getCloudinaryUrl(allImages[selectedImageIndex], "ultra");
+        }
+
+        // DESKTOP ONLY: Progressive loading system below
         const hasHighRes = artwork.images.highRes;
 
         if (!hasHighRes) {

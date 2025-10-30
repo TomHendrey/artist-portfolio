@@ -25,6 +25,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [ultraResLoaded, setUltraResLoaded] = useState(false);
     const [isLoadingHighRes, setIsLoadingHighRes] = useState(false);
     const [loadingProgress, setLoadingProgress] = useState<string>("");
+    const [isImageTransitioning, setIsImageTransitioning] = useState(false);
 
     useEffect(() => {
         setImageLoading(true);
@@ -186,6 +187,14 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         }
     };
 
+    const handleImageChange = (index: number) => {
+        setIsImageTransitioning(true);
+        setTimeout(() => {
+            setSelectedImageIndex(index);
+            setIsImageTransitioning(false);
+        }, 250);
+    };
+
     const preloadImage = (url: string, quality: string): Promise<void> => {
         return new Promise<void>((resolve, reject) => {
             const img = document.createElement("img") as HTMLImageElement;
@@ -254,9 +263,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const allImages = [
+        artwork.images.main,
         artwork.images.cropped || artwork.images.main,
         ...(artwork.images.croppedAlts || []),
-        artwork.images.main,
         ...(artwork.images.details || []),
     ];
 
@@ -284,13 +293,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
 
                     {/* Image Container - MOBILE: full size no constraints, TABLET/DESKTOP: height + padding */}
-                    <div className="w-full h-auto md:h-[70vh] lg:h-screen bg-white flex items-center justify-center md:py-8 md:px-4 lg:py-12 lg:px-6">
+                    <div className="w-full h-auto md:h-[70vh] lg:h-screen bg-white flex items-center justify-center md:py-8 md:px-4 lg:py-6 lg:px-6">
                         <Image
-                            src={getCloudinaryUrl(artwork.images.main, "large")}
+                            src={getCloudinaryUrl(allImages[selectedImageIndex], "large")}
                             alt={`${artwork.title} - Featured View`}
                             width={1200}
                             height={1500}
-                            className="w-full h-auto md:w-auto md:h-auto md:max-w-full md:max-h-full object-contain cursor-zoom-in"
+                            className={`w-full h-auto md:w-auto md:h-auto md:max-w-full md:max-h-full object-contain cursor-zoom-in transition-opacity duration-500 ${isImageTransitioning ? "opacity-0" : "opacity-100"}`}
                             onClick={() => openLightbox(selectedImageIndex)}
                             priority
                         />
@@ -364,20 +373,27 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 <div className="mt-8 lg:mt-12">
                                     {/* Desktop/Tablet: Thumbnail grid - 6 columns, small and consistent */}
                                     <div className="hidden md:grid md:grid-cols-6 gap-1.5">
-                                        {artwork.images.details.map((detail, index) => (
-                                            <div
-                                                key={detail}
-                                                className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                                onClick={() => openDetailLightbox(index)}
-                                            >
-                                                <Image
-                                                    src={getCloudinaryUrl(detail, "medium")}
-                                                    alt={`${artwork.title} - Detail ${index + 1}`}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                        ))}
+                                        {artwork.images.details.map((detail, index) => {
+                                            // Calculate correct index: main, cropped, croppedAlts, then details
+                                            const imageIndex =
+                                                2 +
+                                                (artwork.images.croppedAlts?.length || 0) +
+                                                index;
+                                            return (
+                                                <div
+                                                    key={detail}
+                                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                                                    onClick={() => handleImageChange(imageIndex)}
+                                                >
+                                                    <Image
+                                                        src={getCloudinaryUrl(detail, "medium")}
+                                                        alt={`${artwork.title} - Detail ${index + 1}`}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                            );
+                                        })}
                                     </div>
 
                                     {/* Mobile: Full-width images stacked vertically */}

@@ -7,7 +7,7 @@ import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 // Hero images - easy to update with your close-up detail shots
 const HERO_IMAGES = [
-    "v1761837922/hero-1.png",
+    "v1762293885/hero-1.jpg",
     "v1761837919/hero-2.png",
     "v1761837839/hero-3.png",
     "v1761837836/hero-4.png",
@@ -85,21 +85,21 @@ export default function HeroSection() {
                     })}
                 </div>
 
-                {/* Text content overlay - NO dark overlay */}
-                <div className="relative z-10 text-center md:text-left text-white px-6 md:px-8 lg:px-4 max-w-7xl mx-auto w-full">
-                    <div className="md:max-w-lg">
-                        <h1 className="font-helvetica text-3xl md:text-5xl lg:text-6xl font-light mb-6 tracking-wide drop-shadow-lg whitespace-nowrap">
+                {/* Text content overlay */}
+                <div className="relative z-10 text-center lg:text-left text-white lg:text-neutral-900 px-6 md:px-8 lg:pl-8 xl:pl-18 2xl:pl-36 lg:pr-[60%] w-full">
+                    <div className="">
+                        <h1 className="font-helvetica text-3xl md:text-5xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none whitespace-nowrap xl:whitespace-normal">
                             Hendrey - Kendall White
                         </h1>
                         <p
-                            className="text-xl md:text-2xl lg:text-3xl font-light mb-8 drop-shadow-lg"
+                            className="text-xl md:text-2xl lg:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             Contemporary Painting
                         </p>
                         <Link
                             href="/portfolio"
-                            className="inline-flex items-center gap-2 bg-white text-neutral-800 px-8 py-3 hover:bg-neutral-100 transition-colors duration-300 text-sm md:text-base"
+                            className="inline-flex items-center gap-2 bg-white text-neutral-800 lg:bg-neutral-900 lg:text-white px-8 py-3 hover:bg-neutral-100 lg:hover:bg-neutral-800 transition-colors duration-300 text-sm md:text-base"
                         >
                             View Works
                             <ArrowRight size={18} />

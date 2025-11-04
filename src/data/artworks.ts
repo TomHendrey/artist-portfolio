@@ -37,7 +37,13 @@ export const artworks: Artwork[] = [
             main: "v1761586550/surface-1-main-8.jpg",
             cropped: "v1761586553/surface-1-cropped-9.jpg",
             croppedAlts: [],
-            details: [],
+            details: [
+                "v1761586550/surface-1-main-8.jpg",
+                "v1762215322/surface-1-g-left-1.jpg",
+                "v1762214841/surface-1-g-front-1.jpg",
+
+                "v1762215316/surface-1-g-left-2.jpg",
+            ],
             highRes: {
                 base: "v1761586553/surface-1-cropped-9.jpg", // 9MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-cropped-20.jpg", // 20MB Blob
@@ -62,11 +68,15 @@ export const artworks: Artwork[] = [
             croppedAlts: [],
             details: [
                 "v1761586573/surface-2-main-6.jpg",
+                "v1762215305/surface-2-g-left-1.jpg",
+                "v1762215302/surface-2-g-left-2.jpg",
+                "v1762214850/surface-2-g-front-1.jpg",
+                "v1762215810/surface-2-g-front-2.jpg",
                 "v1754587348/surface-3-detail-2.jpg",
                 "v1754587360/surface-3-detail-3.jpg",
-                "v1754587448/surface-3-detail-4.jpg",
-                "v1754587451/surface-3-detail-5.jpg",
-                "v1754587357/surface-3-detail-6.jpg",
+                // "v1754587448/surface-3-detail-4.jpg",
+                // "v1754587451/surface-3-detail-5.jpg",
+                // "v1754587357/surface-3-detail-6.jpg",
             ],
             highRes: {
                 base: "v1761586574/surface-2-cropped-8.jpg", // 8MB Cloudinary
@@ -90,7 +100,13 @@ export const artworks: Artwork[] = [
             main: "v1761586589/surface-3-main-7.jpg",
             cropped: "v1761586593/surface-3-cropped-8.jpg",
             croppedAlts: [],
-            details: [],
+            details: [
+                "v1761586589/surface-3-main-7.jpg",
+
+                "v1762214859/surface-3-g-front-1.jpg",
+                "v1762215285/surface-3-g-left-1.jpg",
+                "v1762215281/surface-3-g-left-2.jpg",
+            ],
             highRes: {
                 base: "v1761586593/surface-3-cropped-8.jpg", // 8MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-3-cropped-18.jpg", // 18MB Blob
@@ -110,7 +126,7 @@ export const artworks: Artwork[] = [
         description:
             "Mixed media interpretation of Martian terrain, incorporating both digital and analog techniques.",
         images: {
-            main: "v1761674575/surface-4-main-7.jpg",
+            main: "v1762205836/surface-4-main-7.jpg",
             cropped: "v1761674574/surface-4-cropped-9.jpg",
             croppedAlts: [],
             details: [],

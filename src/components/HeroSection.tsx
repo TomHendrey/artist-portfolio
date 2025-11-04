@@ -6,12 +6,17 @@ import { ArrowRight } from "lucide-react";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 // Hero images - easy to update with your close-up detail shots
-const HERO_IMAGES = ["v1761837922/hero-1.png", "v1761837919/hero-2.png", "v1761837839/hero-3.png"];
+const HERO_IMAGES = [
+    "v1761837922/hero-1.png",
+    "v1761837919/hero-2.png",
+    "v1761837839/hero-3.png",
+    "v1761837836/hero-4.png",
+    "v1761838020/hero-5.png",
+];
 
 export default function HeroSection() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [nextImageIndex, setNextImageIndex] = useState(1);
-    const [animationKey, setAnimationKey] = useState(0);
 
     useEffect(() => {
         // Preload all hero images for smooth transitions
@@ -26,7 +31,6 @@ export default function HeroSection() {
         const interval = setInterval(() => {
             setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
             setNextImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-            setAnimationKey((prev) => prev + 1); // Force new animation
         }, 20000); // 20 seconds per image
 
         return () => clearInterval(interval);
@@ -40,12 +44,12 @@ export default function HeroSection() {
                         transform: scale(1) translateZ(0);
                     }
                     to {
-                        transform: scale(1.12) translateZ(0);
+                        transform: scale(1.408) translateZ(0);
                     }
                 }
                 
                 .kenburns-active {
-                    animation: kenburns 30s linear forwards;
+                    animation: kenburns 102s linear infinite;
                     will-change: transform;
                 }
             `}</style>
@@ -67,11 +71,7 @@ export default function HeroSection() {
                                 }`}
                             >
                                 <div
-                                    key={
-                                        isActive
-                                            ? `inner-${index}-${animationKey}`
-                                            : `static-${index}`
-                                    }
+                                    key={`inner-${index}`}
                                     className="w-full h-full kenburns-active"
                                     style={{
                                         backgroundImage: `url(${getCloudinaryUrl(imagePath, "large")})`,
@@ -86,9 +86,9 @@ export default function HeroSection() {
                 </div>
 
                 {/* Text content overlay - NO dark overlay */}
-                <div className="relative z-10 text-center md:text-left text-white px-4 max-w-7xl mx-auto w-full">
+                <div className="relative z-10 text-center md:text-left text-white px-6 md:px-8 lg:px-4 max-w-7xl mx-auto w-full">
                     <div className="md:max-w-lg">
-                        <h1 className="font-helvetica text-3xl md:text-5xl lg:text-6xl font-light mb-6 tracking-wide drop-shadow-lg">
+                        <h1 className="font-helvetica text-3xl md:text-5xl lg:text-6xl font-light mb-6 tracking-wide drop-shadow-lg whitespace-nowrap">
                             Hendrey - Kendall White
                         </h1>
                         <p

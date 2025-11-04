@@ -132,8 +132,8 @@ export const artworks: Artwork[] = [
             details: [],
             highRes: {
                 base: "v1761586624/surface-4-cropped-9.jpg", // 9MB Cloudinary
-                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-cropped-20.jpg", // 20MB Blob
-                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-cropped-24.jpg", // 24MB Blob
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-cropped-18.jpg", // 20MB Blob
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-cropped-21.jpg", // 24MB Blob
             },
         },
         category: "surfaces",

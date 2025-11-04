@@ -86,13 +86,13 @@ export default function HeroSection() {
                 </div>
 
                 {/* Text content overlay */}
-                <div className="relative z-10 text-center lg:text-left text-white lg:text-neutral-900 px-6 md:px-8 lg:pl-8 xl:pl-18 2xl:pl-36 lg:pr-[60%] w-full">
+                <div className="relative z-10 text-center lg:text-left text-white lg:text-neutral-900 px-5 md:px-8 lg:pl-6 xl:pl-12 2xl:pl-35 lg:pr-[60%] w-full">
                     <div className="">
-                        <h1 className="font-helvetica text-3xl md:text-5xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none whitespace-nowrap xl:whitespace-normal">
+                        <h1 className="font-helvetica text-3xl md:text-5xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none lg:max-w-[240px] 2xl:max-w-none">
                             Hendrey - Kendall White
                         </h1>
                         <p
-                            className="text-xl md:text-2xl lg:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
+                            className="text-xl md:text-2xl lg:text-[17px] xl:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             Contemporary Painting

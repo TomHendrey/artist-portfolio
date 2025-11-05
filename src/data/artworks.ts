@@ -30,7 +30,7 @@ export const artworks: Artwork[] = [
         title: "Surface I",
         year: "2025",
         medium: "Oil pastel on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "120 x 160 cm",
         description:
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
         images: {
@@ -39,7 +39,7 @@ export const artworks: Artwork[] = [
             croppedAlts: [],
             details: [
                 "v1761586550/surface-1-main-8.jpg",
-                "v1762215322/surface-1-g-left-1.jpg",
+                // "v1762215322/surface-1-g-left-1.jpg",
                 "v1762214841/surface-1-g-front-1.jpg",
 
                 "v1762215316/surface-1-g-left-2.jpg",
@@ -59,7 +59,7 @@ export const artworks: Artwork[] = [
         title: "Surface II",
         year: "2025",
         medium: "Oil pastel on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "120 x 160 cm",
         description:
             "Continuation of the Mars surface study series, focusing on the interplay between scientific observation and artistic interpretation.",
         images: {
@@ -93,7 +93,7 @@ export const artworks: Artwork[] = [
         title: "Surface III",
         year: "2025",
         medium: "Oil pastel on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "120 x 160 cm",
         description:
             "The third piece in the Mars surface exploration, delving deeper into the abstraction of planetary data.",
         images: {
@@ -102,7 +102,6 @@ export const artworks: Artwork[] = [
             croppedAlts: [],
             details: [
                 "v1761586589/surface-3-main-7.jpg",
-
                 "v1762214859/surface-3-g-front-1.jpg",
                 "v1762215285/surface-3-g-left-1.jpg",
                 "v1762215281/surface-3-g-left-2.jpg",
@@ -120,9 +119,9 @@ export const artworks: Artwork[] = [
         id: 4,
         slug: "surface4",
         title: "Surface IV",
-        year: "2025",
+        year: "2019",
         medium: "Mixed media on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "48 x 70 cm",
         description:
             "Mixed media interpretation of Martian terrain, incorporating both digital and analog techniques.",
         images: {
@@ -143,9 +142,9 @@ export const artworks: Artwork[] = [
         id: 5,
         slug: "surface5",
         title: "Surface V",
-        year: "2025",
+        year: "2020",
         medium: "Mixed media on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "65 x 70 cm",
         description:
             "Advanced exploration of surface textures using contemporary mixed media approaches.",
         images: {
@@ -166,9 +165,9 @@ export const artworks: Artwork[] = [
         id: 6,
         slug: "surface6",
         title: "Surface VI",
-        year: "2025",
+        year: "2022",
         medium: "Mixed media on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "70 x 95cm",
         description:
             "Final piece in the current Mars surface series, synthesizing all previous explorations.",
         images: {
@@ -189,9 +188,9 @@ export const artworks: Artwork[] = [
         id: 7,
         slug: "surface7",
         title: "Surface VII",
-        year: "2025",
+        year: "2022",
         medium: "Acrylic and oil pastel on panel",
-        dimensions: "120 x 150 cm",
+        dimensions: "70 x 95cm",
         description:
             "Marks the beginning of a new series focused on Venusian landscapes, reinterpreting dense atmospheric data into vibrant surface expressions.",
         images: {
@@ -212,9 +211,9 @@ export const artworks: Artwork[] = [
         id: 8,
         slug: "surface8",
         title: "Surface VIII",
-        year: "2025",
+        year: "2024",
         medium: "Acrylic and oil pastel on panel",
-        dimensions: "120 x 150 cm",
+        dimensions: "95 x 85 cm",
         description:
             "Captures the intense heat and pressure of Venus through layered textures and fiery hues, continuing the series' planetary theme.",
         images: {
@@ -235,9 +234,9 @@ export const artworks: Artwork[] = [
         id: 9,
         slug: "surface9",
         title: "Surface IX",
-        year: "2025",
+        year: "2023",
         medium: "Acrylic and oil pastel on panel",
-        dimensions: "120 x 150 cm",
+        dimensions: "65 x 85cm",
         description:
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition's forms.",
         images: {
@@ -258,9 +257,9 @@ export const artworks: Artwork[] = [
         id: 10,
         slug: "surface10",
         title: "Surface X",
-        year: "2025",
+        year: "2023",
         medium: "Mixed media on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "65 x 85cm",
         description:
             "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
         images: {
@@ -281,9 +280,9 @@ export const artworks: Artwork[] = [
         id: 11,
         slug: "surface11",
         title: "Surface XI",
-        year: "2025",
+        year: "2023",
         medium: "Oil pastel and digital transfer on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "65 x 85cm",
         description:
             "Combines analog texture with digital prints of planetary data to create a hybrid surface aesthetic.",
         images: {
@@ -304,9 +303,9 @@ export const artworks: Artwork[] = [
         id: 12,
         slug: "surface12",
         title: "Surface XII",
-        year: "2025",
+        year: "2023",
         medium: "Oil pastel and digital transfer on wood",
-        dimensions: "120 x 150 cm",
+        dimensions: "65 x 85cm",
         description:
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
         images: {

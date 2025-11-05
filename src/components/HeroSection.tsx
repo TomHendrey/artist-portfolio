@@ -9,9 +9,9 @@ import { getCloudinaryUrl } from "@/lib/cloudinary";
 const HERO_IMAGES = [
     "v1762298939/hero-1.jpg",
     "v1762305049/hero-2.jpg",
-    "v1762305068/hero-7.jpg",
+    "v1762305062/hero-8.jpg",
     "v1762305066/hero-11.jpg",
-    "v1762305059/hero-13.jpg",
+    "v1762305071/hero-16.jpg",
 ];
 
 export default function HeroSection() {
@@ -92,7 +92,7 @@ export default function HeroSection() {
                             Hendrey - Kendall White
                         </h1>
                         <p
-                            className="text-xl md:text-2xl lg:text-lg xl:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
+                            className="text-xl md:text-2xl lg:text-[16px] xl:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             Contemporary Painting

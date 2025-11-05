@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
 import { Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
+import { artworks } from "@/data/artworks";
+import { useRouter } from "next/navigation";
 
 interface ArtworkClientProps {
     artwork: Artwork;
@@ -281,8 +283,37 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         ...(artwork.images.details || []),
     ];
 
+    const router = useRouter();
+
+    // Find current artwork index and get prev/next
+    const currentIndex = artworks.findIndex((art) => art.id === artwork.id);
+    const prevArtwork =
+        currentIndex > 0 ? artworks[currentIndex - 1] : artworks[artworks.length - 1];
+    const nextArtwork =
+        currentIndex < artworks.length - 1 ? artworks[currentIndex + 1] : artworks[0];
+
+    const navigateToArtwork = (slug: string) => {
+        router.push(`/portfolio/${slug}`);
+    };
+
     return (
         <div className="bg-white">
+            {/* Artwork Navigation Arrows - Fixed Position */}
+            <button
+                onClick={() => navigateToArtwork(prevArtwork.slug)}
+                className="fixed left-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
+                aria-label="Previous artwork"
+            >
+                <ChevronLeft size={28} strokeWidth={1} />
+            </button>
+
+            <button
+                onClick={() => navigateToArtwork(nextArtwork.slug)}
+                className="fixed right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
+                aria-label="Next artwork"
+            >
+                <ChevronRight size={28} strokeWidth={1} />
+            </button>
             {/* Main Layout: Image first on mobile (order-1), sidebar second (order-2); side-by-side on desktop */}
             <div className="flex flex-col md:flex-row transition-all duration-300 ease-in-out">
                 {/* IMAGE SECTION - Shows first on mobile, on right on desktop - HIGH PRIORITY, doesn't shrink */}
@@ -291,9 +322,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     <div className="md:hidden bg-white px-6 py-6 flex items-center justify-between">
                         <Link
                             href="/portfolio"
-                            className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
+                            className="flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors text-sm"
+                            style={{ fontFamily: "Courier New, monospace" }}
                         >
-                            <ArrowLeft size={20} />
+                            <ArrowLeft size={16} strokeWidth={1} />
                             Back to Portfolio
                         </Link>
                         <button
@@ -340,13 +372,14 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
                 <div className="w-full md:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
                     <div className="w-full max-w-[85%] transform lg:-translate-x-[30px]">
-                        {/* Back Navigation - Desktop only, moved to top on mobile/tablet */}
+                        {/* Back Navigation - Desktop only */}
                         <div className="hidden md:block mb-8 lg:mb-16">
                             <Link
                                 href="/portfolio"
-                                className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
+                                className="flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors text-sm"
+                                style={{ fontFamily: "Courier New, monospace" }}
                             >
-                                <ArrowLeft size={20} />
+                                <ArrowLeft size={16} strokeWidth={1} />
                                 Back to Portfolio
                             </Link>
                         </div>
@@ -361,7 +394,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     className="space-y-1 lg:space-y-1.5 text-neutral-600 mb-4 lg:mb-6"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    <p className="text-sm lg:text-base">{artwork.year}</p>
+                                    <p className="text-sm lg:text-sm">{artwork.year}</p>
                                     <p className="text-xs lg:text-sm">{artwork.medium}</p>
                                     <p className="text-xs lg:text-sm">{artwork.dimensions}</p>
                                 </div>
@@ -373,7 +406,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     About this Work
                                 </h3>
                                 <p
-                                    className="text-neutral-600 leading-relaxed text-sm lg:text-base"
+                                    className="text-neutral-600 leading-relaxed text-sm lg:text-sm"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     {artwork.description}
@@ -420,7 +453,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                         ))}
                                     </div>
                                     {/* Desktop: thumbnail grid */}
-                                    <div className="hidden lg:grid lg:grid-cols-6 gap-1.5">
+                                    <div className="hidden lg:grid lg:grid-cols-5 gap-3">
                                         {artwork.images.details.map((detail, index) => {
                                             const imageIndex =
                                                 2 +
@@ -452,7 +485,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {/* ────────────────────── TABLET-ONLY GALLERY (768–1023px) ────────────────────── */}
             {artwork.images.details && artwork.images.details.length > 0 && (
                 <div className="hidden md:block lg:hidden bg-white px-6 py-8">
-                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-w-5xl mx-auto">
+                    <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 max-w-4xl mx-auto">
                         {artwork.images.details.map((detail, index) => {
                             const imageIndex =
                                 2 + (artwork.images.croppedAlts?.length || 0) + index;
@@ -460,7 +493,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 <button
                                     key={detail}
                                     onClick={() => handleImageChange(imageIndex)}
-                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden rounded-sm hover:opacity-80 transition-opacity"
+                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden  hover:opacity-80 transition-opacity"
                                 >
                                     <Image
                                         src={getCloudinaryUrl(detail, "medium")}

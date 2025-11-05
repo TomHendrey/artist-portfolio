@@ -141,58 +141,63 @@ export default function Portfolio() {
                 </div>
             </div>
 
-            {/* Lightbox */}
+            {/* Lightbox - UPDATED VERSION */}
             {selectedArtwork && selectedArt && (
-                <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+                <div className="fixed inset-0 z-50 bg-white flex items-center justify-center p-4">
                     <button
                         onClick={closeLightbox}
-                        className="absolute top-4 right-4 text-white hover:text-neutral-300 z-10"
+                        className="absolute top-4 right-4 text-neutral-800 hover:text-neutral-600 z-10"
                     >
                         <X size={32} />
                     </button>
 
                     <button
                         onClick={() => navigateLightbox("prev")}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-neutral-300 z-10"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-10"
                     >
-                        <ChevronLeft size={48} />
+                        <ChevronLeft size={32} />
                     </button>
 
                     <button
                         onClick={() => navigateLightbox("next")}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-neutral-300 z-10"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-10"
                     >
-                        <ChevronRight size={48} />
+                        <ChevronRight size={32} />
                     </button>
 
-                    <div className="max-w-6xl w-full flex flex-col lg:flex-row items-center gap-8">
-                        <div className="flex-1 relative max-h-[80vh]">
+                    <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center gap-8">
+                        {/* Image container - larger display */}
+                        <div className="flex-1 relative flex items-center justify-center max-h-[90vh]">
                             <Image
                                 src={getCloudinaryUrl(selectedArt.images.main, "large")}
                                 alt={selectedArt.title}
-                                width={800}
-                                height={1000}
-                                className="max-w-full max-h-full object-contain"
-                                priority
+                                width={1200}
+                                height={1500}
+                                className="w-auto h-auto max-w-full max-h-[90vh] object-contain"
                             />
                         </div>
 
-                        <div className="lg:w-80 text-white space-y-4">
-                            <h2 className="text-2xl font-light">{selectedArt.title}</h2>
-                            <div className="space-y-2 text-neutral-300">
-                                <p>{selectedArt.year}</p>
-                                <p>{selectedArt.medium}</p>
-                                <p>{selectedArt.dimensions}</p>
-                                {selectedArt.available && (
-                                    <p className="text-green-400">Available for Purchase</p>
-                                )}
-                            </div>
-                            <p className="text-neutral-300 leading-relaxed">
-                                {selectedArt.description}
-                            </p>
+                        {/* Details sidebar */}
+                        <div
+                            className="lg:w-80 space-y-4"
+                            style={{ fontFamily: "Courier New, monospace" }}
+                        >
+                            <h2 className="text-2xl font-light text-neutral-800">
+                                {selectedArt.title}
+                            </h2>
+                            <p className="text-neutral-600">{selectedArt.year}</p>
+                            <p className="text-neutral-600">{selectedArt.medium}</p>
+                            <p className="text-neutral-600">{selectedArt.dimensions}</p>
+                            {selectedArt.description && (
+                                <p className="text-sm text-neutral-600 leading-relaxed">
+                                    {selectedArt.description}
+                                </p>
+                            )}
+
                             <Link
                                 href={`/portfolio/${selectedArt.slug}`}
-                                className="inline-block mt-4 text-white border border-white px-4 py-2 hover:bg-white hover:text-black transition-colors"
+                                className="inline-block mt-4 text-sm text-neutral-800 hover:text-neutral-600 border-b border-neutral-800"
+                                onClick={closeLightbox}
                             >
                                 View Full Details
                             </Link>

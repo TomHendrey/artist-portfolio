@@ -20,7 +20,7 @@ export default function Navigation() {
 
     const navItems = [
         { href: "/", label: "Home" },
-        { href: "/portfolio", label: "Portfolio" },
+        { href: "/portfolio", label: "Works" },
         { href: "/about", label: "About" },
         { href: "/contact", label: "Contact" },
     ];

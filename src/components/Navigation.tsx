@@ -32,7 +32,7 @@ export default function Navigation() {
                     {/* Logo */}
                     <Link
                         href="/"
-                        className="text-xl font-light text-neutral-800"
+                        className="md:text-[16px] lg:text-xl font-light text-neutral-800 "
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         Hendrey - Kendall White

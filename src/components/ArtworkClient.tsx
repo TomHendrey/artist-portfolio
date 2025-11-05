@@ -282,13 +282,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     ];
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: "#e9e9e9" }}>
+        <div className="bg-white">
             {/* Main Layout: Image first on mobile (order-1), sidebar second (order-2); side-by-side on desktop */}
             <div className="flex flex-col md:flex-row transition-all duration-300 ease-in-out">
                 {/* IMAGE SECTION - Shows first on mobile, on right on desktop - HIGH PRIORITY, doesn't shrink */}
-                <div className="w-full lg:flex-[2] lg:min-w-[400px] order-1 md:order-2 transition-all duration-300 ease-in-out">
+                <div className="w-full md:flex-[2] lg:min-w-[400px] order-1 md:order-2 transition-all duration-300 ease-in-out">
                     {/* Mobile + Tablet: White top padding with Back to Portfolio (left) and View HD (right) */}
-                    <div className="lg:hidden bg-white px-6 py-6 flex items-center justify-between">
+                    <div className="md:hidden bg-white px-6 py-6 flex items-center justify-between">
                         <Link
                             href="/portfolio"
                             className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -311,7 +311,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
 
                     {/* Image Container - MOBILE: full size no constraints, TABLET/DESKTOP: height + padding */}
-                    <div className="w-full h-auto md:h-[70vh] lg:h-screen bg-white flex items-center justify-center md:py-8 md:px-4 lg:py-6 lg:px-6">
+                    <div className="w-full h-auto md:h-[80vh] lg:h-screen bg-white flex items-center justify-center md:py-8 md:px-4 lg:py-6 lg:px-2">
                         <Image
                             src={getCloudinaryUrl(allImages[selectedImageIndex], "large")}
                             alt={`${artwork.title} - Featured View`}
@@ -338,10 +338,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 </div>
 
                 {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
-                <div className="w-full lg:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
+                <div className="w-full md:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
                     <div className="w-full max-w-[85%] transform lg:-translate-x-[30px]">
                         {/* Back Navigation - Desktop only, moved to top on mobile/tablet */}
-                        <div className="hidden lg:block mb-8 lg:mb-16">
+                        <div className="hidden md:block mb-8 lg:mb-16">
                             <Link
                                 href="/portfolio"
                                 className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors"
@@ -369,7 +369,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                             {/* Description */}
                             <div>
-                                <h3 className="text-lg lg:text-xl font-light mb-3 lg:mb-4 text-neutral-800">
+                                <h3 className="text-lg lg:text-xl font-light mb-3 lg:mb-3 text-neutral-800">
                                     About this Work
                                 </h3>
                                 <p
@@ -393,19 +393,35 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 {/* View High Resolution - Desktop only (mobile/tablet has it in top padding) - outline/secondary */}
                                 <button
                                     onClick={() => openLightbox(selectedImageIndex)}
-                                    className="hidden lg:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
+                                    className="hidden md:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
                                 >
                                     View HD
                                 </button>
                             </div>
 
-                            {/* Gallery Section */}
+                            {/* ───── GALLERY: Mobile (<768px) + Desktop (≥1024px) ───── */}
                             {artwork.images.details && artwork.images.details.length > 0 && (
-                                <div className="mt-8 lg:mt-12">
-                                    {/* Desktop/Tablet: Thumbnail grid - 6 columns, small and consistent */}
-                                    <div className="hidden md:grid md:grid-cols-6 gap-1.5">
+                                <div className="block md:hidden lg:block mt-8 lg:mt-12">
+                                    {/* Mobile: full-width stacked */}
+                                    <div className="md:hidden space-y-6">
+                                        {artwork.images.details.map((detail, index) => (
+                                            <div
+                                                key={detail}
+                                                className="relative w-screen left-1/2 -translate-x-1/2 px-4"
+                                            >
+                                                <Image
+                                                    src={getCloudinaryUrl(detail, "large")}
+                                                    alt={`${artwork.title} - Detail ${index + 1}`}
+                                                    width={1200}
+                                                    height={1500}
+                                                    className="w-full h-auto"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {/* Desktop: thumbnail grid */}
+                                    <div className="hidden lg:grid lg:grid-cols-6 gap-1.5">
                                         {artwork.images.details.map((detail, index) => {
-                                            // Calculate correct index: main, cropped, croppedAlts, then details
                                             const imageIndex =
                                                 2 +
                                                 (artwork.images.croppedAlts?.length || 0) +
@@ -413,7 +429,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                             return (
                                                 <div
                                                     key={detail}
-                                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
                                                     onClick={() => handleImageChange(imageIndex)}
                                                 >
                                                     <Image
@@ -426,30 +442,39 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                             );
                                         })}
                                     </div>
-
-                                    {/* Mobile: Full-width images stacked vertically */}
-                                    <div className="md:hidden mt-12 space-y-8">
-                                        {artwork.images.details.map((detail, index) => (
-                                            <div
-                                                key={detail}
-                                                className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-4"
-                                            >
-                                                <Image
-                                                    src={getCloudinaryUrl(detail, "large")}
-                                                    alt={`${artwork.title} - Detail ${index + 1}`}
-                                                    width={1200}
-                                                    height={1500}
-                                                    className="w-full h-auto"
-                                                />
-                                            </div>
-                                        ))}
-                                    </div>
                                 </div>
                             )}
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* ────────────────────── TABLET-ONLY GALLERY (768–1023px) ────────────────────── */}
+            {artwork.images.details && artwork.images.details.length > 0 && (
+                <div className="hidden md:block lg:hidden bg-white px-6 py-8">
+                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-w-5xl mx-auto">
+                        {artwork.images.details.map((detail, index) => {
+                            const imageIndex =
+                                2 + (artwork.images.croppedAlts?.length || 0) + index;
+                            return (
+                                <button
+                                    key={detail}
+                                    onClick={() => handleImageChange(imageIndex)}
+                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden rounded-sm hover:opacity-80 transition-opacity"
+                                >
+                                    <Image
+                                        src={getCloudinaryUrl(detail, "medium")}
+                                        alt={`${artwork.title} - Detail ${index + 1}`}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+            {/* ────────────────────────────────────────────────────────────────────────────── */}
 
             {/* Lightbox */}
             {lightboxOpen && (

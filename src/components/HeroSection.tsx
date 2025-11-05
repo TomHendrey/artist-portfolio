@@ -7,11 +7,11 @@ import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 // Hero images - easy to update with your close-up detail shots
 const HERO_IMAGES = [
-    "v1762293885/hero-1.jpg",
-    "v1761837919/hero-2.png",
-    "v1761837839/hero-3.png",
-    "v1761837836/hero-4.png",
-    "v1761838020/hero-5.png",
+    "v1762298939/hero-1.jpg",
+    "v1762305049/hero-2.jpg",
+    "v1762305068/hero-7.jpg",
+    "v1762305066/hero-11.jpg",
+    "v1762305059/hero-13.jpg",
 ];
 
 export default function HeroSection() {
@@ -86,13 +86,13 @@ export default function HeroSection() {
                 </div>
 
                 {/* Text content overlay */}
-                <div className="relative z-10 text-center lg:text-left text-white lg:text-neutral-900 px-5 md:px-8 lg:pl-6 xl:pl-12 2xl:pl-35 lg:pr-[60%] w-full">
+                <div className="relative z-10 text-center lg:text-left text-white lg:text-neutral-900 px-6 md:px-8 lg:pl-8 xl:pl-12 2xl:pl-35 lg:pr-[60%] w-full">
                     <div className="">
                         <h1 className="font-helvetica text-3xl md:text-5xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none lg:max-w-[240px] 2xl:max-w-none">
                             Hendrey - Kendall White
                         </h1>
                         <p
-                            className="text-xl md:text-2xl lg:text-[17px] xl:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
+                            className="text-xl md:text-2xl lg:text-lg xl:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             Contemporary Painting

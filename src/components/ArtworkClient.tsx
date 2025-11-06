@@ -301,7 +301,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {/* Artwork Navigation Arrows - Fixed Position */}
             <button
                 onClick={() => navigateToArtwork(prevArtwork.slug)}
-                className="fixed left-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
+                className="hidden lg:block fixed left-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
                 aria-label="Previous artwork"
             >
                 <ChevronLeft size={28} strokeWidth={1} />
@@ -309,7 +309,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
             <button
                 onClick={() => navigateToArtwork(nextArtwork.slug)}
-                className="fixed right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
+                className="hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
                 aria-label="Next artwork"
             >
                 <ChevronRight size={28} strokeWidth={1} />
@@ -371,7 +371,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                 {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
                 <div className="w-full md:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
-                    <div className="w-full max-w-[85%] transform lg:-translate-x-[30px]">
+                    <div className="w-full max-w-[85%] transform ">
                         {/* Back Navigation - Desktop only */}
                         <div className="hidden md:block mb-8 lg:mb-16">
                             <Link
@@ -540,29 +540,11 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             onClick={resetZoom}
                             className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
                         >
-                            Reset (100%)
+                            Reset
                         </button>
 
-                        <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded space-y-1">
+                        <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded">
                             <div className="font-bold">{Math.round(zoomLevel * 100)}%</div>
-                            <div className="text-xs opacity-75">
-                                {zoomLevel >= 8
-                                    ? " Microscope"
-                                    : zoomLevel >= 6
-                                      ? " Extreme Detail"
-                                      : zoomLevel >= 4
-                                        ? " Fine Detail"
-                                        : zoomLevel >= 2
-                                          ? " Close Study"
-                                          : " Normal View"}
-                            </div>
-                        </div>
-
-                        <div className="text-neutral-800 text-xs bg-white/90 px-2 py-1 rounded">
-                            <div>
-                                Image: {Math.round(1200 * zoomLevel)}×{Math.round(1500 * zoomLevel)}
-                                px
-                            </div>
                         </div>
                     </div>
 

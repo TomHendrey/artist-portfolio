@@ -485,7 +485,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {/* ────────────────────── TABLET-ONLY GALLERY (768–1023px) ────────────────────── */}
             {artwork.images.details && artwork.images.details.length > 0 && (
                 <div className="hidden md:block lg:hidden bg-white px-6 py-8">
-                    <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 max-w-4xl mx-auto">
+                    <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 max-w-4xl mx-auto">
                         {artwork.images.details.map((detail, index) => {
                             const imageIndex =
                                 2 + (artwork.images.croppedAlts?.length || 0) + index;

@@ -11,8 +11,8 @@ const courierPrime = Courier_Prime({
 });
 
 export const metadata = {
-    title: "Your Name - Artist Portfolio",
-    description: "Contemporary artist specializing in...",
+    title: "Hendrey Kendall White | Contemporary Artist",
+    description: "Contemporary artist specializing in digital painting",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

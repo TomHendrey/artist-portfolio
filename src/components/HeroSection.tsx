@@ -17,7 +17,7 @@ const HERO_IMAGES_DESKTOP = [
 // Mobile/Tablet hero images (<1024px) - portrait/square crops
 const HERO_IMAGES_MOBILE = [
     "v1762601265/hero-22-md_uteqnr.jpg", // REPLACE with your mobile versions
-    "v1762601265/hero-24-md_tgtj6g.jpg",
+    "v1762602276/hero-24-md_dk8cml.jpg",
     "v1762601261/hero-31-md_ir9wys.jpg",
     "v1762601264/hero-25-md_fgw3qa.jpg",
     "v1762601260/hero-30-md_dccbfb.jpg",

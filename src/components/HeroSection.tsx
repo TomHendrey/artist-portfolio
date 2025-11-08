@@ -5,8 +5,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
 
-// Hero images - easy to update with your close-up detail shots
-const HERO_IMAGES = [
+// Desktop hero images (≥1024px) - landscape with grey sidebar
+const HERO_IMAGES_DESKTOP = [
     "v1762476069/hero-1_uuype3.jpg",
     "v1762476056/hero-2_gsog6d.jpg",
     "v1762527301/hero-5_hguuuz.jpg",
@@ -14,9 +14,36 @@ const HERO_IMAGES = [
     "v1762595712/hero-17_fwpd79.jpg",
 ];
 
+// Mobile/Tablet hero images (<1024px) - portrait/square crops
+const HERO_IMAGES_MOBILE = [
+    "v1762601265/hero-22-md_uteqnr.jpg", // REPLACE with your mobile versions
+    "v1762601265/hero-24-md_tgtj6g.jpg",
+    "v1762601261/hero-31-md_ir9wys.jpg",
+    "v1762601264/hero-25-md_fgw3qa.jpg",
+    "v1762601260/hero-30-md_dccbfb.jpg",
+];
+
 export default function HeroSection() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [nextImageIndex, setNextImageIndex] = useState(1);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Detect screen size
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 1024);
+        };
+
+        // Check on mount
+        checkMobile();
+
+        // Check on resize
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    // Select image set based on screen size
+    const HERO_IMAGES = isMobile ? HERO_IMAGES_MOBILE : HERO_IMAGES_DESKTOP;
 
     useEffect(() => {
         // Preload all hero images for smooth transitions
@@ -24,7 +51,7 @@ export default function HeroSection() {
             const img = new Image();
             img.src = getCloudinaryUrl(imagePath, "large");
         });
-    }, []);
+    }, [HERO_IMAGES]);
 
     useEffect(() => {
         // Rotate images every 20 seconds
@@ -34,19 +61,19 @@ export default function HeroSection() {
         }, 20000); // 20 seconds per image
 
         return () => clearInterval(interval);
-    }, []);
+    }, [HERO_IMAGES.length]);
 
     return (
         <>
             <style>{`
                 @keyframes kenburns {
-    from {
-        transform: scale(1) translateZ(0);  // Start zoomed OUT
-    }
-    to {
-        transform: scale(1.1) translateZ(0);  // End just slightly zoomed in
-    }
-}
+                    from {
+                        transform: scale(1) translateZ(0);
+                    }
+                    to {
+                        transform: scale(1.1) translateZ(0);
+                    }
+                }
                 
                 .kenburns-active {
                     animation: kenburns 102s linear infinite;
@@ -76,7 +103,7 @@ export default function HeroSection() {
                                     style={{
                                         backgroundImage: `url(${getCloudinaryUrl(imagePath, "large")})`,
                                         backgroundSize: "cover",
-                                        backgroundPosition: "center",
+                                        backgroundPosition: isMobile ? "left center" : "center",
                                         backfaceVisibility: "hidden",
                                     }}
                                 />
@@ -88,7 +115,7 @@ export default function HeroSection() {
                 {/* Text content overlay */}
                 <div className="relative z-10 text-center lg:text-left text-white lg:text-neutral-900 px-6 md:px-8 lg:pl-10 xl:pl-10 2xl:pl-35 lg:pr-[60%] w-full">
                     <div className="">
-                        <h1 className="font-helvetica text-3xl md:text-5xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none lg:max-w-[260px] xl:max-w-none 2xl:max-w-none">
+                        <h1 className="font-helvetica text-2xl xs:text-3xl md:text-5xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none lg:max-w-[260px] xl:max-w-none 2xl:max-w-none ">
                             Hendrey - Kendall White
                         </h1>
                         <p

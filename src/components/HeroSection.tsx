@@ -10,13 +10,8 @@ const HERO_IMAGES = [
     "v1762476069/hero-1_uuype3.jpg",
     "v1762476056/hero-2_gsog6d.jpg",
     "v1762527301/hero-5_hguuuz.jpg",
-    "v1762532919/hero-16_zsmrtf.jpg",
+    "v1762531810/hero-14_vsudfh.jpg",
     "v1762595712/hero-17_fwpd79.jpg",
-    // "v1762480031/hero-6b_anlsvr.jpg",
-    // "v1762480026/hero-7b_lpqnlp.jpg",
-    // "v1762480031/hero-8b_duu3gs.jpg",
-    // "v1762480033/hero-9b_hfa4db.jpg",
-    // "v1762480033/hero-10b_ntssnl.jpg",
 ];
 
 export default function HeroSection() {

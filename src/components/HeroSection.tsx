@@ -20,7 +20,7 @@ const HERO_IMAGES_MOBILE = [
     "v1762602276/hero-24-md_dk8cml.jpg",
     "v1762601261/hero-31-md_ir9wys.jpg",
     "v1762601264/hero-25-md_fgw3qa.jpg",
-    "v1762601260/hero-30-md_dccbfb.jpg",
+    "v1762601266/hero-29-md_w9o3ec.jpg",
 ];
 
 export default function HeroSection() {

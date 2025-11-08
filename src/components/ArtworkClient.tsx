@@ -434,7 +434,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                             {/* ───── GALLERY: Mobile (<768px) + Desktop (≥1024px) ───── */}
                             {artwork.images.details && artwork.images.details.length > 0 && (
-                                <div className="block md:hidden lg:block mt-8 lg:mt-12">
+                                <div className="block md:hidden lg:block mt-40 lg:mt-12">
                                     {/* Mobile: full-width stacked */}
                                     <div className="md:hidden space-y-6">
                                         {artwork.images.details.map((detail, index) => (

@@ -129,10 +129,10 @@ export default function Portfolio() {
                                 <p className="text-sm text-neutral-500">{artwork.dimensions}</p>
                             </div>
 
-                            {/* Quick view button */}
+                            {/* Quick view button - Desktop only */}
                             <button
                                 onClick={() => openLightbox(artwork.id)}
-                                className="mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors"
+                                className="hidden md:block mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors"
                             >
                                 Quick View
                             </button>

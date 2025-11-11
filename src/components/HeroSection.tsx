@@ -71,7 +71,7 @@ export default function HeroSection() {
                         transform: scale(1) translateZ(0);
                     }
                     to {
-                        transform: scale(1.1) translateZ(0);
+                        transform: scale(1.2) translateZ(0);
                     }
                 }
                 

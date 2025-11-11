@@ -89,7 +89,7 @@ export default function Contact() {
                                             className="text-neutral-600 hover:text-neutral-800 transition-colors"
                                             style={{ fontFamily: "Courier New, monospace" }}
                                         >
-                                            studio@hkw.com
+                                            studio@hendreykendallwhite.com
                                         </a>
                                     </div>
                                 </div>

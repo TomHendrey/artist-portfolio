@@ -17,7 +17,7 @@ export default function Home() {
             {/* Featured Works Preview */}
             <section className="py-60 px-4 max-w-7xl mx-auto">
                 <h2 className="text-3xl md:text-4xl font-light text-left mb-16 text-neutral-800">
-                    Featured Works
+                    Featured Works - Surfaces
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -51,7 +51,7 @@ export default function Home() {
 
             {/* About Preview */}
             <section className="py-30 px-4 bg-neutral-100">
-                <div className="max-w-4xl mx-auto text-center">
+                <div className="max-w-4xl mx-auto text-left-center">
                     <h2 className="text-3xl md:text-4xl font-light mb-8 text-neutral-800">
                         About the Artist
                     </h2>
@@ -59,11 +59,11 @@ export default function Home() {
                         className="text-lg text-neutral-600 mb-8 leading-relaxed"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.{" "}
+                        Hendrey Kendall White is the collaborative practice of Thomas Hendrey and
+                        Alexander Kendall White. The studio explores contemporary painting by
+                        blending digital processes and traditional painting techniques,
+                        investigating how the collection and transformation of information shapes
+                        our understanding of landscape.{" "}
                     </p>
                     <Link
                         href="/about"

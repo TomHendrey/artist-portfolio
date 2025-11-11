@@ -40,7 +40,7 @@ export const artworks: Artwork[] = [
             details: [
                 "v1761586550/surface-1-main-8.jpg",
                 // "v1762215322/surface-1-g-left-1.jpg",
-                "v1762214841/surface-1-g-front-1.jpg",
+                "v1762776995/surface-1-g-front-1.jpg",
 
                 "v1762215316/surface-1-g-left-2.jpg",
             ],
@@ -70,8 +70,8 @@ export const artworks: Artwork[] = [
                 "v1761586573/surface-2-main-6.jpg",
                 "v1762215305/surface-2-g-left-1.jpg",
                 "v1762215302/surface-2-g-left-2.jpg",
-                "v1762214850/surface-2-g-front-1.jpg",
-                "v1762215810/surface-2-g-front-2.jpg",
+                "v1762777180/surface-2-g-front-1.jpg",
+                "v1762776985/surface-2-g-front-2.jpg",
                 "v1754587348/surface-3-detail-2.jpg",
                 "v1754587360/surface-3-detail-3.jpg",
                 // "v1754587448/surface-3-detail-4.jpg",
@@ -102,7 +102,7 @@ export const artworks: Artwork[] = [
             croppedAlts: [],
             details: [
                 "v1761586589/surface-3-main-7.jpg",
-                "v1762214859/surface-3-g-front-1.jpg",
+                "v1762776066/surface-3-g-front-1.jpg",
                 "v1762215285/surface-3-g-left-1.jpg",
                 "v1762215281/surface-3-g-left-2.jpg",
             ],
@@ -128,7 +128,7 @@ export const artworks: Artwork[] = [
             main: "v1762205836/surface-4-main-7.jpg",
             cropped: "v1761674574/surface-4-cropped-9.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861158/surface-4-g-front-1_qetuvy.jpg"],
             highRes: {
                 base: "v1761586624/surface-4-cropped-9.jpg", // 9MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-cropped-18.jpg", // 20MB Blob
@@ -151,7 +151,7 @@ export const artworks: Artwork[] = [
             main: "v1761587672/surface-5-main-7.jpg",
             cropped: "v1761587680/surface-5-cropped-8.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861163/surface-5-g-front-1_meluqg.jpg"],
             highRes: {
                 base: "v1761587680/surface-5-cropped-8.jpg", // 8MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-5-cropped-9.jpg", // 9MB Blob
@@ -174,7 +174,7 @@ export const artworks: Artwork[] = [
             main: "v1761608329/surface-6-main-7.jpg",
             cropped: "v1761612469/surface-6-cropped-9.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861169/surface-6-g-front-1_b71hjn.jpg"],
             highRes: {
                 base: "v1761608332/surface-6-cropped-9.jpg", // 9MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-6-cropped-19.jpg", // 19MB Blob
@@ -197,7 +197,7 @@ export const artworks: Artwork[] = [
             main: "v1761674559/surface-7-main-7.jpg",
             cropped: "v1761674561/surface-7-cropped-9.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861176/surface-7-g-front-1_w6t70x.jpg"],
             highRes: {
                 base: "v1761608403/surface-7-cropped-9.jpg", // 9MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-7-cropped-19.jpg", // 19MB Blob
@@ -220,7 +220,9 @@ export const artworks: Artwork[] = [
             main: "v1761660151/surface-8-main-7.jpg",
             cropped: "v1761657106/surface-8-cropped-8.jpg",
             croppedAlts: [],
-            details: [],
+            details: [
+                "https://res.cloudinary.com/dutoeewfl/image/upload/v1762861183/surface-8-g-front-1_u8ortw.jpg",
+            ],
             highRes: {
                 base: "v1761609058/surface-8-cropped-8.jpg", // 8MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-8-cropped-19.jpg", // 19MB Blob
@@ -243,7 +245,7 @@ export const artworks: Artwork[] = [
             main: "v1761674545/surface-9-main-7.jpg",
             cropped: "v1761674549/surface-9-cropped-8.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861188/surface-9-g-front-1_pptrvz.jpg"],
             highRes: {
                 base: "v1761608539/surface-9-cropped-8.jpg", // 8MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-9-cropped-18.jpg", // 18MB Blob
@@ -266,7 +268,7 @@ export const artworks: Artwork[] = [
             main: "v1761587833/surface-12-main-9.jpg",
             cropped: "v1761587835/surface-12-cropped-9.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861216/surface-12-g-front-1_iu1q57.jpg"],
             highRes: {
                 base: "v1761587835/surface-12-cropped-9.jpg", // 9MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-12-cropped-19.jpg", // 19MB Blob
@@ -289,7 +291,7 @@ export const artworks: Artwork[] = [
             main: "v1761587814/surface-11-main-8.jpg",
             cropped: "v1761587817/surface-11-cropped-10.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861209/surface-11-g-front-1_modilu.jpg"],
             highRes: {
                 base: "v1761587817/surface-11-cropped-10.jpg", // 10MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-11-cropped-20.jpg", // 20MB Blob
@@ -312,7 +314,7 @@ export const artworks: Artwork[] = [
             main: "v1761587791/surface-10-main-8.jpg",
             cropped: "v1761587790/surface-10-cropped-10.jpg",
             croppedAlts: [],
-            details: [],
+            details: ["v1762861201/surface-10-g-front-1_b81pyp.jpg"],
             highRes: {
                 base: "v1761587790/surface-10-cropped-10.jpg", // 10MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-10-cropped-20.jpg", // 20MB Blob

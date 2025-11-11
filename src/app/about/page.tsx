@@ -38,12 +38,12 @@ export default function About() {
                         </p>
 
                         <p className="indent-[1em]">
-                            When we approach genre painting - that is work that explore `&apos;`
-                            human centric reality`&apos;`, it has become a ritual act - self
-                            referential field increasingly irrelevant to its actors and audiences.
-                            The choice of painting demands the direct use of an individual
-                            faculties: that is the result will be a reflection of their
-                            conciousness, there sense perception, their active capabilities.
+                            When we approach genre painting - that is work that explore &apos;human
+                            centric reality&apos;, it has become a ritual act - self referential
+                            field increasingly irrelevant to its actors and audiences. The choice of
+                            painting demands the direct use of an individual faculties: that is the
+                            result will be a reflection of their conciousness, there sense
+                            perception, their active capabilities.
                         </p>
 
                         <p className="indent-[1em]">

@@ -190,11 +190,35 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const handleImageChange = (index: number) => {
+        // Don't fade out if clicking the same image
+        if (index === selectedImageIndex) return;
+
+        // Start fade out
         setIsImageTransitioning(true);
-        setTimeout(() => {
-            setSelectedImageIndex(index);
-            setIsImageTransitioning(false);
-        }, 250);
+
+        // Preload the new image first
+        const newImageUrl = getCloudinaryUrl(allImages[index], "large");
+        const img = document.createElement("img");
+
+        img.onload = () => {
+            // Image fully loaded - now switch and fade in
+            setTimeout(() => {
+                setSelectedImageIndex(index);
+                setIsImageTransitioning(false);
+            }, 250);
+        };
+
+        img.onerror = () => {
+            // If image fails to load, still switch (fallback)
+            console.error("Failed to preload image");
+            setTimeout(() => {
+                setSelectedImageIndex(index);
+                setIsImageTransitioning(false);
+            }, 250);
+        };
+
+        // Start loading the image
+        img.src = newImageUrl;
     };
 
     const preloadImage = (url: string, quality: string): Promise<void> => {

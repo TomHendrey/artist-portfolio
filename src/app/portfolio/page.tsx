@@ -119,20 +119,28 @@ export default function Portfolio() {
 
                             <div className="space-y-1">
                                 <Link href={`/portfolio/${artwork.slug}`}>
-                                    <h3 className="text-lg font-light text-neutral-800 hover:text-neutral-600 transition-colors">
+                                    <h3 className="text-lg  font-light text-neutral-800 hover:text-neutral-600 transition-colors">
                                         {artwork.title}
                                     </h3>
                                 </Link>
-                                <p className="text-sm text-neutral-600">
+                                <p
+                                    className="text-sm text-neutral-600"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
                                     {artwork.year} • {artwork.medium}
                                 </p>
-                                <p className="text-sm text-neutral-500">{artwork.dimensions}</p>
+                                <p
+                                    className="text-sm text-neutral-500"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    {artwork.dimensions}
+                                </p>
                             </div>
 
                             {/* Quick view button - Desktop only */}
                             <button
                                 onClick={() => openLightbox(artwork.id)}
-                                className="hidden md:block mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors"
+                                className="hidden lg:pb-4 md:block mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors"
                             >
                                 Quick View
                             </button>

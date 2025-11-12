@@ -220,9 +220,7 @@ export const artworks: Artwork[] = [
             main: "v1761660151/surface-8-main-7.jpg",
             cropped: "v1761657106/surface-8-cropped-8.jpg",
             croppedAlts: [],
-            details: [
-                "https://res.cloudinary.com/dutoeewfl/image/upload/v1762861183/surface-8-g-front-1_u8ortw.jpg",
-            ],
+            details: ["v1762861183/surface-8-g-front-1_u8ortw.jpg"],
             highRes: {
                 base: "v1761609058/surface-8-cropped-8.jpg", // 8MB Cloudinary
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-8-cropped-19.jpg", // 19MB Blob

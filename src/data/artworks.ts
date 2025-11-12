@@ -68,9 +68,9 @@ export const artworks: Artwork[] = [
             croppedAlts: [],
             details: [
                 "v1761586573/surface-2-main-6.jpg",
-                "v1762215305/surface-2-g-left-1.jpg",
+                // "v1762215305/surface-2-g-left-1.jpg",
                 "v1762215302/surface-2-g-left-2.jpg",
-                "v1762777180/surface-2-g-front-1.jpg",
+                // "v1762777180/surface-2-g-front-1.jpg",
                 "v1762776985/surface-2-g-front-2.jpg",
                 "v1754587348/surface-3-detail-2.jpg",
                 "v1754587360/surface-3-detail-3.jpg",
@@ -281,7 +281,7 @@ export const artworks: Artwork[] = [
         slug: "surface11",
         title: "Surface XI",
         year: "2023",
-        medium: "Oil pastel and digital transfer on wood",
+        medium: "Mixed media on wood",
         dimensions: "65 x 85cm",
         description:
             "Combines analog texture with digital prints of planetary data to create a hybrid surface aesthetic.",
@@ -304,7 +304,7 @@ export const artworks: Artwork[] = [
         slug: "surface12",
         title: "Surface XII",
         year: "2023",
-        medium: "Oil pastel and digital transfer on wood",
+        medium: "Mixed media on wood",
         dimensions: "65 x 85cm",
         description:
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",

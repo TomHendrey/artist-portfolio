@@ -69,8 +69,8 @@ export default function Portfolio() {
                             className="text-lg text-neutral-600 max-w-2xl"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
-                            A collection of recent works exploring the use of technology, and the
-                            transformation of data in contemporary painting.
+                            A collection of recent paintings exploring the use of technology, and
+                            the transformation of data.
                         </p>
                     </div>
                 </div>

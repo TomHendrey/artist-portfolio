@@ -108,7 +108,7 @@ export default function About() {
                             className="text-neutral-500 text-base italic"
                             style={{ fontFamily: "Cardo, serif" }}
                         >
-                            - Alex Kendal White 2025
+                            - Kendall White 2025
                         </p>
                     </div>
                 </div>

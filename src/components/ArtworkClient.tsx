@@ -426,9 +426,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                             {/* Description */}
                             <div>
-                                <h3 className="text-lg lg:text-xl font-light mb-3 lg:mb-3 text-neutral-800">
-                                    About this Work
-                                </h3>
+                                {/* <h3 className="text-lg lg:text-xl font-light mb-3 lg:mb-3 text-neutral-800"> */}
+                                {/*     About this Work */}
+                                {/* </h3> */}
                                 <p
                                     className="text-neutral-600 leading-relaxed text-sm lg:text-sm"
                                     style={{ fontFamily: "Courier New, monospace" }}

@@ -8,10 +8,40 @@ export interface Artwork {
     dimensions: string;
     description: string;
     images: {
-        main: string; // Main image filename (with Cloudinary path)
-        cropped?: string;
-        croppedAlts?: string[]; // Alternative cropped versions
-        details?: string[]; // Additional detail shots
+        main: string; // Main image filename (Cloudinary path)
+        cropped?: string; // Optional cropped version
+        croppedAlts?: string[]; // Optional alternative cropped versions
+
+        // Detail images (three-tier system)
+        details?: string[]; // HD versions (2400px) - for lightbox
+        detailsMedium?: string[]; // Medium versions (1600px) - for main display
+        detailsThumb?: string[]; // Thumbnails (400px) - for grid
+
+        // Gallery view images (optional - different angles)
+        gallery?: {
+            front?: {
+                hd?: string;
+                medium?: string;
+                thumb?: string;
+            };
+            main?: {
+                hd?: string;
+                medium?: string;
+                thumb?: string;
+            };
+            left1?: {
+                hd?: string;
+                medium?: string;
+                thumb?: string;
+            };
+            left2?: {
+                hd?: string;
+                medium?: string;
+                thumb?: string;
+            };
+        };
+
+        // Progressive loading for main composite (optional)
         highRes?: {
             base?: string; // 8MB Cloudinary version (fast loading)
             medium?: string; // ~18MB Blob version (background preload)
@@ -26,31 +56,86 @@ export interface Artwork {
 export const artworks: Artwork[] = [
     {
         id: 1,
-        slug: "surface1",
+        slug: "surface-1",
         title: "Surface I",
         year: "2025",
         medium: "Oil pastel on wood",
-        dimensions: "120 x 160 cm",
+        dimensions: "120 × 160 cm",
         description:
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
-        images: {
-            main: "v1761586550/surface-1-main-8.jpg",
-            cropped: "v1761586553/surface-1-cropped-9.jpg",
-            croppedAlts: [],
-            details: [
-                "v1761586550/surface-1-main-8.jpg",
-                // "v1762215322/surface-1-g-left-1.jpg",
-                "v1762776995/surface-1-g-front-1.jpg",
 
-                "v1762215316/surface-1-g-left-2.jpg",
-            ],
+        images: {
+            // Main composite image (shown on artwork detail page)
+            main: "v1761586550/surface-1-main-8.jpg",
+
+            // Cropped version
+            cropped: "v1761586553/surface-1-cropped-9.jpg",
+
+            // High-res progressive loading (for main image lightbox zoom)
             highRes: {
-                base: "v1761586553/surface-1-cropped-9.jpg", // 9MB Cloudinary
-                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-cropped-20.jpg", // 20MB Blob
-                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-cropped-74.jpg", // 74MB Blob
+                base: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-8.jpg",
+                medium: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-18.jpg",
+                ultra: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-46.jpg",
             },
+
+            // Gallery view images (different angles - for future use)
+            gallery: {
+                front: {
+                    hd: "v1764979198/surface-1-g-front-24.jpg",
+                    medium: "v1764979183/surface-1-g-front-16.jpg",
+                    thumb: "v1764978504/surface-1-g-front-thumb.jpg",
+                },
+                main: {
+                    hd: "v1764979453/surface-1-g-main-24.jpg",
+                    medium: "v1764979437/surface-1-g-main-16.jpg",
+                    thumb: "v1764978524/surface-1-g-main-thumb.jpg",
+                },
+
+                left2: {
+                    hd: "v1764979405/surface-1-g-left-2-24.jpg",
+                    medium: "v1764979393/surface-1-g-left-2-16.jpg",
+                    thumb: "v1764978483/surface-1-g-left-2-thumb.jpg",
+                },
+            },
+
+            // Detail close-up images (for thumbnail gallery on artwork page)
+            // HD versions (2400px) - for lightbox viewing
+            details: [
+                "v1764978694/surface-1-closeup-1-24.jpg",
+                "v1764978720/surface-1-closeup-2-24.jpg",
+                "v1764978752/surface-1-closeup-3-24.jpg",
+                "v1764978827/surface-1-closeup-4-24.jpg",
+                "v1764978878/surface-1-closeup-5-24.jpg",
+                "v1764978901/surface-1-closeup-6-24.jpg",
+                "v1764981158/surface-1-closeup-7-24.jpg",
+                "v1764978979/surface-1-closeup-8-24.jpg",
+            ],
+
+            // Medium versions (1600px) - for main display when clicked
+            detailsMedium: [
+                "v1764978679/surface-1-closeup-1-16.jpg",
+                "v1764978701/surface-1-closeup-2-16.jpg",
+                "v1764978737/surface-1-closeup-3-16.jpg",
+                "v1764978774/surface-1-closeup-4-16.jpg",
+                "v1764978844/surface-1-closeup-5-16.jpg",
+                "v1764978890/surface-1-closeup-6-16.jpg",
+                "v1764981142/surface-1-closeup-7-16.jpg",
+                "v1764978963/surface-1-closeup-8-16.jpg",
+            ],
+
+            // Thumbnail versions (400px) - for thumbnail grid
+            detailsThumb: [
+                "v1764977444/surface-1-closeup-1-thumb.jpg",
+                "v1764977966/surface-1-closeup-2-thumb.jpg",
+                "v1764978024/surface-1-closeup-3-thumb.jpg",
+                "v1764978049/surface-1-closeup-4-thumb.jpg",
+                "v1764978089/surface-1-closeup-5-thumb.jpg",
+                "v1764978184/surface-1-closeup-6-thumb.jpg",
+                "v1764978205/surface-1-closeup-7-thumb.jpg",
+                "v1764978236/surface-1-closeup-8-thumb.jpg",
+            ],
         },
-        category: "surfaces",
+
         available: true,
     },
     {

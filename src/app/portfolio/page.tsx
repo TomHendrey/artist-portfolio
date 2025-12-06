@@ -99,9 +99,9 @@ export default function Portfolio() {
             {/**/}
             {/* Gallery Grid */}
             <div className="py-12 px-4 max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
                     {filteredArtworks.map((artwork) => (
-                        <div key={artwork.id} className="group">
+                        <div key={artwork.id} className="group ">
                             {/* Link to individual artwork page */}
                             <Link href={`/portfolio/${artwork.slug}`} className="block">
                                 <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-neutral-100">
@@ -117,9 +117,9 @@ export default function Portfolio() {
                                 </div>
                             </Link>
 
-                            <div className="space-y-1">
+                            <div className="space-y-1 pb-22 md:pb-0 ">
                                 <Link href={`/portfolio/${artwork.slug}`}>
-                                    <h3 className="text-lg  font-light text-neutral-800 hover:text-neutral-600 transition-colors">
+                                    <h3 className="text-base  pb-1 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
                                         {artwork.title}
                                     </h3>
                                 </Link>
@@ -130,7 +130,7 @@ export default function Portfolio() {
                                     {artwork.year} • {artwork.medium}
                                 </p>
                                 <p
-                                    className="text-sm text-neutral-500"
+                                    className="text-sm text-neutral-500 "
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     {artwork.dimensions}

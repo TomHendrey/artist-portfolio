@@ -149,7 +149,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const zoomIn = () => {
-        setZoomLevel((prev) => Math.min(10, prev + 0.5));
+        const detailStartIndex = 2 + (artwork.images.croppedAlts?.length || 0);
+        const isDetailImage = selectedImageIndex >= detailStartIndex;
+
+        // Detail images: max 3x zoom, Main composite: max 10x zoom
+        const maxZoom = isDetailImage ? 1.5 : 10;
+
+        setZoomLevel((prev) => Math.min(maxZoom, prev + 0.5));
     };
 
     const zoomOut = () => {
@@ -241,22 +247,34 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const getCurrentImageUrl = () => {
-        // Mobile/Tablet detection - under 1024px bypasses progressive loading
         const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
-        // On mobile/tablet, use completely raw URL with no transformations
-        // Images are already optimized, so no processing needed
         if (isMobile) {
-            const cloudName = "dutoeewfl"; // Your cloud name
-            const cleanPath = allImages[selectedImageIndex].replace(/^\//, "");
+            const cloudName = "dutoeewfl";
+            const cleanPath = (
+                hdImages[selectedImageIndex] || allImages[selectedImageIndex]
+            ).replace(/^\//, "");
             return `https://res.cloudinary.com/${cloudName}/image/upload/${cleanPath}`;
         }
 
-        // DESKTOP ONLY: Progressive loading system below
+        // DESKTOP: Check if viewing a detail image
+        const detailStartIndex = 2 + (artwork.images.croppedAlts?.length || 0);
+        const isDetailImage = selectedImageIndex >= detailStartIndex;
+
+        // For detail images: use HD version (2400px) for lightbox
+        if (isDetailImage && selectedImageIndex < hdImages.length) {
+            const hdImage = hdImages[selectedImageIndex];
+            if (hdImage) {
+                return getCloudinaryUrl(hdImage, "large");
+            }
+        }
+
+        // For main composite: use progressive loading system (existing code)
         const hasHighRes = artwork.images.highRes;
 
         if (!hasHighRes) {
-            return getCloudinaryUrl(allImages[selectedImageIndex], "ultra");
+            const hdImage = hdImages[selectedImageIndex] || allImages[selectedImageIndex];
+            return getCloudinaryUrl(hdImage, "large");
         }
 
         if (zoomLevel >= 1.5) {
@@ -300,11 +318,26 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         }
     };
 
+    // CHANGE TO (use medium versions for main display):
     const allImages = [
         artwork.images.main,
         artwork.images.cropped || artwork.images.main,
         ...(artwork.images.croppedAlts || []),
-        ...(artwork.images.details || []),
+        ...(artwork.images.detailsMedium || artwork.images.details || []), // Use 1600px versions
+    ];
+
+    const thumbnailImages = [
+        artwork.images.main, // Will need thumbnail version later
+        artwork.images.cropped,
+        ...(artwork.images.croppedAlts || []),
+        ...(artwork.images.detailsThumb || []), // 400px thumbnails
+    ];
+
+    const hdImages = [
+        artwork.images.main,
+        artwork.images.cropped,
+        ...(artwork.images.croppedAlts || []),
+        ...(artwork.images.details || []), // 2400px HD versions
     ];
 
     const router = useRouter();
@@ -478,19 +511,36 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     </div>
                                     {/* Desktop: thumbnail grid */}
                                     <div className="hidden lg:grid lg:grid-cols-5 gap-3">
-                                        {artwork.images.details.map((detail, index) => {
+                                        {/* Main image thumbnail - first position */}
+                                        <div
+                                            className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
+                                            onClick={() => handleImageChange(0)} // Goes to main image
+                                        >
+                                            <Image
+                                                src={getCloudinaryUrl(
+                                                    artwork.images.main,
+                                                    "medium",
+                                                )} // Use small quality for now
+                                                alt={`${artwork.title} - Main view`}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+
+                                        {/* Detail thumbnails */}
+                                        {artwork.images.detailsThumb?.map((thumb, index) => {
                                             const imageIndex =
                                                 2 +
                                                 (artwork.images.croppedAlts?.length || 0) +
                                                 index;
                                             return (
                                                 <div
-                                                    key={detail}
+                                                    key={thumb}
                                                     className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
                                                     onClick={() => handleImageChange(imageIndex)}
                                                 >
                                                     <Image
-                                                        src={getCloudinaryUrl(detail, "medium")}
+                                                        src={getCloudinaryUrl(thumb, "medium")}
                                                         alt={`${artwork.title} - Detail ${index + 1}`}
                                                         fill
                                                         className="object-cover"
@@ -510,17 +560,17 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {artwork.images.details && artwork.images.details.length > 0 && (
                 <div className="hidden md:block lg:hidden bg-white px-6 py-8">
                     <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 max-w-4xl mx-auto">
-                        {artwork.images.details.map((detail, index) => {
+                        {artwork.images.detailsThumb?.map((thumb, index) => {
                             const imageIndex =
                                 2 + (artwork.images.croppedAlts?.length || 0) + index;
                             return (
                                 <button
-                                    key={detail}
+                                    key={thumb}
                                     onClick={() => handleImageChange(imageIndex)}
-                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden  hover:opacity-80 transition-opacity"
+                                    className="relative aspect-[4/5] bg-neutral-100 overflow-hidden hover:opacity-80 transition-opacity"
                                 >
                                     <Image
-                                        src={getCloudinaryUrl(detail, "medium")}
+                                        src={getCloudinaryUrl(thumb, "quality_auto")}
                                         alt={`${artwork.title} - Detail ${index + 1}`}
                                         fill
                                         className="object-cover"

@@ -65,74 +65,80 @@ export const artworks: Artwork[] = [
             "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
 
         images: {
-            // Main composite image (shown on artwork detail page)
+            // Main composite image (4096px)
             main: "v1761586550/surface-1-main-8.jpg",
 
             // Cropped version
             cropped: "v1761586553/surface-1-cropped-9.jpg",
 
-            // High-res progressive loading (for main image lightbox zoom)
+            // High-res progressive loading (Vercel blob storage)
             highRes: {
                 base: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-8.jpg",
                 medium: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-18.jpg",
                 ultra: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-46.jpg",
             },
 
-            // Gallery view images (different angles - for future use)
-            gallery: {
-                front: {
-                    hd: "v1764979198/surface-1-g-front-24.jpg",
-                    medium: "v1764979183/surface-1-g-front-16.jpg",
-                    thumb: "v1764978504/surface-1-g-front-thumb.jpg",
-                },
-                main: {
-                    hd: "v1764979453/surface-1-g-main-24.jpg",
-                    medium: "v1764979437/surface-1-g-main-16.jpg",
-                    thumb: "v1764978524/surface-1-g-main-thumb.jpg",
-                },
-
-                left2: {
-                    hd: "v1764979405/surface-1-g-left-2-24.jpg",
-                    medium: "v1764979393/surface-1-g-left-2-16.jpg",
-                    thumb: "v1764978483/surface-1-g-left-2-thumb.jpg",
-                },
-            },
-
-            // Detail close-up images (for thumbnail gallery on artwork page)
-            // HD versions (2400px) - for lightbox viewing
+            // Detail images - HD versions (2400px) - NOW INCLUDING GALLERY
             details: [
-                "v1764978694/surface-1-closeup-1-24.jpg",
-                "v1764978720/surface-1-closeup-2-24.jpg",
-                "v1764978752/surface-1-closeup-3-24.jpg",
-                "v1764978827/surface-1-closeup-4-24.jpg",
-                "v1764978878/surface-1-closeup-5-24.jpg",
-                "v1764978901/surface-1-closeup-6-24.jpg",
-                "v1764981158/surface-1-closeup-7-24.jpg",
-                "v1764978979/surface-1-closeup-8-24.jpg",
+                // Gallery views first
+                "v1764979198/surface-1-g-front-24.jpg",
+                "v1764979405/surface-1-g-left-2-24.jpg",
+                // Close-up details
+                "v1765331078/surface-1-closeup-2-24.jpg",
+                "v1765331076/surface-1-closeup-1-24.jpg",
+                "v1765331082/surface-1-closeup-6-24.jpg",
+                "v1765331088/surface-1-closeup-8-24.jpg",
+                "v1765331089/surface-1-closeup-3-24.jpg",
+                "v1765331045/surface-1-closeup-4-24.jpg",
+                // "v1765331086/surface-1-closeup-5-24.jpg",
+
+                "v1765331084/surface-1-closeup-10-24.jpg",
+                // "v1765331072/surface-1-closeup-11-24.jpg",
+                // "v1765331071/surface-1-closeup-12-24.jpg",
+                // "v1765331064/surface-1-closeup-13-24.jpg",
+                // "v1765331092/surface-1-closeup-14-24.jpg",
             ],
 
-            // Medium versions (1600px) - for main display when clicked
+            // Detail images - Medium versions (1600px) - NOW INCLUDING GALLERY
             detailsMedium: [
-                "v1764978679/surface-1-closeup-1-16.jpg",
-                "v1764978701/surface-1-closeup-2-16.jpg",
-                "v1764978737/surface-1-closeup-3-16.jpg",
-                "v1764978774/surface-1-closeup-4-16.jpg",
-                "v1764978844/surface-1-closeup-5-16.jpg",
-                "v1764978890/surface-1-closeup-6-16.jpg",
-                "v1764981142/surface-1-closeup-7-16.jpg",
-                "v1764978963/surface-1-closeup-8-16.jpg",
+                // Gallery views first
+                "v1764979183/surface-1-g-front-16.jpg",
+                "v1764979393/surface-1-g-left-2-16.jpg",
+                // Close-up details
+                "v1765331050/surface-1-closeup-2-16.jpg",
+                "v1765331045/surface-1-closeup-1-16.jpg",
+                "v1765331054/surface-1-closeup-6-16.jpg",
+                "v1765331045/surface-1-closeup-8-16.jpg",
+                "v1765331049/surface-1-closeup-3-16.jpg",
+                "v1765331056/surface-1-closeup-4-16.jpg",
+                // "v1765331048/surface-1-closeup-5-16.jpg",
+
+                "v1765331055/surface-1-closeup-10-16.jpg",
+                // "v1765331064/surface-1-closeup-11-16.jpg",
+                // "v1765331071/surface-1-closeup-12-16.jpg",
+                // "v1765331066/surface-1-closeup-13-16.jpg",
+                // "v1765331072/surface-1-closeup-14-16.jpg",
             ],
 
-            // Thumbnail versions (400px) - for thumbnail grid
+            // Detail images - Thumbnails (400px) - NOW INCLUDING GALLERY
             detailsThumb: [
-                "v1764977444/surface-1-closeup-1-thumb.jpg",
-                "v1764977966/surface-1-closeup-2-thumb.jpg",
-                "v1764978024/surface-1-closeup-3-thumb.jpg",
-                "v1764978049/surface-1-closeup-4-thumb.jpg",
-                "v1764978089/surface-1-closeup-5-thumb.jpg",
-                "v1764978184/surface-1-closeup-6-thumb.jpg",
-                "v1764978205/surface-1-closeup-7-thumb.jpg",
-                "v1764978236/surface-1-closeup-8-thumb.jpg",
+                // Gallery views first
+                "v1764978504/surface-1-g-front-thumb.jpg",
+                "v1764978483/surface-1-g-left-2-thumb.jpg",
+                // Close-up details
+                "v1765330904/surface-1-closeup-2-thumb-b.jpg",
+                "v1765330905/surface-1-closeup-1-thumb-b.jpg",
+                "v1765330904/surface-1-closeup-6-thumb-b.jpg",
+                "v1765330905/surface-1-closeup-8-thumb-b.jpg",
+                "v1765330906/surface-1-closeup-3-thumb-b.jpg",
+                "v1765330905/surface-1-closeup-4-thumb-b.jpg",
+                // "v1765330905/surface-1-closeup-5-thumb-b.jpg",
+
+                "v1765330907/surface-1-closeup-10-thumb-b.jpg",
+                // "v1765330907/surface-1-closeup-11-thumb-b.jpg",
+                // "v1765330907/surface-1-closeup-12-thumb-b.jpg",
+                // "v1765330906/surface-1-closeup-13-thumb-b.jpg",
+                // "v1765330906/surface-1-closeup-14-thumb-b.jpg",
             ],
         },
 

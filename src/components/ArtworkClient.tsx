@@ -28,6 +28,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [isLoadingHighRes, setIsLoadingHighRes] = useState(false);
     const [loadingProgress, setLoadingProgress] = useState<string>("");
     const [isImageTransitioning, setIsImageTransitioning] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     useEffect(() => {
         setImageLoading(true);
@@ -135,43 +136,157 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         }
     }, [zoomLevel, lightboxOpen, ultraResLoaded, isLoadingHighRes]);
 
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            if (!document.fullscreenElement) {
+                // User pressed ESC - exit fullscreen mode but stay in lightbox
+                setIsFullscreen(false);
+                setZoomLevel(1); // Reset zoom when exiting fullscreen
+            }
+        };
+
+        document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+        return () => {
+            document.removeEventListener("fullscreenchange", handleFullscreenChange);
+        };
+    }, []);
+
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
         setZoomLevel(1);
         setLightboxOpen(true);
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#e9e9e9";
+
+        // Request fullscreen after a small delay (to let lightbox render)
+        // setTimeout(() => {
+        //     if (document.documentElement.requestFullscreen) {
+        //         document.documentElement.requestFullscreen().catch((err) => {
+        //             console.log("Fullscreen request failed:", err);
+        //         });
+        //     }
+        // }, 100);
     };
 
     const closeLightbox = () => {
+        // Exit fullscreen if active
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+
         setLightboxOpen(false);
+        setIsFullscreen(false);
         document.body.style.overflow = "unset";
         document.body.style.backgroundColor = "";
+    };
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            // Enter fullscreen
+            document.documentElement
+                .requestFullscreen()
+                .then(() => {
+                    setIsFullscreen(true);
+                    // Fit image to screen height when entering fullscreen
+                    const viewportHeight = window.innerHeight;
+                    const imageHeight = 1500;
+                    const fitZoom = viewportHeight / imageHeight;
+                    setZoomLevel(fitZoom); // Start at fit-to-height (~0.7)
+                })
+                .catch((err) => {
+                    console.log("Fullscreen failed:", err);
+                });
+        } else {
+            // Exit fullscreen (back to normal lightbox)
+            document.exitFullscreen().then(() => {
+                setIsFullscreen(false);
+                setZoomLevel(1); // Reset to 100% when exiting fullscreen
+            });
+        }
+    };
+
+    const navigateLightboxImage = (direction: "prev" | "next") => {
+        const totalImages = allImages.length;
+
+        if (direction === "prev") {
+            const newIndex = selectedImageIndex > 0 ? selectedImageIndex - 1 : totalImages - 1;
+            handleImageChange(newIndex);
+        } else {
+            const newIndex = selectedImageIndex < totalImages - 1 ? selectedImageIndex + 1 : 0;
+            handleImageChange(newIndex);
+        }
+
+        // Reset zoom to fit-to-height if in fullscreen mode
+        if (isFullscreen) {
+            const viewportHeight = window.innerHeight;
+            const imageHeight = 1500;
+            const fitZoom = viewportHeight / imageHeight;
+            setZoomLevel(fitZoom);
+        }
     };
 
     const zoomIn = () => {
         const detailStartIndex = 2 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
-        // Detail images: max 3x zoom, Main composite: max 10x zoom
-        const maxZoom = isDetailImage ? 1.5 : 10;
+        if (isFullscreen) {
+            // FULLSCREEN MODE: Discrete zoom levels (fit, 100%, 150%)
+            const viewportHeight = window.innerHeight;
+            const imageHeight = 1500;
+            const fitZoom = viewportHeight / imageHeight; // ~0.7
 
-        setZoomLevel((prev) => Math.min(maxZoom, prev + 0.5));
+            // Define discrete zoom levels for fullscreen
+            const zoomLevels = [fitZoom, 1.0, 1.5];
+
+            // Find next zoom level
+            const currentIndex = zoomLevels.findIndex(
+                (level) => Math.abs(level - zoomLevel) < 0.01,
+            );
+            if (currentIndex < zoomLevels.length - 1) {
+                setZoomLevel(zoomLevels[currentIndex + 1]);
+            }
+        } else {
+            // NORMAL MODE: Incremental zoom with max limits
+            const maxZoom = isDetailImage ? 1.5 : 10;
+            setZoomLevel((prev) => Math.min(maxZoom, prev + 0.5));
+        }
     };
 
     const zoomOut = () => {
-        setZoomLevel((prev) => Math.max(0.5, prev - 0.5));
+        if (isFullscreen) {
+            // FULLSCREEN MODE: Discrete zoom levels (fit, 100%, 150%)
+            const viewportHeight = window.innerHeight;
+            const imageHeight = 1500;
+            const fitZoom = viewportHeight / imageHeight; // ~0.7
+
+            // Define discrete zoom levels for fullscreen
+            const zoomLevels = [fitZoom, 1.0, 1.5];
+
+            // Find previous zoom level
+            const currentIndex = zoomLevels.findIndex(
+                (level) => Math.abs(level - zoomLevel) < 0.01,
+            );
+            if (currentIndex > 0) {
+                setZoomLevel(zoomLevels[currentIndex - 1]);
+            }
+        } else {
+            // NORMAL MODE: Incremental zoom with 50% minimum
+            setZoomLevel((prev) => Math.max(0.5, prev - 0.5));
+        }
     };
 
     const resetZoom = () => {
-        setZoomLevel(1);
-    };
-
-    const getImageSizeForZoom = (zoomLevel: number) => {
-        if (zoomLevel >= 2) {
-            return "ultra";
+        if (isFullscreen) {
+            // FULLSCREEN MODE: Reset to fit-to-height
+            const viewportHeight = window.innerHeight;
+            const imageHeight = 1500;
+            const fitZoom = viewportHeight / imageHeight;
+            setZoomLevel(fitZoom);
+        } else {
+            // NORMAL MODE: Reset to 100%
+            setZoomLevel(1);
         }
-        return "large";
     };
 
     const openDetailLightbox = (index: number) => {
@@ -323,21 +438,18 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     // CHANGE TO (use medium versions for main display):
     const allImages = [
         artwork.images.main,
-        artwork.images.cropped || artwork.images.main,
         ...(artwork.images.croppedAlts || []),
         ...(artwork.images.detailsMedium || artwork.images.details || []), // Use 1600px versions
     ];
 
     const thumbnailImages = [
         artwork.images.main, // Will need thumbnail version later
-        artwork.images.cropped,
         ...(artwork.images.croppedAlts || []),
         ...(artwork.images.detailsThumb || []), // 400px thumbnails
     ];
 
     const hdImages = [
         artwork.images.main,
-        artwork.images.cropped,
         ...(artwork.images.croppedAlts || []),
         ...(artwork.images.details || []), // 2400px HD versions
     ];
@@ -363,7 +475,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 className="hidden lg:block fixed left-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
                 aria-label="Previous artwork"
             >
-                <ChevronLeft size={28} strokeWidth={1} />
+                <ChevronLeft size={40} strokeWidth={1} />
             </button>
 
             <button
@@ -371,7 +483,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 className="hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
                 aria-label="Next artwork"
             >
-                <ChevronRight size={28} strokeWidth={1} />
+                <ChevronRight size={40} strokeWidth={1} />
             </button>
             {/* Main Layout: Image first on mobile (order-1), sidebar second (order-2); side-by-side on desktop */}
             <div className="flex flex-col md:flex-row transition-all duration-300 ease-in-out">
@@ -602,7 +714,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {/* Lightbox */}
             {lightboxOpen &&
                 (() => {
-                    const detailStartIndex = 2 + (artwork.images.croppedAlts?.length || 0);
+                    const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
                     const isDetailImage = selectedImageIndex >= detailStartIndex;
                     const bgColor = isDetailImage ? "#ffffff" : "#e9e9e9";
 
@@ -613,10 +725,31 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         >
                             <button
                                 onClick={closeLightbox}
-                                className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-20"
+                                className="fixed top-4 right-8 text-neutral-800 hover:text-neutral-600 z-20"
                             >
-                                <X size={32} />
+                                <X size={40} strokeWidth={1} />
                             </button>
+                            {/* Previous Image Arrow */}
+                            {allImages.length > 1 && (
+                                <button
+                                    onClick={() => navigateLightboxImage("prev")}
+                                    className="fixed left-6 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 transition-colors z-20"
+                                    aria-label="Previous image"
+                                >
+                                    <ChevronLeft size={40} strokeWidth={1} />
+                                </button>
+                            )}
+
+                            {/* Next Image Arrow */}
+                            {allImages.length > 1 && (
+                                <button
+                                    onClick={() => navigateLightboxImage("next")}
+                                    className="fixed right-6 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 transition-colors z-20"
+                                    aria-label="Next image"
+                                >
+                                    <ChevronRight size={40} strokeWidth={1} />
+                                </button>
+                            )}
 
                             {/* Zoom controls - Desktop only (1024px+), hidden on mobile/tablet */}
                             <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
@@ -642,6 +775,37 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded">
                                     <div className="font-bold">{Math.round(zoomLevel * 100)}%</div>
                                 </div>
+                                <button
+                                    onClick={toggleFullscreen}
+                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center gap-1"
+                                    title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                                >
+                                    {isFullscreen ? (
+                                        // Exit fullscreen icon (arrows pointing in)
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                        >
+                                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+                                        </svg>
+                                    ) : (
+                                        // Enter fullscreen icon (arrows pointing out)
+                                        <svg
+                                            width="16"
+                                            height="16"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                        >
+                                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                                        </svg>
+                                    )}
+                                </button>
                             </div>
 
                             <div
@@ -676,7 +840,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     {artwork.images.details.length > 1 && (
                         <button
                             onClick={() => navigateDetail("prev")}
-                            className="fixed left-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-60"
+                            className=" fixed right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
                         >
                             <ChevronLeft size={48} />
                         </button>
@@ -685,7 +849,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     {artwork.images.details.length > 1 && (
                         <button
                             onClick={() => navigateDetail("next")}
-                            className="fixed right-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-60"
+                            className="fixed right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
                         >
                             <ChevronRight size={48} />
                         </button>

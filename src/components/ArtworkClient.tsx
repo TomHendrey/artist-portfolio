@@ -137,6 +137,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
+        setZoomLevel(1);
         setLightboxOpen(true);
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#e9e9e9";
@@ -159,7 +160,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const zoomOut = () => {
-        setZoomLevel((prev) => Math.max(0.25, prev - 0.5));
+        setZoomLevel((prev) => Math.max(0.5, prev - 0.5));
     };
 
     const resetZoom = () => {
@@ -201,6 +202,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
         // Start fade out
         setIsImageTransitioning(true);
+        setZoomLevel(1);
 
         // Preload the new image first
         const newImageUrl = getCloudinaryUrl(allImages[index], "large");
@@ -558,8 +560,22 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
             {/* ────────────────────── TABLET-ONLY GALLERY (768–1023px) ────────────────────── */}
             {artwork.images.details && artwork.images.details.length > 0 && (
-                <div className="hidden md:block lg:hidden bg-white px-6 py-8">
-                    <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 max-w-4xl mx-auto">
+                <div className="hidden md:block lg:hidden bg-white px-4 py-8">
+                    <div className="grid grid-cols-10 gap-3 max-w-4xl mx-auto">
+                        {/* Main image thumbnail - first position */}
+                        <button
+                            onClick={() => handleImageChange(0)}
+                            className="relative aspect-[4/5] bg-neutral-100 overflow-hidden hover:opacity-80 transition-opacity"
+                        >
+                            <Image
+                                src={getCloudinaryUrl(artwork.images.main, "medium")}
+                                alt={`${artwork.title} - Main view`}
+                                fill
+                                className="object-cover"
+                            />
+                        </button>
+
+                        {/* Detail thumbnails */}
                         {artwork.images.detailsThumb?.map((thumb, index) => {
                             const imageIndex =
                                 2 + (artwork.images.croppedAlts?.length || 0) + index;
@@ -570,7 +586,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     className="relative aspect-[4/5] bg-neutral-100 overflow-hidden hover:opacity-80 transition-opacity"
                                 >
                                     <Image
-                                        src={getCloudinaryUrl(thumb, "quality_auto")}
+                                        src={getCloudinaryUrl(thumb, "medium")}
                                         alt={`${artwork.title} - Detail ${index + 1}`}
                                         fill
                                         className="object-cover"
@@ -584,65 +600,72 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             {/* ────────────────────────────────────────────────────────────────────────────── */}
 
             {/* Lightbox */}
-            {lightboxOpen && (
-                <div
-                    className="fixed inset-0 z-50 overflow-auto"
-                    style={{ backgroundColor: "#e9e9e9" }}
-                >
-                    <button
-                        onClick={closeLightbox}
-                        className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-20"
-                    >
-                        <X size={32} />
-                    </button>
+            {lightboxOpen &&
+                (() => {
+                    const detailStartIndex = 2 + (artwork.images.croppedAlts?.length || 0);
+                    const isDetailImage = selectedImageIndex >= detailStartIndex;
+                    const bgColor = isDetailImage ? "#ffffff" : "#e9e9e9";
 
-                    {/* Zoom controls - Desktop only (1024px+), hidden on mobile/tablet */}
-                    <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
-                        <button
-                            onClick={zoomIn}
-                            className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                    return (
+                        <div
+                            className="fixed inset-0 z-50 overflow-auto"
+                            style={{ backgroundColor: bgColor }}
                         >
-                            + Zoom In
-                        </button>
-                        <button
-                            onClick={zoomOut}
-                            className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
-                        >
-                            - Zoom Out
-                        </button>
-                        <button
-                            onClick={resetZoom}
-                            className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
-                        >
-                            Reset
-                        </button>
+                            <button
+                                onClick={closeLightbox}
+                                className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-20"
+                            >
+                                <X size={32} />
+                            </button>
 
-                        <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded">
-                            <div className="font-bold">{Math.round(zoomLevel * 100)}%</div>
+                            {/* Zoom controls - Desktop only (1024px+), hidden on mobile/tablet */}
+                            <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
+                                <button
+                                    onClick={zoomIn}
+                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                                >
+                                    + Zoom In
+                                </button>
+                                <button
+                                    onClick={zoomOut}
+                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                                >
+                                    - Zoom Out
+                                </button>
+                                <button
+                                    onClick={resetZoom}
+                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                                >
+                                    Reset
+                                </button>
+
+                                <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded">
+                                    <div className="font-bold">{Math.round(zoomLevel * 100)}%</div>
+                                </div>
+                            </div>
+
+                            <div
+                                className="w-full min-h-screen flex items-center justify-center"
+                                style={{ overflow: "auto" }}
+                            >
+                                <Image
+                                    src={getCurrentImageUrl()}
+                                    alt={`${artwork.title} - ${getQualityDescription()}`}
+                                    width={1200 * zoomLevel}
+                                    height={1500 * zoomLevel}
+                                    className="cursor-default"
+                                    style={{ maxWidth: "none", maxHeight: "none" }}
+                                    priority
+                                    quality={95}
+                                />
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="w-full" style={{ textAlign: "center" }}>
-                        <Image
-                            src={getCurrentImageUrl()}
-                            alt={`${artwork.title} - ${getQualityDescription()}`}
-                            width={1200 * zoomLevel}
-                            height={1500 * zoomLevel}
-                            className="cursor-default"
-                            style={{ display: "inline-block", maxWidth: "none", maxHeight: "none" }}
-                            priority
-                            quality={95}
-                        />
-                    </div>
-                </div>
-            )}
+                    );
+                })()}
 
             {/* Detail Images Lightbox */}
             {detailLightboxOpen && artwork.images.details && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center py-10 lg:py-20"
-                    style={{ backgroundColor: "#e9e9e9" }}
-                >
+                <div className="fixed inset-0 z-50 flex items-center justify-center py-10 lg:py-20 bg-white">
                     <button
                         onClick={closeDetailLightbox}
                         className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-60"

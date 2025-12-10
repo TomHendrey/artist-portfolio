@@ -61,8 +61,7 @@ export const artworks: Artwork[] = [
         year: "2025",
         medium: "Oil pastel on wood",
         dimensions: "120 × 160 cm",
-        description:
-            "Study of the surface of Mars, exploring the relationship between digital data and physical texture. This piece examines how satellite imagery transforms our understanding of distant landscapes.",
+        description: "Study of the surface of Mars.",
 
         images: {
             // Main composite image (4096px)
@@ -73,9 +72,9 @@ export const artworks: Artwork[] = [
 
             // High-res progressive loading (Vercel blob storage)
             highRes: {
-                base: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-8.jpg",
-                medium: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-18.jpg",
-                ultra: "https://blob.vercel-storage.com/.../surface-1-composite-cropped-46.jpg",
+                base: "v1761586553/surface-1-cropped-9.jpg",
+                medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-cropped-20.jpg",
+                ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-cropped-74.jpg",
             },
 
             // Detail images - HD versions (2400px) - NOW INCLUDING GALLERY

@@ -163,6 +163,24 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         setLightboxOpen(true);
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#e9e9e9";
+
+        // Open directly into fullscreen mode
+        setTimeout(() => {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement
+                    .requestFullscreen()
+                    .then(() => {
+                        setIsFullscreen(true);
+                        // Calculate and store fit zoom
+                        const fitZoom = calculateFitZoom();
+                        setFitZoomLevel(fitZoom);
+                        setZoomLevel(fitZoom);
+                    })
+                    .catch((err) => {
+                        console.log("Fullscreen request failed:", err);
+                    });
+            }
+        }, 100);
     };
 
     const closeLightbox = () => {
@@ -236,7 +254,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const availableWidth = viewportWidth - 60;
 
         // Use actual aspect ratios: 0.74 for details, 0.792 for main composite
-        let imageAspectRatio = isDetailImage ? 0.74 : 0.792;
+        const imageAspectRatio = isDetailImage ? 0.74 : 0.792;
 
         const baseHeight = 1500;
         const baseWidth = baseHeight * imageAspectRatio;
@@ -255,12 +273,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
-        if (isFullscreen && isDetailImage) {
-            // Detail images: toggle between fit and 120%
-            if (Math.abs(zoomLevel - fitZoomLevel) < 0.05) {
+        if (isDetailImage) {
+            // Detail images: toggle between 100% and 120% (both modes)
+            if (Math.abs(zoomLevel - 1.0) < 0.05) {
                 setZoomLevel(1.2); // Zoom in to 120%
             } else {
-                setZoomLevel(fitZoomLevel); // Zoom out to fit
+                setZoomLevel(1.0); // Zoom out to 100%
             }
         }
         // For main composite, don't do anything on click (use buttons)
@@ -271,12 +289,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
-        if (isFullscreen && isDetailImage) {
-            // Detail images in fullscreen: simple toggle fit → 120%
-            if (Math.abs(zoomLevel - fitZoomLevel) < 0.05) {
+        if (isDetailImage) {
+            // Detail images (both modes): simple toggle 100% → 120%
+            if (Math.abs(zoomLevel - 1.0) < 0.05) {
                 setZoomLevel(1.2);
             }
-        } else if (isFullscreen && !isDetailImage) {
+            // If already at 120%, do nothing (at max)
+        } else if (isFullscreen) {
             // Main composite in fullscreen: three discrete levels
             const zoomLevels = [fitZoomLevel, 1.0, 1.5];
             const currentIndex = zoomLevels.findIndex(
@@ -286,9 +305,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 setZoomLevel(zoomLevels[currentIndex + 1]);
             }
         } else {
-            // Normal mode: incremental zoom with limits
-            const maxZoom = isDetailImage ? 1.5 : 10;
-            setZoomLevel((prev) => Math.min(maxZoom, prev + 0.5));
+            // Main composite in normal mode: incremental zoom up to 1000%
+            setZoomLevel((prev) => Math.min(10, prev + 0.5));
         }
     };
 
@@ -297,12 +315,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
-        if (isFullscreen && isDetailImage) {
-            // Detail images in fullscreen: simple toggle 120% → fit
+        if (isDetailImage) {
+            // Detail images (both modes): simple toggle 120% → 100%
             if (Math.abs(zoomLevel - 1.2) < 0.05) {
-                setZoomLevel(fitZoomLevel);
+                setZoomLevel(1.0);
             }
-        } else if (isFullscreen && !isDetailImage) {
+            // If already at 100%, do nothing (at min)
+        } else if (isFullscreen) {
             // Main composite in fullscreen: three discrete levels
             const zoomLevels = [fitZoomLevel, 1.0, 1.5];
             const currentIndex = zoomLevels.findIndex(
@@ -312,7 +331,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 setZoomLevel(zoomLevels[currentIndex - 1]);
             }
         } else {
-            // Normal mode: incremental zoom
+            // Main composite in normal mode: incremental zoom down to 50%
             setZoomLevel((prev) => Math.max(0.5, prev - 0.5));
         }
     };
@@ -798,41 +817,63 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 const detailStartIndex =
                                     1 + (artwork.images.croppedAlts?.length || 0);
                                 const isDetailImage = selectedImageIndex >= detailStartIndex;
-                                const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
+                                const isAt100 = Math.abs(zoomLevel - 1.0) < 0.05;
 
-                                if (isFullscreen && isDetailImage) {
-                                    // Simplified controls for detail images
+                                if (isDetailImage) {
+                                    // Simplified controls for detail images (both fullscreen and normal)
                                     return (
                                         <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
                                             {/* Single zoom toggle button */}
                                             <button
-                                                onClick={isAtFit ? zoomIn : zoomOut}
+                                                onClick={isAt100 ? zoomIn : zoomOut}
                                                 className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
                                             >
-                                                {isAtFit ? "+ Zoom In" : "- Zoom Out"}
+                                                {isAt100 ? "+ Zoom In" : "- Zoom Out"}
                                             </button>
 
-                                            {/* Clean fullscreen exit button with corner arrows */}
-                                            <button
-                                                onClick={toggleFullscreen}
-                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center"
-                                                title="Exit fullscreen"
-                                            >
-                                                <svg
-                                                    width="20"
-                                                    height="20"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    strokeWidth="1.5"
+                                            {/* Fullscreen button (only if not already in fullscreen) */}
+                                            {!isFullscreen && (
+                                                <button
+                                                    onClick={toggleFullscreen}
+                                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center"
+                                                    title="Enter fullscreen"
                                                 >
-                                                    <path d="M4 14h6m0 0v6m0-6l-7 7M20 14h-6m0 0v6m0-6l7 7M4 10h6m0 0V4m0 6L3 3M20 10h-6m0 0V4m0 6l7-7" />
-                                                </svg>
-                                            </button>
+                                                    <svg
+                                                        width="20"
+                                                        height="20"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.5"
+                                                    >
+                                                        <path d="M15 3h6m0 0v6m0-6l-7 7M9 3H3m0 0v6m0-6l7 7M15 21h6m0 0v-6m0 6l-7-7M9 21H3m0 0v-6m0 6l7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
+
+                                            {/* Exit fullscreen button (only when in fullscreen) */}
+                                            {isFullscreen && (
+                                                <button
+                                                    onClick={toggleFullscreen}
+                                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center"
+                                                    title="Exit fullscreen"
+                                                >
+                                                    <svg
+                                                        width="20"
+                                                        height="20"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.5"
+                                                    >
+                                                        <path d="M4 14h6m0 0v6m0-6l-7 7M20 14h-6m0 0v6m0-6l7 7M4 10h6m0 0V4m0 6L3 3M20 10h-6m0 0V4m0 6l7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
                                         </div>
                                     );
                                 } else {
-                                    // Full controls for main composite
+                                    // Full controls for main composite (unchanged)
                                     return (
                                         <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
                                             <button
@@ -940,8 +981,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                                 1 + (artwork.images.croppedAlts?.length || 0);
                                             const isDetailImage =
                                                 selectedImageIndex >= detailStartIndex;
-                                            // Detail images have zoom cursor, main composite does not
-                                            return isFullscreen && isDetailImage
+                                            // Detail images have zoom cursor in both modes
+                                            return isDetailImage
                                                 ? "cursor-zoom-in"
                                                 : "cursor-default";
                                         })()}

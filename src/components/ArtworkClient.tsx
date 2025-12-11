@@ -379,7 +379,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
         // Start fade out
         setIsImageTransitioning(true);
-        setZoomLevel(1);
+        // Don't reset zoom here - let the caller decide
 
         // Preload the new image first
         const newImageUrl = getCloudinaryUrl(allImages[index], "large");
@@ -404,6 +404,31 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
         // Start loading the image
         img.src = newImageUrl;
+    };
+
+    // Wrapper for thumbnail clicks - changes image and resets zoom to fit
+    const handleThumbnailClick = (index: number) => {
+        handleImageChange(index);
+        // Calculate fit zoom for the new image
+        // We need to temporarily update selectedImageIndex to calculate correctly
+        setTimeout(() => {
+            const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+            const isDetailImage = index >= detailStartIndex;
+
+            const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            const availableHeight = viewportHeight - 60;
+            const availableWidth = viewportWidth - 60;
+            const imageAspectRatio = isDetailImage ? 0.74 : 0.792;
+            const baseHeight = 1500;
+            const baseWidth = baseHeight * imageAspectRatio;
+            const heightZoom = availableHeight / baseHeight;
+            const widthZoom = availableWidth / baseWidth;
+            const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
+
+            setFitZoomLevel(fitZoom);
+            setZoomLevel(fitZoom);
+        }, 10);
     };
 
     const preloadImage = (url: string, quality: string): Promise<void> => {
@@ -692,7 +717,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                         {/* Main image thumbnail - first position */}
                                         <div
                                             className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                                            onClick={() => handleImageChange(0)} // Goes to main image
+                                            onClick={() => handleThumbnailClick(0)} // Goes to main image
                                         >
                                             <Image
                                                 src={getCloudinaryUrl(
@@ -716,7 +741,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                                 <div
                                                     key={thumb}
                                                     className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                                                    onClick={() => handleImageChange(imageIndex)}
+                                                    onClick={() => handleThumbnailClick(imageIndex)}
                                                 >
                                                     <Image
                                                         src={getCloudinaryUrl(thumb, "medium")}
@@ -741,7 +766,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     <div className="grid grid-cols-10 gap-3 max-w-4xl mx-auto">
                         {/* Main image thumbnail - first position */}
                         <button
-                            onClick={() => handleImageChange(0)}
+                            onClick={() => handleThumbnailClick(0)}
                             className="relative aspect-[4/5] bg-neutral-100 overflow-hidden hover:opacity-80 transition-opacity"
                         >
                             <Image
@@ -760,7 +785,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             return (
                                 <button
                                     key={thumb}
-                                    onClick={() => handleImageChange(imageIndex)}
+                                    onClick={() => handleThumbnailClick(imageIndex)}
                                     className="relative aspect-[4/5] bg-neutral-100 overflow-hidden hover:opacity-80 transition-opacity"
                                 >
                                     <Image

@@ -146,7 +146,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             if (!document.fullscreenElement) {
                 // User pressed ESC - exit fullscreen mode but stay in lightbox
                 setIsFullscreen(false);
-                setZoomLevel(1); // Reset zoom when exiting fullscreen
+                // Keep current zoom level - don't reset
             }
         };
 
@@ -159,10 +159,28 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
-        setZoomLevel(1);
         setLightboxOpen(true);
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#e9e9e9";
+
+        // Calculate fit zoom for initial display (for both details and main)
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+        const availableHeight = viewportHeight - 60;
+        const availableWidth = viewportWidth - 60;
+
+        const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+        const isDetailImage = index >= detailStartIndex;
+        const imageAspectRatio = isDetailImage ? 0.74 : 0.792;
+
+        const baseHeight = 1500;
+        const baseWidth = baseHeight * imageAspectRatio;
+        const heightZoom = availableHeight / baseHeight;
+        const widthZoom = availableWidth / baseWidth;
+        const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
+
+        setFitZoomLevel(fitZoom);
+        setZoomLevel(fitZoom);
 
         // Open directly into fullscreen mode
         setTimeout(() => {
@@ -171,7 +189,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     .requestFullscreen()
                     .then(() => {
                         setIsFullscreen(true);
-                        // Calculate and store fit zoom
+                        // Recalculate fit zoom for fullscreen dimensions
                         const fitZoom = calculateFitZoom();
                         setFitZoomLevel(fitZoom);
                         setZoomLevel(fitZoom);
@@ -203,19 +221,25 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 .requestFullscreen()
                 .then(() => {
                     setIsFullscreen(true);
-                    // Calculate and store fit zoom
+                    // Recalculate fit zoom for fullscreen dimensions (but keep current zoom if possible)
                     const fitZoom = calculateFitZoom();
                     setFitZoomLevel(fitZoom);
-                    setZoomLevel(fitZoom);
+                    // Only reset zoom if we're on main composite at fit level
+                    const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+                    const isDetailImage = selectedImageIndex >= detailStartIndex;
+                    if (!isDetailImage && Math.abs(zoomLevel - fitZoomLevel) < 0.05) {
+                        setZoomLevel(fitZoom);
+                    }
+                    // Otherwise keep current zoom level
                 })
                 .catch((err) => {
                     console.log("Fullscreen failed:", err);
                 });
         } else {
-            // Exit fullscreen (back to normal lightbox)
+            // Exit fullscreen (back to normal lightbox) - KEEP current zoom level
             document.exitFullscreen().then(() => {
                 setIsFullscreen(false);
-                setZoomLevel(1);
+                // Don't reset zoom - let it persist
             });
         }
     };
@@ -232,12 +256,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             handleImageChange(newIndex);
         }
 
-        // Reset zoom to fit when navigating in fullscreen
-        if (isFullscreen) {
-            const fitZoom = calculateFitZoom();
-            setFitZoomLevel(fitZoom);
-            setZoomLevel(fitZoom);
-        }
+        // Reset zoom to fit when navigating
+        const fitZoom = calculateFitZoom();
+        setFitZoomLevel(fitZoom);
+        setZoomLevel(fitZoom);
     };
 
     // Calculate optimal zoom level to fit image to screen
@@ -274,11 +296,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images: toggle between 100% and 120% (both modes)
-            if (Math.abs(zoomLevel - 1.0) < 0.05) {
+            // Detail images: toggle between fit and 120%
+            const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
+            if (isAtFit) {
                 setZoomLevel(1.2); // Zoom in to 120%
             } else {
-                setZoomLevel(1.0); // Zoom out to 100%
+                setZoomLevel(fitZoomLevel); // Zoom out to fit
             }
         }
         // For main composite, don't do anything on click (use buttons)
@@ -290,22 +313,14 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images (both modes): simple toggle 100% → 120%
-            if (Math.abs(zoomLevel - 1.0) < 0.05) {
+            // Detail images (both modes): simple toggle fit → 120%
+            const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
+            if (isAtFit) {
                 setZoomLevel(1.2);
             }
             // If already at 120%, do nothing (at max)
-        } else if (isFullscreen) {
-            // Main composite in fullscreen: three discrete levels
-            const zoomLevels = [fitZoomLevel, 1.0, 1.5];
-            const currentIndex = zoomLevels.findIndex(
-                (level) => Math.abs(level - zoomLevel) < 0.05,
-            );
-            if (currentIndex !== -1 && currentIndex < zoomLevels.length - 1) {
-                setZoomLevel(zoomLevels[currentIndex + 1]);
-            }
         } else {
-            // Main composite in normal mode: incremental zoom up to 1000%
+            // Main composite (both modes): incremental zoom up to 1000%
             setZoomLevel((prev) => Math.min(10, prev + 0.5));
         }
     };
@@ -316,22 +331,13 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images (both modes): simple toggle 120% → 100%
+            // Detail images (both modes): simple toggle 120% → fit
             if (Math.abs(zoomLevel - 1.2) < 0.05) {
-                setZoomLevel(1.0);
+                setZoomLevel(fitZoomLevel);
             }
-            // If already at 100%, do nothing (at min)
-        } else if (isFullscreen) {
-            // Main composite in fullscreen: three discrete levels
-            const zoomLevels = [fitZoomLevel, 1.0, 1.5];
-            const currentIndex = zoomLevels.findIndex(
-                (level) => Math.abs(level - zoomLevel) < 0.05,
-            );
-            if (currentIndex > 0) {
-                setZoomLevel(zoomLevels[currentIndex - 1]);
-            }
+            // If already at fit, do nothing (at min)
         } else {
-            // Main composite in normal mode: incremental zoom down to 50%
+            // Main composite (both modes): incremental zoom down to 50%
             setZoomLevel((prev) => Math.max(0.5, prev - 0.5));
         }
     };
@@ -817,7 +823,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 const detailStartIndex =
                                     1 + (artwork.images.croppedAlts?.length || 0);
                                 const isDetailImage = selectedImageIndex >= detailStartIndex;
-                                const isAt100 = Math.abs(zoomLevel - 1.0) < 0.05;
+                                const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
 
                                 if (isDetailImage) {
                                     // Simplified controls for detail images (both fullscreen and normal)
@@ -825,10 +831,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                         <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
                                             {/* Single zoom toggle button */}
                                             <button
-                                                onClick={isAt100 ? zoomIn : zoomOut}
+                                                onClick={isAtFit ? zoomIn : zoomOut}
                                                 className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
                                             >
-                                                {isAt100 ? "+ Zoom In" : "- Zoom Out"}
+                                                {isAtFit ? "+ Zoom In" : "- Zoom Out"}
                                             </button>
 
                                             {/* Fullscreen button (only if not already in fullscreen) */}

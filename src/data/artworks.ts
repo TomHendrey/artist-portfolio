@@ -68,7 +68,7 @@ export const artworks: Artwork[] = [
             main: "v1761586550/surface-1-main-8.jpg",
 
             // Cropped version
-            cropped: "v1761586553/surface-1-cropped-9.jpg",
+            cropped: "v1761586554/surface-1-cropped-9.jpg",
 
             // High-res progressive loading (Vercel blob storage)
             highRes: {

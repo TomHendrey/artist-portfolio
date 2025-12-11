@@ -29,6 +29,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [loadingProgress, setLoadingProgress] = useState<string>("");
     const [isImageTransitioning, setIsImageTransitioning] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const MAIN_ZOOM_LEVELS = [0.65, 1.0, 2.5, 4.0, 5.5, 7.0, 8.5, 10.0];
     // Stores the calculated fit-to-screen zoom level for current image
     const [fitZoomLevel, setFitZoomLevel] = useState(1);
 
@@ -180,8 +181,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
 
         setFitZoomLevel(fitZoom);
-        setZoomLevel(fitZoom);
-
+        // Main composite starts at 65%, details use calculated fit
+        if (isDetailImage) {
+            setZoomLevel(fitZoom);
+        } else {
+            setZoomLevel(0.65); // Start main composite at first zoom level
+        }
         // Open directly into fullscreen mode
         setTimeout(() => {
             if (document.documentElement.requestFullscreen) {
@@ -189,10 +194,16 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     .requestFullscreen()
                     .then(() => {
                         setIsFullscreen(true);
-                        // Recalculate fit zoom for fullscreen dimensions
-                        const fitZoom = calculateFitZoom();
-                        setFitZoomLevel(fitZoom);
-                        setZoomLevel(fitZoom);
+                        // Recalculate fit zoom for fullscreen dimensions (details only)
+                        const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+                        const isDetailImage = index >= detailStartIndex;
+
+                        if (isDetailImage) {
+                            const fitZoom = calculateFitZoom();
+                            setFitZoomLevel(fitZoom);
+                            setZoomLevel(fitZoom);
+                        }
+                        // Main composite keeps 65% zoom
                     })
                     .catch((err) => {
                         console.log("Fullscreen request failed:", err);
@@ -250,16 +261,11 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
         if (direction === "prev") {
             const newIndex = selectedImageIndex > 0 ? selectedImageIndex - 1 : totalImages - 1;
-            handleImageChange(newIndex);
+            handleImageChange(newIndex, true); // true = reset zoom to fit
         } else {
             const newIndex = selectedImageIndex < totalImages - 1 ? selectedImageIndex + 1 : 0;
-            handleImageChange(newIndex);
+            handleImageChange(newIndex, true); // true = reset zoom to fit
         }
-
-        // Reset zoom to fit when navigating
-        const fitZoom = calculateFitZoom();
-        setFitZoomLevel(fitZoom);
-        setZoomLevel(fitZoom);
     };
 
     // Calculate optimal zoom level to fit image to screen
@@ -313,15 +319,16 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images (both modes): simple toggle fit → 120%
+            // Detail images: toggle fit → 120%
             const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
             if (isAtFit) {
                 setZoomLevel(1.2);
             }
-            // If already at 120%, do nothing (at max)
         } else {
-            // Main composite (both modes): incremental zoom up to 1000%
-            setZoomLevel((prev) => Math.min(10, prev + 0.5));
+            // Main composite: step through fixed zoom levels
+            const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
+            const nextIndex = Math.min(currentIndex + 1, MAIN_ZOOM_LEVELS.length - 1);
+            setZoomLevel(MAIN_ZOOM_LEVELS[nextIndex]);
         }
     };
 
@@ -331,22 +338,26 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images (both modes): simple toggle 120% → fit
+            // Detail images: toggle 120% → fit
             if (Math.abs(zoomLevel - 1.2) < 0.05) {
                 setZoomLevel(fitZoomLevel);
             }
-            // If already at fit, do nothing (at min)
         } else {
-            // Main composite (both modes): incremental zoom down to 50%
-            setZoomLevel((prev) => Math.max(0.5, prev - 0.5));
+            // Main composite: step backwards through fixed zoom levels
+            const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
+            const prevIndex = Math.max(currentIndex - 1, 0);
+            setZoomLevel(MAIN_ZOOM_LEVELS[prevIndex]);
         }
     };
 
     const resetZoom = () => {
-        if (isFullscreen) {
-            setZoomLevel(fitZoomLevel);
+        const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+        const isDetailImage = selectedImageIndex >= detailStartIndex;
+
+        if (isDetailImage) {
+            setZoomLevel(fitZoomLevel); // Details reset to fit
         } else {
-            setZoomLevel(1);
+            setZoomLevel(0.65); // Main composite resets to 65%
         }
     };
 
@@ -373,13 +384,38 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     // Handle image transitions with preloading for smooth experience
-    const handleImageChange = (index: number) => {
+    const handleImageChange = (index: number, resetZoom: boolean = false) => {
         // Don't fade out if clicking the same image
         if (index === selectedImageIndex) return;
 
         // Start fade out
         setIsImageTransitioning(true);
-        // Don't reset zoom here - let the caller decide
+
+        // Calculate fit zoom for the NEW image (using the new index, not current state)
+        if (resetZoom) {
+            const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+            const isDetailImage = index >= detailStartIndex;
+
+            if (isDetailImage) {
+                // Detail images: calculate and use fit zoom
+                const viewportHeight = window.innerHeight;
+                const viewportWidth = window.innerWidth;
+                const availableHeight = viewportHeight - 60;
+                const availableWidth = viewportWidth - 60;
+                const imageAspectRatio = 0.74;
+                const baseHeight = 1500;
+                const baseWidth = baseHeight * imageAspectRatio;
+                const heightZoom = availableHeight / baseHeight;
+                const widthZoom = availableWidth / baseWidth;
+                const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
+
+                setFitZoomLevel(fitZoom);
+                setZoomLevel(fitZoom);
+            } else {
+                // Main composite: always reset to 65%
+                setZoomLevel(0.65);
+            }
+        }
 
         // Preload the new image first
         const newImageUrl = getCloudinaryUrl(allImages[index], "large");
@@ -406,29 +442,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         img.src = newImageUrl;
     };
 
-    // Wrapper for thumbnail clicks - changes image and resets zoom to fit
     const handleThumbnailClick = (index: number) => {
-        handleImageChange(index);
-        // Calculate fit zoom for the new image
-        // We need to temporarily update selectedImageIndex to calculate correctly
-        setTimeout(() => {
-            const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
-            const isDetailImage = index >= detailStartIndex;
-
-            const viewportHeight = window.innerHeight;
-            const viewportWidth = window.innerWidth;
-            const availableHeight = viewportHeight - 60;
-            const availableWidth = viewportWidth - 60;
-            const imageAspectRatio = isDetailImage ? 0.74 : 0.792;
-            const baseHeight = 1500;
-            const baseWidth = baseHeight * imageAspectRatio;
-            const heightZoom = availableHeight / baseHeight;
-            const widthZoom = availableWidth / baseWidth;
-            const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
-
-            setFitZoomLevel(fitZoom);
-            setZoomLevel(fitZoom);
-        }, 10);
+        handleImageChange(index, true); // true = reset zoom to fit
     };
 
     const preloadImage = (url: string, quality: string): Promise<void> => {

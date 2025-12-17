@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
@@ -48,17 +48,16 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const MAIN_ZOOM_LEVELS = [0.65, 1.0, 1.5, 2.0, 4.0, 6.0, 8.0];
 
     // Helper function: Calculate responsive zoom for detail images in normal lightbox
-    const calculateDetailNormalZoom = () => {
+    const calculateDetailNormalZoom = useCallback(() => {
         const viewportHeight = window.innerHeight;
         const baseHeight = 1500;
-        const imageAspectRatio = 0.74;
 
         // Calculate zoom that would fit perfectly
         const perfectFitZoom = viewportHeight / baseHeight;
 
         // Apply percentage to add padding
         return perfectFitZoom * ZOOM_CONFIG.DETAIL_NORMAL_PERCENTAGE;
-    };
+    }, [ZOOM_CONFIG.DETAIL_NORMAL_PERCENTAGE]);
 
     // ============================================
     // CLEANUP ON UNMOUNT
@@ -201,6 +200,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         zoomLevel,
         fitZoomLevel,
         artwork.images.croppedAlts?.length,
+        calculateDetailNormalZoom,
     ]);
 
     // ============================================
@@ -553,13 +553,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         artwork.images.main,
         ...(artwork.images.croppedAlts || []),
         ...(artwork.images.detailsMedium || artwork.images.details || []),
-    ];
-
-    // Thumbnail images - 400px for grid
-    const thumbnailImages = [
-        artwork.images.main,
-        ...(artwork.images.croppedAlts || []),
-        ...(artwork.images.detailsThumb || []),
     ];
 
     // HD images - 2400px for lightbox

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { ArrowLeft, X, ZoomIn, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
 import { artworks } from "@/data/artworks";
@@ -14,31 +14,55 @@ interface ArtworkClientProps {
 }
 
 export default function ArtworkClient({ artwork }: ArtworkClientProps) {
+    // ============================================
+    // STATE MANAGEMENT
+    // ============================================
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [zoomLevel, setZoomLevel] = useState(1);
-    const [imageLoading, setImageLoading] = useState(false);
-    const [detailLightboxOpen, setDetailLightboxOpen] = useState(false);
-    const [selectedDetailIndex, setSelectedDetailIndex] = useState(0);
-    const [currentImageQuality, setCurrentImageQuality] = useState<"base" | "medium" | "ultra">(
-        "base",
-    );
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isImageTransitioning, setIsImageTransitioning] = useState(false);
+
+    // Progressive loading state (for main composite only)
     const [mediumResLoaded, setMediumResLoaded] = useState(false);
     const [ultraResLoaded, setUltraResLoaded] = useState(false);
     const [isLoadingHighRes, setIsLoadingHighRes] = useState(false);
-    const [loadingProgress, setLoadingProgress] = useState<string>("");
-    const [isImageTransitioning, setIsImageTransitioning] = useState(false);
-    const [isFullscreen, setIsFullscreen] = useState(false);
-    const MAIN_ZOOM_LEVELS = [0.65, 1.0, 2.5, 4.0, 5.5, 7.0, 8.5, 10.0];
-    // Stores the calculated fit-to-screen zoom level for current image
+
+    // Stores the fit zoom level for detail images
     const [fitZoomLevel, setFitZoomLevel] = useState(1);
 
-    useEffect(() => {
-        setImageLoading(true);
-        const timer = setTimeout(() => setImageLoading(false), 1000);
-        return () => clearTimeout(timer);
-    }, [zoomLevel]);
+    // ============================================
+    // ZOOM CONFIGURATION - EASY TO ADJUST
+    // ============================================
+    const ZOOM_CONFIG = {
+        // Main composite zoom levels (fixed values)
+        MAIN_FULLSCREEN: 0.65,
+        MAIN_NORMAL: 0.65,
 
+        // Detail image zoom levels
+        DETAIL_FULLSCREEN: 0.68, // Fixed: fills fullscreen perfectly
+        DETAIL_NORMAL_PERCENTAGE: 0.85, // Percentage: 85% of screen height (responsive!)
+        DETAIL_ZOOMED: 1.2, // Fixed: 120% clicked zoom
+    };
+
+    const MAIN_ZOOM_LEVELS = [0.65, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0];
+
+    // Helper function: Calculate responsive zoom for detail images in normal lightbox
+    const calculateDetailNormalZoom = () => {
+        const viewportHeight = window.innerHeight;
+        const baseHeight = 1500;
+        const imageAspectRatio = 0.74;
+
+        // Calculate zoom that would fit perfectly
+        const perfectFitZoom = viewportHeight / baseHeight;
+
+        // Apply percentage to add padding
+        return perfectFitZoom * ZOOM_CONFIG.DETAIL_NORMAL_PERCENTAGE;
+    };
+
+    // ============================================
+    // CLEANUP ON UNMOUNT
+    // ============================================
     useEffect(() => {
         return () => {
             document.body.style.overflow = "unset";
@@ -58,48 +82,37 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         };
     }, []);
 
-    // Progressive loading system for main composite image
+    // ============================================
+    // PROGRESSIVE LOADING (Main Composite Only)
+    // ============================================
     useEffect(() => {
         if (lightboxOpen && artwork.images.highRes) {
             console.log("🚀 Starting progressive loading for", artwork.title);
             setIsLoadingHighRes(true);
             setMediumResLoaded(false);
             setUltraResLoaded(false);
-            setCurrentImageQuality("base");
-
-            setLoadingProgress("Showing base quality (8MB)");
 
             if (artwork.images.highRes.medium) {
-                setLoadingProgress("Loading high quality (18MB)...");
                 preloadImage(artwork.images.highRes.medium, "Medium (18MB)")
                     .then(() => {
                         setMediumResLoaded(true);
-                        setCurrentImageQuality("medium");
-                        setLoadingProgress("High quality loaded!");
 
                         if (artwork.images.highRes?.ultra) {
                             setTimeout(() => {
-                                setLoadingProgress("Loading ultra quality (46MB)...");
                                 preloadImage(artwork.images.highRes!.ultra!, "Ultra (46MB)")
                                     .then(() => {
                                         setUltraResLoaded(true);
                                         setIsLoadingHighRes(false);
-                                        setLoadingProgress(
-                                            "Ultra quality ready! Try 400-600% zoom!",
-                                        );
-                                        setTimeout(() => setLoadingProgress(""), 3000);
                                     })
                                     .catch((error) => {
                                         console.error("Ultra res load failed:", error);
                                         setIsLoadingHighRes(false);
-                                        setLoadingProgress("Ultra quality failed to load");
                                     });
                             }, 500);
                         }
                     })
                     .catch((error) => {
                         console.error("Medium res load failed:", error);
-                        setLoadingProgress("High quality failed to load");
                     });
             }
         }
@@ -108,10 +121,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             setMediumResLoaded(false);
             setUltraResLoaded(false);
             setIsLoadingHighRes(false);
-            setCurrentImageQuality("base");
-            setLoadingProgress("");
         }
-    }, [lightboxOpen, artwork.images.highRes]);
+    }, [lightboxOpen, artwork.images.highRes, artwork.title]);
 
     // Load ultra quality when user zooms in past 2.5x
     useEffect(() => {
@@ -124,30 +135,26 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         ) {
             console.log("🔍 High zoom detected, prioritizing ultra quality load");
             setIsLoadingHighRes(true);
-            setLoadingProgress("Loading ultra quality for zoom...");
 
             preloadImage(artwork.images.highRes.ultra, "Ultra (46MB)")
                 .then(() => {
                     setUltraResLoaded(true);
                     setIsLoadingHighRes(false);
-                    setLoadingProgress("Ultra quality ready for detailed viewing!");
-                    setTimeout(() => setLoadingProgress(""), 2000);
                 })
                 .catch((error) => {
                     console.error("Ultra res load failed:", error);
                     setIsLoadingHighRes(false);
-                    setLoadingProgress("");
                 });
         }
-    }, [zoomLevel, lightboxOpen, ultraResLoaded, isLoadingHighRes]);
+    }, [zoomLevel, lightboxOpen, ultraResLoaded, isLoadingHighRes, artwork.images.highRes]);
 
-    // Handle ESC key - exits fullscreen but keeps lightbox open
+    // ============================================
+    // HANDLE ESC KEY - exits fullscreen but keeps lightbox open
+    // ============================================
     useEffect(() => {
         const handleFullscreenChange = () => {
             if (!document.fullscreenElement) {
-                // User pressed ESC - exit fullscreen mode but stay in lightbox
                 setIsFullscreen(false);
-                // Keep current zoom level - don't reset
             }
         };
 
@@ -158,52 +165,74 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         };
     }, []);
 
+    // ============================================
+    // HANDLE WINDOW RESIZE - recalculate detail zoom in non-fullscreen
+    // ============================================
+    useEffect(() => {
+        if (!lightboxOpen || isFullscreen) return;
+
+        const handleResize = () => {
+            const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+            const isDetailImage = selectedImageIndex >= detailStartIndex;
+
+            if (isDetailImage) {
+                // Recalculate responsive zoom for detail images
+                const newZoom = calculateDetailNormalZoom();
+                setFitZoomLevel(newZoom);
+
+                // Only update zoom if we're at the "fit" level (not zoomed in to 120%)
+                const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
+                if (isAtFit) {
+                    setZoomLevel(newZoom);
+                }
+            }
+            // Main composite stays at fixed 0.65, no recalculation needed
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, [
+        lightboxOpen,
+        isFullscreen,
+        selectedImageIndex,
+        zoomLevel,
+        fitZoomLevel,
+        artwork.images.croppedAlts?.length,
+    ]);
+
+    // ============================================
+    // LIGHTBOX FUNCTIONS
+    // ============================================
+
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
         setLightboxOpen(true);
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#e9e9e9";
 
-        // Calculate fit zoom for initial display (for both details and main)
-        const viewportHeight = window.innerHeight;
-        const viewportWidth = window.innerWidth;
-        const availableHeight = viewportHeight - 60;
-        const availableWidth = viewportWidth - 60;
-
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = index >= detailStartIndex;
-        const imageAspectRatio = isDetailImage ? 0.74 : 0.792;
 
-        const baseHeight = 1500;
-        const baseWidth = baseHeight * imageAspectRatio;
-        const heightZoom = availableHeight / baseHeight;
-        const widthZoom = availableWidth / baseWidth;
-        const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
-
-        setFitZoomLevel(fitZoom);
-        // Main composite starts at 65%, details use calculated fit
+        // Set fullscreen zoom immediately (before any rendering)
+        // This prevents flash of non-fullscreen zoom
         if (isDetailImage) {
-            setZoomLevel(fitZoom);
+            setFitZoomLevel(ZOOM_CONFIG.DETAIL_FULLSCREEN);
+            setZoomLevel(ZOOM_CONFIG.DETAIL_FULLSCREEN);
         } else {
-            setZoomLevel(0.65); // Start main composite at first zoom level
+            setZoomLevel(ZOOM_CONFIG.MAIN_FULLSCREEN);
         }
-        // Open directly into fullscreen mode
+
+        // Enter fullscreen after brief delay
         setTimeout(() => {
             if (document.documentElement.requestFullscreen) {
                 document.documentElement
                     .requestFullscreen()
                     .then(() => {
                         setIsFullscreen(true);
-                        // Recalculate fit zoom for fullscreen dimensions (details only)
-                        const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
-                        const isDetailImage = index >= detailStartIndex;
-
-                        if (isDetailImage) {
-                            const fitZoom = calculateFitZoom();
-                            setFitZoomLevel(fitZoom);
-                            setZoomLevel(fitZoom);
-                        }
-                        // Main composite keeps 65% zoom
+                        // Zoom already set correctly above
                     })
                     .catch((err) => {
                         console.log("Fullscreen request failed:", err);
@@ -213,7 +242,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     };
 
     const closeLightbox = () => {
-        // Exit fullscreen if active
         if (document.fullscreenElement) {
             document.exitFullscreen();
         }
@@ -224,126 +252,184 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         document.body.style.backgroundColor = "";
     };
 
-    // Toggle between fullscreen and normal lightbox mode
     const toggleFullscreen = () => {
+        const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+        const isDetailImage = selectedImageIndex >= detailStartIndex;
+
         if (!document.fullscreenElement) {
             // Enter fullscreen
             document.documentElement
                 .requestFullscreen()
                 .then(() => {
                     setIsFullscreen(true);
-                    // Recalculate fit zoom for fullscreen dimensions (but keep current zoom if possible)
-                    const fitZoom = calculateFitZoom();
-                    setFitZoomLevel(fitZoom);
-                    // Only reset zoom if we're on main composite at fit level
-                    const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
-                    const isDetailImage = selectedImageIndex >= detailStartIndex;
-                    if (!isDetailImage && Math.abs(zoomLevel - fitZoomLevel) < 0.05) {
-                        setZoomLevel(fitZoom);
+
+                    if (isDetailImage) {
+                        setFitZoomLevel(ZOOM_CONFIG.DETAIL_FULLSCREEN);
+                        setZoomLevel(ZOOM_CONFIG.DETAIL_FULLSCREEN);
+                    } else {
+                        setZoomLevel(ZOOM_CONFIG.MAIN_FULLSCREEN);
                     }
-                    // Otherwise keep current zoom level
                 })
                 .catch((err) => {
                     console.log("Fullscreen failed:", err);
                 });
         } else {
-            // Exit fullscreen (back to normal lightbox) - KEEP current zoom level
+            // Exit fullscreen
             document.exitFullscreen().then(() => {
                 setIsFullscreen(false);
-                // Don't reset zoom - let it persist
+
+                if (isDetailImage) {
+                    const detailZoom = calculateDetailNormalZoom();
+                    setFitZoomLevel(detailZoom);
+                    setZoomLevel(detailZoom);
+                } else {
+                    setZoomLevel(ZOOM_CONFIG.MAIN_NORMAL);
+                }
             });
         }
     };
 
-    // Navigate between images in lightbox using prev/next arrows
+    // ============================================
+    // IMAGE NAVIGATION
+    // ============================================
+
     const navigateLightboxImage = (direction: "prev" | "next") => {
         const totalImages = allImages.length;
 
         if (direction === "prev") {
             const newIndex = selectedImageIndex > 0 ? selectedImageIndex - 1 : totalImages - 1;
-            handleImageChange(newIndex, true); // true = reset zoom to fit
+            handleImageChange(newIndex, true);
         } else {
             const newIndex = selectedImageIndex < totalImages - 1 ? selectedImageIndex + 1 : 0;
-            handleImageChange(newIndex, true); // true = reset zoom to fit
+            handleImageChange(newIndex, true);
         }
     };
 
-    // Calculate optimal zoom level to fit image to screen
-    // Accounts for image aspect ratio and available viewport space
-    const calculateFitZoom = () => {
-        const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
-        const isDetailImage = selectedImageIndex >= detailStartIndex;
+    const handleImageChange = (index: number, resetZoom: boolean = false) => {
+        if (index === selectedImageIndex) return;
 
-        const viewportHeight = window.innerHeight;
-        const viewportWidth = window.innerWidth;
+        setIsImageTransitioning(true);
 
-        // Reserve space for controls and padding
-        const availableHeight = viewportHeight - 60;
-        const availableWidth = viewportWidth - 60;
+        const newImageUrl = getCloudinaryUrl(allImages[index], "large");
+        const img = document.createElement("img");
 
-        // Use actual aspect ratios: 0.74 for details, 0.792 for main composite
-        const imageAspectRatio = isDetailImage ? 0.74 : 0.792;
+        img.onload = () => {
+            setTimeout(() => {
+                setSelectedImageIndex(index);
 
-        const baseHeight = 1500;
-        const baseWidth = baseHeight * imageAspectRatio;
+                if (resetZoom) {
+                    const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+                    const isDetailImage = index >= detailStartIndex;
+                    const currentlyFullscreen = document.fullscreenElement !== null;
 
-        const heightZoom = availableHeight / baseHeight;
-        const widthZoom = availableWidth / baseWidth;
+                    if (isDetailImage) {
+                        const targetZoom = currentlyFullscreen
+                            ? ZOOM_CONFIG.DETAIL_FULLSCREEN
+                            : calculateDetailNormalZoom();
+                        setFitZoomLevel(targetZoom);
+                        setZoomLevel(targetZoom);
+                    } else {
+                        const targetZoom = currentlyFullscreen
+                            ? ZOOM_CONFIG.MAIN_FULLSCREEN
+                            : ZOOM_CONFIG.MAIN_NORMAL;
+                        setZoomLevel(targetZoom);
+                    }
+                }
 
-        // Use 98% safety margin to prevent any overflow/scrollbars
-        const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
+                setIsImageTransitioning(false);
+            }, 250);
+        };
 
-        return fitZoom;
+        img.onerror = () => {
+            console.error("Failed to preload image");
+            setTimeout(() => {
+                setSelectedImageIndex(index);
+
+                if (resetZoom) {
+                    const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
+                    const isDetailImage = index >= detailStartIndex;
+                    const currentlyFullscreen = document.fullscreenElement !== null;
+
+                    if (isDetailImage) {
+                        const targetZoom = currentlyFullscreen
+                            ? ZOOM_CONFIG.DETAIL_FULLSCREEN
+                            : calculateDetailNormalZoom();
+                        setFitZoomLevel(targetZoom);
+                        setZoomLevel(targetZoom);
+                    } else {
+                        const targetZoom = currentlyFullscreen
+                            ? ZOOM_CONFIG.MAIN_FULLSCREEN
+                            : ZOOM_CONFIG.MAIN_NORMAL;
+                        setZoomLevel(targetZoom);
+                    }
+                }
+
+                setIsImageTransitioning(false);
+            }, 250);
+        };
+
+        img.src = newImageUrl;
     };
 
-    // Handle click-to-zoom on detail images
+    const handleThumbnailClick = (index: number) => {
+        handleImageChange(index, true);
+    };
+
+    // ============================================
+    // ZOOM CONTROLS
+    // ============================================
+
     const handleImageClick = () => {
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images: toggle between fit and 120%
-            const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
+            const currentlyFullscreen = document.fullscreenElement !== null;
+            const fitZoom = currentlyFullscreen
+                ? ZOOM_CONFIG.DETAIL_FULLSCREEN
+                : calculateDetailNormalZoom();
+            const isAtFit = Math.abs(zoomLevel - fitZoom) < 0.05;
+
             if (isAtFit) {
-                setZoomLevel(1.2); // Zoom in to 120%
+                setZoomLevel(ZOOM_CONFIG.DETAIL_ZOOMED);
             } else {
-                setZoomLevel(fitZoomLevel); // Zoom out to fit
+                setZoomLevel(fitZoom);
             }
         }
-        // For main composite, don't do anything on click (use buttons)
     };
 
-    // Zoom in - behavior varies by image type and mode
     const zoomIn = () => {
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images: toggle fit → 120%
-            const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
-            if (isAtFit) {
-                setZoomLevel(1.2);
+            const currentlyFullscreen = document.fullscreenElement !== null;
+            const fitZoom = currentlyFullscreen
+                ? ZOOM_CONFIG.DETAIL_FULLSCREEN
+                : calculateDetailNormalZoom();
+            if (Math.abs(zoomLevel - fitZoom) < 0.05) {
+                setZoomLevel(ZOOM_CONFIG.DETAIL_ZOOMED);
             }
         } else {
-            // Main composite: step through fixed zoom levels
             const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
             const nextIndex = Math.min(currentIndex + 1, MAIN_ZOOM_LEVELS.length - 1);
             setZoomLevel(MAIN_ZOOM_LEVELS[nextIndex]);
         }
     };
 
-    // Zoom out - behavior varies by image type and mode
     const zoomOut = () => {
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
         if (isDetailImage) {
-            // Detail images: toggle 120% → fit
-            if (Math.abs(zoomLevel - 1.2) < 0.05) {
-                setZoomLevel(fitZoomLevel);
+            const currentlyFullscreen = document.fullscreenElement !== null;
+            const fitZoom = currentlyFullscreen
+                ? ZOOM_CONFIG.DETAIL_FULLSCREEN
+                : calculateDetailNormalZoom();
+            if (Math.abs(zoomLevel - ZOOM_CONFIG.DETAIL_ZOOMED) < 0.05) {
+                setZoomLevel(fitZoom);
             }
         } else {
-            // Main composite: step backwards through fixed zoom levels
             const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
             const prevIndex = Math.max(currentIndex - 1, 0);
             setZoomLevel(MAIN_ZOOM_LEVELS[prevIndex]);
@@ -353,98 +439,25 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const resetZoom = () => {
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
+        const currentlyFullscreen = document.fullscreenElement !== null;
 
         if (isDetailImage) {
-            setZoomLevel(fitZoomLevel); // Details reset to fit
+            const detailZoom = currentlyFullscreen
+                ? ZOOM_CONFIG.DETAIL_FULLSCREEN
+                : calculateDetailNormalZoom();
+            setFitZoomLevel(detailZoom);
+            setZoomLevel(detailZoom);
         } else {
-            setZoomLevel(0.65); // Main composite resets to 65%
+            const mainZoom = currentlyFullscreen
+                ? ZOOM_CONFIG.MAIN_FULLSCREEN
+                : ZOOM_CONFIG.MAIN_NORMAL;
+            setZoomLevel(mainZoom);
         }
     };
 
-    const openDetailLightbox = (index: number) => {
-        setSelectedDetailIndex(index);
-        setDetailLightboxOpen(true);
-        document.body.style.overflow = "hidden";
-        document.body.style.backgroundColor = "#e9e9e9";
-    };
-
-    const closeDetailLightbox = () => {
-        setDetailLightboxOpen(false);
-        document.body.style.overflow = "unset";
-        document.body.style.backgroundColor = "";
-    };
-
-    const navigateDetail = (direction: "prev" | "next") => {
-        const detailsLength = artwork.images.details?.length || 0;
-        if (direction === "prev") {
-            setSelectedDetailIndex((prev) => (prev > 0 ? prev - 1 : detailsLength - 1));
-        } else {
-            setSelectedDetailIndex((prev) => (prev < detailsLength - 1 ? prev + 1 : 0));
-        }
-    };
-
-    // Handle image transitions with preloading for smooth experience
-    const handleImageChange = (index: number, resetZoom: boolean = false) => {
-        // Don't fade out if clicking the same image
-        if (index === selectedImageIndex) return;
-
-        // Start fade out
-        setIsImageTransitioning(true);
-
-        // Calculate fit zoom for the NEW image (using the new index, not current state)
-        if (resetZoom) {
-            const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
-            const isDetailImage = index >= detailStartIndex;
-
-            if (isDetailImage) {
-                // Detail images: calculate and use fit zoom
-                const viewportHeight = window.innerHeight;
-                const viewportWidth = window.innerWidth;
-                const availableHeight = viewportHeight - 60;
-                const availableWidth = viewportWidth - 60;
-                const imageAspectRatio = 0.74;
-                const baseHeight = 1500;
-                const baseWidth = baseHeight * imageAspectRatio;
-                const heightZoom = availableHeight / baseHeight;
-                const widthZoom = availableWidth / baseWidth;
-                const fitZoom = Math.min(heightZoom, widthZoom, 1) * 0.98;
-
-                setFitZoomLevel(fitZoom);
-                setZoomLevel(fitZoom);
-            } else {
-                // Main composite: always reset to 65%
-                setZoomLevel(0.65);
-            }
-        }
-
-        // Preload the new image first
-        const newImageUrl = getCloudinaryUrl(allImages[index], "large");
-        const img = document.createElement("img");
-
-        img.onload = () => {
-            // Image fully loaded - now switch and fade in
-            setTimeout(() => {
-                setSelectedImageIndex(index);
-                setIsImageTransitioning(false);
-            }, 250);
-        };
-
-        img.onerror = () => {
-            // If image fails to load, still switch (fallback)
-            console.error("Failed to preload image");
-            setTimeout(() => {
-                setSelectedImageIndex(index);
-                setIsImageTransitioning(false);
-            }, 250);
-        };
-
-        // Start loading the image
-        img.src = newImageUrl;
-    };
-
-    const handleThumbnailClick = (index: number) => {
-        handleImageChange(index, true); // true = reset zoom to fit
-    };
+    // ============================================
+    // IMAGE QUALITY HELPERS
+    // ============================================
 
     const preloadImage = (url: string, quality: string): Promise<void> => {
         return new Promise<void>((resolve, reject) => {
@@ -465,7 +478,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         });
     };
 
-    // Determine which image URL to serve based on zoom level and progressive loading state
     const getCurrentImageUrl = () => {
         const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
@@ -477,11 +489,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             return `https://res.cloudinary.com/${cloudName}/image/upload/${cleanPath}`;
         }
 
-        // DESKTOP: Check if viewing a detail image
         const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
         const isDetailImage = selectedImageIndex >= detailStartIndex;
 
-        // For detail images: use HD version (2400px) for lightbox
+        // For detail images: use HD version (2400px)
         if (isDetailImage && selectedImageIndex < hdImages.length) {
             const hdImage = hdImages[selectedImageIndex];
             if (hdImage) {
@@ -517,12 +528,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         return getCloudinaryUrl(allImages[selectedImageIndex], "large");
     };
 
-    const loadUltraQuality = () => {
-        if (artwork.images.highRes?.ultra && ultraResLoaded) {
-            setCurrentImageQuality("ultra");
-        }
-    };
-
     const getQualityDescription = () => {
         const currentUrl = getCurrentImageUrl();
 
@@ -539,31 +544,37 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         }
     };
 
-    // Main images array - uses medium quality (1600px) for display
-    // Cropped version removed from navigation (only used for progressive loading)
+    // ============================================
+    // IMAGE ARRAYS
+    // ============================================
+
+    // Main images - 1600px for display
     const allImages = [
         artwork.images.main,
         ...(artwork.images.croppedAlts || []),
         ...(artwork.images.detailsMedium || artwork.images.details || []),
     ];
 
-    // Thumbnail images - 400px versions for grid display
+    // Thumbnail images - 400px for grid
     const thumbnailImages = [
         artwork.images.main,
         ...(artwork.images.croppedAlts || []),
         ...(artwork.images.detailsThumb || []),
     ];
 
-    // HD images - 2400px versions for lightbox zoom
+    // HD images - 2400px for lightbox
     const hdImages = [
         artwork.images.main,
         ...(artwork.images.croppedAlts || []),
         ...(artwork.images.details || []),
     ];
 
+    // ============================================
+    // ARTWORK NAVIGATION
+    // ============================================
+
     const router = useRouter();
 
-    // Find current artwork index and get prev/next
     const currentIndex = artworks.findIndex((art) => art.id === artwork.id);
     const prevArtwork =
         currentIndex > 0 ? artworks[currentIndex - 1] : artworks[artworks.length - 1];
@@ -573,6 +584,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const navigateToArtwork = (slug: string) => {
         router.push(`/portfolio/${slug}`);
     };
+
+    // ============================================
+    // RENDER
+    // ============================================
 
     return (
         <div className="bg-white">
@@ -592,11 +607,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
             >
                 <ChevronRight size={40} strokeWidth={1} />
             </button>
-            {/* Main Layout: Image first on mobile (order-1), sidebar second (order-2); side-by-side on desktop */}
+
+            {/* Main Layout */}
             <div className="flex flex-col md:flex-row transition-all duration-300 ease-in-out">
-                {/* IMAGE SECTION - Shows first on mobile, on right on desktop - HIGH PRIORITY, doesn't shrink */}
+                {/* IMAGE SECTION */}
                 <div className="w-full md:flex-[2] lg:min-w-[400px] order-1 md:order-2 transition-all duration-300 ease-in-out">
-                    {/* Mobile + Tablet: White top padding with Back to Portfolio (left) and View HD (right) */}
+                    {/* Mobile + Tablet Header */}
                     <div className="md:hidden bg-white px-6 py-6 flex items-center justify-between">
                         <Link
                             href="/portfolio"
@@ -608,7 +624,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </Link>
                         <button
                             onClick={() => {
-                                // Mobile/Tablet: Open raw Cloudinary URL in new tab for perfect quality
                                 const cloudName = "dutoeewfl";
                                 const cleanPath = allImages[selectedImageIndex].replace(/^\//, "");
                                 const rawUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${cleanPath}`;
@@ -620,7 +635,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </button>
                     </div>
 
-                    {/* Image Container - MOBILE: full size no constraints, TABLET/DESKTOP: height + padding */}
+                    {/* Image Container */}
                     <div className="w-full h-auto md:h-[80vh] lg:h-screen bg-white flex items-center justify-center md:py-8 md:px-4 lg:py-6 lg:px-2">
                         <Image
                             src={getCloudinaryUrl(allImages[selectedImageIndex], "large")}
@@ -629,7 +644,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             height={1500}
                             className={`w-full h-auto md:w-auto md:h-auto md:max-w-full md:max-h-full object-contain cursor-zoom-in transition-opacity duration-500 ${isImageTransitioning ? "opacity-0" : "opacity-100"}`}
                             onClick={() => {
-                                // Mobile/Tablet: Open raw URL in new tab, Desktop: Open lightbox
                                 if (typeof window !== "undefined" && window.innerWidth < 1024) {
                                     const cloudName = "dutoeewfl";
                                     const cleanPath = allImages[selectedImageIndex].replace(
@@ -647,7 +661,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
                 </div>
 
-                {/* DETAILS SIDEBAR - Shows second on mobile, on left on desktop - LOW PRIORITY, shrinks first */}
+                {/* DETAILS SIDEBAR */}
                 <div className="w-full md:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
                     <div className="w-full max-w-[85%] transform ">
                         {/* Back Navigation - Desktop only */}
@@ -662,7 +676,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             </Link>
                         </div>
 
-                        {/* Details Section After Changes*/}
+                        {/* Details Section */}
                         <div className="space-y-6 lg:space-y-8 md:mt-12 lg:mt-32">
                             <div>
                                 <h1 className="text-3xl lg:text-4xl font-light mb-3 lg:mb-4 text-neutral-800 leading-tight">
@@ -688,9 +702,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 </p>
                             </div>
 
-                            {/* Buttons section - elegant, compact, side by side */}
+                            {/* Buttons */}
                             <div className="flex gap-3">
-                                {/* Inquire button - filled/primary */}
                                 <Link
                                     href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
                                     className="inline-flex items-center justify-center bg-neutral-800 text-white px-4 py-2 hover:bg-neutral-700 transition-colors duration-300 text-xs lg:text-sm font-light"
@@ -698,7 +711,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     Inquire
                                 </Link>
 
-                                {/* View High Resolution - Desktop only (mobile/tablet has it in top padding) - outline/secondary */}
                                 <button
                                     onClick={() => openLightbox(selectedImageIndex)}
                                     className="hidden md:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
@@ -707,7 +719,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 </button>
                             </div>
 
-                            {/* ───── GALLERY: Mobile (<768px) + Desktop (≥1024px) ───── */}
+                            {/* Gallery - Mobile + Desktop */}
                             {artwork.images.details && artwork.images.details.length > 0 && (
                                 <div className="block md:hidden lg:block mt-40 lg:mt-12">
                                     {/* Mobile: full-width stacked */}
@@ -727,12 +739,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                             </div>
                                         ))}
                                     </div>
+
                                     {/* Desktop: thumbnail grid */}
                                     <div className="hidden lg:grid lg:grid-cols-5 gap-3">
-                                        {/* Main image thumbnail - first position */}
                                         <div
                                             className="relative aspect-[4/5] bg-neutral-100 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                                            onClick={() => handleThumbnailClick(0)} // Goes to main image
+                                            onClick={() => handleThumbnailClick(0)}
                                         >
                                             <Image
                                                 src={getCloudinaryUrl(
@@ -745,9 +757,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                             />
                                         </div>
 
-                                        {/* Detail thumbnails */}
                                         {artwork.images.detailsThumb?.map((thumb, index) => {
-                                            // Index offset: 1 for main + croppedAlts length
                                             const imageIndex =
                                                 1 +
                                                 (artwork.images.croppedAlts?.length || 0) +
@@ -775,11 +785,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 </div>
             </div>
 
-            {/* ────────────────────── TABLET-ONLY GALLERY (768–1023px) ────────────────────── */}
+            {/* Tablet Gallery */}
             {artwork.images.details && artwork.images.details.length > 0 && (
                 <div className="hidden md:block lg:hidden bg-white px-4 py-8">
                     <div className="grid grid-cols-10 gap-3 max-w-4xl mx-auto">
-                        {/* Main image thumbnail - first position */}
                         <button
                             onClick={() => handleThumbnailClick(0)}
                             className="relative aspect-[4/5] bg-neutral-100 overflow-hidden hover:opacity-80 transition-opacity"
@@ -792,9 +801,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             />
                         </button>
 
-                        {/* Detail thumbnails */}
                         {artwork.images.detailsThumb?.map((thumb, index) => {
-                            // Index offset: 1 for main + croppedAlts length
                             const imageIndex =
                                 1 + (artwork.images.croppedAlts?.length || 0) + index;
                             return (
@@ -815,14 +822,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     </div>
                 </div>
             )}
-            {/* ────────────────────────────────────────────────────────────────────────────── */}
 
             {/* Lightbox */}
             {lightboxOpen &&
                 (() => {
                     const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
                     const isDetailImage = selectedImageIndex >= detailStartIndex;
-                    // White background for details, grey for main composite
                     const bgColor = isDetailImage ? "#ffffff" : "#e9e9e9";
 
                     return (
@@ -830,35 +835,38 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             className="fixed inset-0 z-50 overflow-auto"
                             style={{ backgroundColor: bgColor }}
                         >
-                            <button
-                                onClick={closeLightbox}
-                                className="fixed top-4 right-8 text-neutral-800 hover:text-neutral-600 z-20"
-                            >
-                                <X size={40} strokeWidth={1} />
-                            </button>
-                            {/* Previous Image Arrow */}
-                            {allImages.length > 1 && (
+                            {/* Close button */}
+                            {zoomLevel < 2.0 && (
                                 <button
-                                    onClick={() => navigateLightboxImage("prev")}
-                                    className="fixed left-6 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 transition-colors z-20"
-                                    aria-label="Previous image"
+                                    onClick={closeLightbox}
+                                    className="fixed top-4 right-8 text-neutral-800 hover:text-neutral-600 z-20"
                                 >
-                                    <ChevronLeft size={40} strokeWidth={1} />
+                                    <X size={40} strokeWidth={1} />
                                 </button>
                             )}
 
-                            {/* Next Image Arrow */}
-                            {allImages.length > 1 && (
-                                <button
-                                    onClick={() => navigateLightboxImage("next")}
-                                    className="fixed right-6 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 transition-colors z-20"
-                                    aria-label="Next image"
-                                >
-                                    <ChevronRight size={40} strokeWidth={1} />
-                                </button>
+                            {/* Previous/Next arrows */}
+                            {allImages.length > 1 && zoomLevel < 2.0 && (
+                                <>
+                                    <button
+                                        onClick={() => navigateLightboxImage("prev")}
+                                        className="fixed left-6 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 transition-colors z-20"
+                                        aria-label="Previous image"
+                                    >
+                                        <ChevronLeft size={40} strokeWidth={1} />
+                                    </button>
+
+                                    <button
+                                        onClick={() => navigateLightboxImage("next")}
+                                        className="fixed right-6 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 transition-colors z-20"
+                                        aria-label="Next image"
+                                    >
+                                        <ChevronRight size={40} strokeWidth={1} />
+                                    </button>
+                                </>
                             )}
 
-                            {/* Zoom controls - conditional based on image type */}
+                            {/* Zoom controls */}
                             {(() => {
                                 const detailStartIndex =
                                     1 + (artwork.images.croppedAlts?.length || 0);
@@ -866,62 +874,96 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
 
                                 if (isDetailImage) {
-                                    // Simplified controls for detail images (both fullscreen and normal)
+                                    // Detail image controls - minimal
                                     return (
                                         <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
-                                            {/* Single zoom toggle button */}
                                             <button
                                                 onClick={isAtFit ? zoomIn : zoomOut}
-                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                                                className="text-neutral-800 hover:text-neutral-600 transition-colors flex items-center justify-center"
                                             >
-                                                {isAtFit ? "+ Zoom In" : "- Zoom Out"}
+                                                <span
+                                                    className="text-5xl leading-none"
+                                                    style={{ fontWeight: 100 }}
+                                                >
+                                                    {isAtFit ? "+" : "−"}
+                                                </span>
                                             </button>
 
-                                            {/* Fullscreen button (only if not already in fullscreen) */}
-                                            {!isFullscreen && (
-                                                <button
-                                                    onClick={toggleFullscreen}
-                                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center"
-                                                    title="Enter fullscreen"
-                                                >
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="1.5"
+                                            <button
+                                                onClick={toggleFullscreen}
+                                                className="text-neutral-800 hover:text-neutral-600 transition-colors flex items-center justify-center relative"
+                                                style={{ width: "40px", height: "40px" }}
+                                                title={
+                                                    isFullscreen
+                                                        ? "Exit fullscreen"
+                                                        : "Enter fullscreen"
+                                                }
+                                            >
+                                                {isFullscreen ? (
+                                                    <span
+                                                        className="text-lg leading-none"
+                                                        style={{
+                                                            fontWeight: 100,
+                                                            fontFamily: "system-ui",
+                                                        }}
                                                     >
-                                                        <path d="M15 3h6m0 0v6m0-6l-7 7M9 3H3m0 0v6m0-6l7 7M15 21h6m0 0v-6m0 6l-7-7M9 21H3m0 0v-6m0 6l7-7" />
-                                                    </svg>
-                                                </button>
-                                            )}
-
-                                            {/* Exit fullscreen button (only when in fullscreen) */}
-                                            {isFullscreen && (
-                                                <button
-                                                    onClick={toggleFullscreen}
-                                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center"
-                                                    title="Exit fullscreen"
-                                                >
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="1.5"
+                                                        <span
+                                                            className="absolute"
+                                                            style={{ top: "6px", right: "6px" }}
+                                                        >
+                                                            ↙
+                                                        </span>
+                                                        <span
+                                                            className="absolute"
+                                                            style={{
+                                                                bottom: "0px",
+                                                                left: "6px",
+                                                            }}
+                                                        >
+                                                            ↗
+                                                        </span>
+                                                    </span>
+                                                ) : (
+                                                    <span
+                                                        className="text-lg leading-none"
+                                                        style={{
+                                                            fontWeight: 100,
+                                                            fontFamily: "system-ui",
+                                                        }}
                                                     >
-                                                        <path d="M4 14h6m0 0v6m0-6l-7 7M20 14h-6m0 0v6m0-6l7 7M4 10h6m0 0V4m0 6L3 3M20 10h-6m0 0V4m0 6l7-7" />
-                                                    </svg>
-                                                </button>
-                                            )}
+                                                        <span
+                                                            className="absolute"
+                                                            style={{ top: "6px", right: "6px" }}
+                                                        >
+                                                            ↗
+                                                        </span>
+                                                        <span
+                                                            className="absolute"
+                                                            style={{
+                                                                bottom: "0px",
+                                                                left: "6px",
+                                                            }}
+                                                        >
+                                                            ↙
+                                                        </span>
+                                                    </span>
+                                                )}
+                                            </button>
                                         </div>
                                     );
                                 } else {
-                                    // Full controls for main composite (unchanged)
+                                    // Main composite controls - full
                                     return (
                                         <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
+                                            {zoomLevel >= 2.0 && (
+                                                <button
+                                                    onClick={closeLightbox}
+                                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 flex items-center justify-center"
+                                                    aria-label="Close"
+                                                >
+                                                    <X size={20} strokeWidth={1.5} />
+                                                </button>
+                                            )}
                                             <button
                                                 onClick={zoomIn}
                                                 className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
@@ -940,15 +982,32 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                             >
                                                 Reset
                                             </button>
-
-                                            {/* Percentage indicator ONLY for main composite */}
-                                            <div className="text-neutral-800 text-xs text-center bg-white/90 px-2 py-2 rounded">
-                                                <div className="font-bold">
-                                                    {Math.round(zoomLevel * 100)}%
-                                                </div>
+                                            <div className="bg-neutral-800/70 text-white text-xs text-center px-3 py-2 rounded">
+                                                {Math.round(zoomLevel * 100)}%
                                             </div>
+                                            {allImages.length > 1 && zoomLevel >= 2.0 && (
+                                                <div className="flex gap-3">
+                                                    <button
+                                                        onClick={() =>
+                                                            navigateLightboxImage("prev")
+                                                        }
+                                                        className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 flex items-center justify-center"
+                                                        aria-label="Previous image"
+                                                    >
+                                                        <ChevronLeft size={20} strokeWidth={1.5} />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            navigateLightboxImage("next")
+                                                        }
+                                                        className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 flex items-center justify-center"
+                                                        aria-label="Next image"
+                                                    >
+                                                        <ChevronRight size={20} strokeWidth={1.5} />
+                                                    </button>
+                                                </div>
+                                            )}
 
-                                            {/* Fullscreen button with toggle icons */}
                                             <button
                                                 onClick={toggleFullscreen}
                                                 className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center"
@@ -958,49 +1017,91 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                                         : "Enter fullscreen"
                                                 }
                                             >
-                                                {isFullscreen ? (
-                                                    // Exit fullscreen - arrows pointing inward
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="1.5"
-                                                    >
-                                                        <path d="M4 14h6m0 0v6m0-6l-7 7M20 14h-6m0 0v6m0-6l7 7M4 10h6m0 0V4m0 6L3 3M20 10h-6m0 0V4m0 6l7-7" />
-                                                    </svg>
-                                                ) : (
-                                                    // Enter fullscreen - arrows pointing outward
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="1.5"
-                                                    >
-                                                        <path d="M15 3h6m0 0v6m0-6l-7 7M9 3H3m0 0v6m0-6l7 7M15 21h6m0 0v-6m0 6l-7-7M9 21H3m0 0v-6m0 6l7-7" />
-                                                    </svg>
-                                                )}
+                                                <span
+                                                    className="relative"
+                                                    style={{
+                                                        width: "24px",
+                                                        height: "24px",
+                                                        display: "block",
+                                                    }}
+                                                >
+                                                    {isFullscreen ? (
+                                                        <span
+                                                            className="leading-none"
+                                                            style={{
+                                                                fontWeight: 100,
+                                                                fontFamily: "system-ui",
+                                                            }}
+                                                        >
+                                                            <span
+                                                                className="absolute"
+                                                                style={{
+                                                                    top: "0px",
+                                                                    right: "1px",
+                                                                    fontSize: "14px",
+                                                                }}
+                                                            >
+                                                                ↙
+                                                            </span>
+                                                            <span
+                                                                className="absolute"
+                                                                style={{
+                                                                    bottom: "-1px",
+                                                                    left: "2px",
+                                                                    fontSize: "14px",
+                                                                }}
+                                                            >
+                                                                ↗
+                                                            </span>
+                                                        </span>
+                                                    ) : (
+                                                        <span
+                                                            className="leading-none"
+                                                            style={{
+                                                                fontWeight: 100,
+                                                                fontFamily: "system-ui",
+                                                            }}
+                                                        >
+                                                            <span
+                                                                className="absolute"
+                                                                style={{
+                                                                    top: "0px",
+                                                                    right: "1px",
+                                                                    fontSize: "14px",
+                                                                }}
+                                                            >
+                                                                ↗
+                                                            </span>
+                                                            <span
+                                                                className="absolute"
+                                                                style={{
+                                                                    bottom: "-1px",
+                                                                    left: "2px",
+                                                                    fontSize: "14px",
+                                                                }}
+                                                            >
+                                                                ↙
+                                                            </span>
+                                                        </span>
+                                                    )}
+                                                </span>
                                             </button>
                                         </div>
                                     );
                                 }
                             })()}
 
-                            {/* Image container with conditional overflow handling */}
+                            {/* Image container */}
                             <div
                                 className="w-full overflow-auto"
                                 style={{
-                                    height: "100vh", // Fixed viewport height keeps scrollbar at bottom
+                                    height: "100vh",
                                     overflow: (() => {
                                         const detailStartIndex =
                                             1 + (artwork.images.croppedAlts?.length || 0);
                                         const isDetailImage =
                                             selectedImageIndex >= detailStartIndex;
                                         const isAtFit = Math.abs(zoomLevel - fitZoomLevel) < 0.05;
-                                        // Hide overflow ONLY for detail images at fit zoom
                                         if (isDetailImage && isFullscreen && isAtFit) {
                                             return "hidden";
                                         }
@@ -1012,9 +1113,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     className="flex items-center justify-center"
                                     style={{
                                         width: `${1200 * zoomLevel}px`,
-                                        height: `${1500 * zoomLevel}px`, // Explicit height for image
+                                        height: `${1500 * zoomLevel}px`,
                                         minWidth: "100%",
-                                        minHeight: "100%", // At least viewport height for centering
+                                        minHeight: "100%",
                                     }}
                                 >
                                     <Image
@@ -1027,7 +1128,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                                 1 + (artwork.images.croppedAlts?.length || 0);
                                             const isDetailImage =
                                                 selectedImageIndex >= detailStartIndex;
-                                            // Detail images have zoom cursor in both modes
                                             return isDetailImage
                                                 ? "cursor-zoom-in"
                                                 : "cursor-default";
@@ -1042,50 +1142,6 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
                     );
                 })()}
-
-            {/* Detail Images Lightbox (legacy - not currently used) */}
-            {detailLightboxOpen && artwork.images.details && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center py-10 lg:py-20 bg-white">
-                    <button
-                        onClick={closeDetailLightbox}
-                        className="fixed top-4 right-4 text-neutral-800 hover:text-neutral-600 z-60"
-                    >
-                        <X size={32} />
-                    </button>
-
-                    {artwork.images.details.length > 1 && (
-                        <button
-                            onClick={() => navigateDetail("prev")}
-                            className="fixed left-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
-                        >
-                            <ChevronLeft size={48} />
-                        </button>
-                    )}
-
-                    {artwork.images.details.length > 1 && (
-                        <button
-                            onClick={() => navigateDetail("next")}
-                            className="fixed right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-40"
-                        >
-                            <ChevronRight size={48} />
-                        </button>
-                    )}
-
-                    <div className="max-w-[90vw] lg:max-w-[85vw] h-[85vh] lg:h-[95vh] flex items-center justify-center">
-                        <Image
-                            src={getCloudinaryUrl(
-                                artwork.images.details[selectedDetailIndex],
-                                "large",
-                            )}
-                            alt={`${artwork.title} - Detail ${selectedDetailIndex + 1}`}
-                            width={800}
-                            height={1200}
-                            className="max-w-full max-h-full object-contain"
-                            priority
-                        />
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

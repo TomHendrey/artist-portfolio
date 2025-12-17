@@ -45,7 +45,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         DETAIL_ZOOMED: 1.2, // Fixed: 120% clicked zoom
     };
 
-    const MAIN_ZOOM_LEVELS = [0.65, 1.0, 2.0, 4.0, 6.0, 8.0, 10.0];
+    const MAIN_ZOOM_LEVELS = [0.65, 1.0, 1.5, 2.0, 4.0, 6.0, 8.0];
 
     // Helper function: Calculate responsive zoom for detail images in normal lightbox
     const calculateDetailNormalZoom = () => {

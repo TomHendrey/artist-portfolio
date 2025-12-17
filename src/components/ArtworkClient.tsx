@@ -41,7 +41,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
         // Detail image zoom levels
         DETAIL_FULLSCREEN: 0.68, // Fixed: fills fullscreen perfectly
-        DETAIL_NORMAL_PERCENTAGE: 0.85, // Percentage: 85% of screen height (responsive!)
+        DETAIL_NORMAL_PERCENTAGE: 0.9, // Percentage: 85% of screen height (responsive!)
         DETAIL_ZOOMED: 1.2, // Fixed: 120% clicked zoom
     };
 

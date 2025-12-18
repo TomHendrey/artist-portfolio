@@ -22,6 +22,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const [zoomLevel, setZoomLevel] = useState(1);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isImageTransitioning, setIsImageTransitioning] = useState(false);
+    const [isEnteringFullscreen, setIsEnteringFullscreen] = useState(false); // Prevent resize handler during fullscreen transition
 
     // Progressive loading state (for main composite only)
     const [mediumResLoaded, setMediumResLoaded] = useState(false);
@@ -168,7 +169,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     // HANDLE WINDOW RESIZE - recalculate detail zoom in non-fullscreen
     // ============================================
     useEffect(() => {
-        if (!lightboxOpen || isFullscreen) return;
+        // Block resize handler during fullscreen transitions
+        if (!lightboxOpen || isFullscreen || isEnteringFullscreen) return;
 
         const handleResize = () => {
             const detailStartIndex = 1 + (artwork.images.croppedAlts?.length || 0);
@@ -196,6 +198,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     }, [
         lightboxOpen,
         isFullscreen,
+        isEnteringFullscreen,
         selectedImageIndex,
         zoomLevel,
         fitZoomLevel,
@@ -210,6 +213,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
     const openLightbox = (index: number) => {
         setSelectedImageIndex(index);
         setLightboxOpen(true);
+        setIsEnteringFullscreen(true); // Block resize handler during transition
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#e9e9e9";
 
@@ -232,11 +236,15 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     .requestFullscreen()
                     .then(() => {
                         setIsFullscreen(true);
+                        setIsEnteringFullscreen(false); // Transition complete, allow resize handler
                         // Zoom already set correctly above
                     })
                     .catch((err) => {
                         console.log("Fullscreen request failed:", err);
+                        setIsEnteringFullscreen(false); // Clear flag even if fullscreen fails
                     });
+            } else {
+                setIsEnteringFullscreen(false); // No fullscreen support, clear flag
             }
         }, 100);
     };
@@ -258,10 +266,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
         if (!document.fullscreenElement) {
             // Enter fullscreen
+            setIsEnteringFullscreen(true); // Block resize handler during transition
             document.documentElement
                 .requestFullscreen()
                 .then(() => {
                     setIsFullscreen(true);
+                    setIsEnteringFullscreen(false); // Transition complete
 
                     if (isDetailImage) {
                         setFitZoomLevel(ZOOM_CONFIG.DETAIL_FULLSCREEN);
@@ -272,6 +282,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 })
                 .catch((err) => {
                     console.log("Fullscreen failed:", err);
+                    setIsEnteringFullscreen(false); // Clear flag even if fullscreen fails
                 });
         } else {
             // Exit fullscreen

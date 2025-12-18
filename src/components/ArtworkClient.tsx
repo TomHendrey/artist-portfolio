@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
@@ -31,6 +31,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
     // Stores the fit zoom level for detail images
     const [fitZoomLevel, setFitZoomLevel] = useState(1);
+
+    // Ref to track the scrollable lightbox container for maintaining zoom position
+    const lightboxScrollRef = useRef<HTMLDivElement>(null);
 
     // ============================================
     // ZOOM CONFIGURATION - EASY TO ADJUST
@@ -422,9 +425,36 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 setZoomLevel(ZOOM_CONFIG.DETAIL_ZOOMED);
             }
         } else {
+            // Main composite - maintain scroll position
+            const container = lightboxScrollRef.current;
+            let scrollPercentX = 0.5; // Default to center
+            let scrollPercentY = 0.5;
+
+            if (container) {
+                // Calculate current scroll position as percentage
+                scrollPercentX =
+                    (container.scrollLeft + container.clientWidth / 2) / container.scrollWidth;
+                scrollPercentY =
+                    (container.scrollTop + container.clientHeight / 2) / container.scrollHeight;
+            }
+
             const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
             const nextIndex = Math.min(currentIndex + 1, MAIN_ZOOM_LEVELS.length - 1);
-            setZoomLevel(MAIN_ZOOM_LEVELS[nextIndex]);
+            const newZoom = MAIN_ZOOM_LEVELS[nextIndex];
+
+            setZoomLevel(newZoom);
+
+            // Wait for render, then restore scroll position
+            setTimeout(() => {
+                if (container) {
+                    const newScrollLeft =
+                        scrollPercentX * container.scrollWidth - container.clientWidth / 2;
+                    const newScrollTop =
+                        scrollPercentY * container.scrollHeight - container.clientHeight / 2;
+                    container.scrollLeft = newScrollLeft;
+                    container.scrollTop = newScrollTop;
+                }
+            }, 0);
         }
     };
 
@@ -441,9 +471,36 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 setZoomLevel(fitZoom);
             }
         } else {
+            // Main composite - maintain scroll position
+            const container = lightboxScrollRef.current;
+            let scrollPercentX = 0.5; // Default to center
+            let scrollPercentY = 0.5;
+
+            if (container) {
+                // Calculate current scroll position as percentage
+                scrollPercentX =
+                    (container.scrollLeft + container.clientWidth / 2) / container.scrollWidth;
+                scrollPercentY =
+                    (container.scrollTop + container.clientHeight / 2) / container.scrollHeight;
+            }
+
             const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
             const prevIndex = Math.max(currentIndex - 1, 0);
-            setZoomLevel(MAIN_ZOOM_LEVELS[prevIndex]);
+            const newZoom = MAIN_ZOOM_LEVELS[prevIndex];
+
+            setZoomLevel(newZoom);
+
+            // Wait for render, then restore scroll position
+            setTimeout(() => {
+                if (container) {
+                    const newScrollLeft =
+                        scrollPercentX * container.scrollWidth - container.clientWidth / 2;
+                    const newScrollTop =
+                        scrollPercentY * container.scrollHeight - container.clientHeight / 2;
+                    container.scrollLeft = newScrollLeft;
+                    container.scrollTop = newScrollTop;
+                }
+            }, 0);
         }
     };
 
@@ -1097,6 +1154,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                             {/* Image container */}
                             <div
+                                ref={lightboxScrollRef}
                                 className="w-full overflow-auto"
                                 style={{
                                     height: "100vh",

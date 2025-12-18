@@ -7,6 +7,7 @@ export interface Artwork {
     medium: string;
     dimensions: string;
     description: string;
+    maxZoom?: number;
     images: {
         main: string; // Main image filename (Cloudinary path)
         cropped?: string; // Optional cropped version
@@ -62,6 +63,7 @@ export const artworks: Artwork[] = [
         medium: "Oil pastel on wood",
         dimensions: "120 × 160 cm",
         description: "Study of the surface of Mars.",
+        maxZoom: 8.0,
 
         images: {
             // Main composite image (4096px)
@@ -152,6 +154,7 @@ export const artworks: Artwork[] = [
         dimensions: "120 x 160 cm",
         description:
             "Continuation of the Mars surface study series, focusing on the interplay between scientific observation and artistic interpretation.",
+        maxZoom: 8.0,
         images: {
             main: "v1761586573/surface-2-main-6.jpg",
             cropped: "v1761586574/surface-2-cropped-8.jpg",
@@ -186,6 +189,7 @@ export const artworks: Artwork[] = [
         dimensions: "120 x 160 cm",
         description:
             "The third piece in the Mars surface exploration, delving deeper into the abstraction of planetary data.",
+        maxZoom: 8.0,
         images: {
             main: "v1761586589/surface-3-main-7.jpg",
             cropped: "v1761586593/surface-3-cropped-8.jpg",
@@ -214,6 +218,7 @@ export const artworks: Artwork[] = [
         dimensions: "48 x 70 cm",
         description:
             "Mixed media interpretation of Martian terrain, incorporating both digital and analog techniques.",
+        maxZoom: 4.0,
         images: {
             main: "v1762205836/surface-4-main-7.jpg",
             cropped: "v1761674574/surface-4-cropped-9.jpg",
@@ -237,6 +242,7 @@ export const artworks: Artwork[] = [
         dimensions: "65 x 70 cm",
         description:
             "Advanced exploration of surface textures using contemporary mixed media approaches.",
+        maxZoom: 4.0,
         images: {
             main: "v1761587672/surface-5-main-7.jpg",
             cropped: "v1761587680/surface-5-cropped-8.jpg",
@@ -260,6 +266,7 @@ export const artworks: Artwork[] = [
         dimensions: "70 x 95cm",
         description:
             "Final piece in the current Mars surface series, synthesizing all previous explorations.",
+        maxZoom: 4.0,
         images: {
             main: "v1761608329/surface-6-main-7.jpg",
             cropped: "v1761612469/surface-6-cropped-9.jpg",
@@ -283,6 +290,7 @@ export const artworks: Artwork[] = [
         dimensions: "70 x 95cm",
         description:
             "Marks the beginning of a new series focused on Venusian landscapes, reinterpreting dense atmospheric data into vibrant surface expressions.",
+        maxZoom: 4.0,
         images: {
             main: "v1761674559/surface-7-main-7.jpg",
             cropped: "v1761674561/surface-7-cropped-9.jpg",
@@ -306,6 +314,7 @@ export const artworks: Artwork[] = [
         dimensions: "85 x 95 cm",
         description:
             "Captures the intense heat and pressure of Venus through layered textures and fiery hues, continuing the series' planetary theme.",
+        maxZoom: 4.0,
         images: {
             main: "v1761660151/surface-8-main-7.jpg",
             cropped: "v1761657106/surface-8-cropped-8.jpg",
@@ -329,6 +338,7 @@ export const artworks: Artwork[] = [
         dimensions: "65 x 85cm",
         description:
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition's forms.",
+        maxZoom: 4.0,
         images: {
             main: "v1761674545/surface-9-main-7.jpg",
             cropped: "v1761674549/surface-9-cropped-8.jpg",
@@ -352,6 +362,7 @@ export const artworks: Artwork[] = [
         dimensions: "65 x 85cm",
         description:
             "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
+        maxZoom: 4.0,
         images: {
             main: "v1761587833/surface-12-main-9.jpg",
             cropped: "v1761587835/surface-12-cropped-9.jpg",
@@ -375,6 +386,7 @@ export const artworks: Artwork[] = [
         dimensions: "65 x 85cm",
         description:
             "Combines analog texture with digital prints of planetary data to create a hybrid surface aesthetic.",
+        maxZoom: 4.0,
         images: {
             main: "v1761587814/surface-11-main-8.jpg",
             cropped: "v1761587817/surface-11-cropped-10.jpg",
@@ -398,6 +410,7 @@ export const artworks: Artwork[] = [
         dimensions: "65 x 85cm",
         description:
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
+        maxZoom: 4.0,
         images: {
             main: "v1761587791/surface-10-main-8.jpg",
             cropped: "v1761587790/surface-10-cropped-10.jpg",

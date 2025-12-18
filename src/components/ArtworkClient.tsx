@@ -47,9 +47,18 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         DETAIL_FULLSCREEN: 0.68, // Fixed: fills fullscreen perfectly
         DETAIL_NORMAL_PERCENTAGE: 0.9, // Percentage: 85% of screen height (responsive!)
         DETAIL_ZOOMED: 1.2, // Fixed: 120% clicked zoom
+
+        // Max zoom level (fallback if artwork doesn't specify)
+        MAIN_DEFAULT_MAX_ZOOM: 2.0,
     };
 
     const MAIN_ZOOM_LEVELS = [0.65, 1.0, 1.5, 2.0, 4.0, 6.0, 8.0];
+
+    // Get max zoom for this artwork (use artwork's maxZoom or fallback to default)
+    const maxZoom = artwork.maxZoom || ZOOM_CONFIG.MAIN_DEFAULT_MAX_ZOOM;
+
+    // Filter zoom levels to only include those up to maxZoom
+    const availableZoomLevels = MAIN_ZOOM_LEVELS.filter((level) => level <= maxZoom);
 
     // Helper function: Calculate responsive zoom for detail images in normal lightbox
     const calculateDetailNormalZoom = useCallback(() => {
@@ -425,6 +434,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 setZoomLevel(ZOOM_CONFIG.DETAIL_ZOOMED);
             }
         } else {
+            // Check if already at max zoom
+            const isAtMaxZoom = zoomLevel >= maxZoom;
+            if (isAtMaxZoom) return; // Don't zoom further
+
             // Main composite - maintain scroll position
             const container = lightboxScrollRef.current;
             let scrollPercentX = 0.5; // Default to center
@@ -438,9 +451,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     (container.scrollTop + container.clientHeight / 2) / container.scrollHeight;
             }
 
-            const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
-            const nextIndex = Math.min(currentIndex + 1, MAIN_ZOOM_LEVELS.length - 1);
-            const newZoom = MAIN_ZOOM_LEVELS[nextIndex];
+            const currentIndex = availableZoomLevels.findIndex((level) => level >= zoomLevel);
+            const nextIndex = Math.min(currentIndex + 1, availableZoomLevels.length - 1);
+            const newZoom = availableZoomLevels[nextIndex];
 
             setZoomLevel(newZoom);
 
@@ -484,9 +497,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     (container.scrollTop + container.clientHeight / 2) / container.scrollHeight;
             }
 
-            const currentIndex = MAIN_ZOOM_LEVELS.findIndex((level) => level >= zoomLevel);
+            const currentIndex = availableZoomLevels.findIndex((level) => level >= zoomLevel);
             const prevIndex = Math.max(currentIndex - 1, 0);
-            const newZoom = MAIN_ZOOM_LEVELS[prevIndex];
+            const newZoom = availableZoomLevels[prevIndex];
 
             setZoomLevel(newZoom);
 
@@ -1014,6 +1027,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                     );
                                 } else {
                                     // Main composite controls - full
+                                    const isAtMaxZoom = zoomLevel >= maxZoom;
+
                                     return (
                                         <div
                                             className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20"
@@ -1021,7 +1036,12 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                         >
                                             <button
                                                 onClick={zoomIn}
-                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-xs"
+                                                disabled={isAtMaxZoom}
+                                                className={`bg-neutral-800/70 text-white px-3 py-2 rounded text-xs ${
+                                                    isAtMaxZoom
+                                                        ? "opacity-40 cursor-not-allowed"
+                                                        : "hover:bg-neutral-800/90"
+                                                }`}
                                             >
                                                 + Zoom In
                                             </button>

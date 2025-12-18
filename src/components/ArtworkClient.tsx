@@ -1015,31 +1015,25 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 } else {
                                     // Main composite controls - full
                                     return (
-                                        <div className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20">
-                                            {zoomLevel >= 2.0 && (
-                                                <button
-                                                    onClick={closeLightbox}
-                                                    className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 flex items-center justify-center"
-                                                    aria-label="Close"
-                                                >
-                                                    <X size={20} strokeWidth={1.5} />
-                                                </button>
-                                            )}
+                                        <div
+                                            className="hidden lg:flex fixed top-4 left-4 flex-col gap-2 z-20"
+                                            style={{ width: "110px" }}
+                                        >
                                             <button
                                                 onClick={zoomIn}
-                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-xs"
                                             >
                                                 + Zoom In
                                             </button>
                                             <button
                                                 onClick={zoomOut}
-                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-xs"
                                             >
                                                 - Zoom Out
                                             </button>
                                             <button
                                                 onClick={resetZoom}
-                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm"
+                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-xs"
                                             >
                                                 Reset
                                             </button>
@@ -1052,7 +1046,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                                         onClick={() =>
                                                             navigateLightboxImage("prev")
                                                         }
-                                                        className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 flex items-center justify-center"
+                                                        className="bg-neutral-800/70 text-white px-3 py-1.5 rounded hover:bg-neutral-800/90 flex items-center justify-center flex-1"
                                                         aria-label="Previous image"
                                                     >
                                                         <ChevronLeft size={20} strokeWidth={1.5} />
@@ -1061,7 +1055,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                                         onClick={() =>
                                                             navigateLightboxImage("next")
                                                         }
-                                                        className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 flex items-center justify-center"
+                                                        className="bg-neutral-800/70 text-white px-3 py-1.5 rounded hover:bg-neutral-800/90 flex items-center justify-center flex-1"
                                                         aria-label="Next image"
                                                     >
                                                         <ChevronRight size={20} strokeWidth={1.5} />
@@ -1069,84 +1063,95 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                                 </div>
                                             )}
 
-                                            <button
-                                                onClick={toggleFullscreen}
-                                                className="bg-neutral-800/70 text-white px-3 py-2 rounded hover:bg-neutral-800/90 text-sm flex items-center justify-center"
-                                                title={
-                                                    isFullscreen
-                                                        ? "Exit fullscreen"
-                                                        : "Enter fullscreen"
-                                                }
-                                            >
-                                                <span
-                                                    className="relative"
-                                                    style={{
-                                                        width: "24px",
-                                                        height: "24px",
-                                                        display: "block",
-                                                    }}
+                                            <div className="flex gap-3">
+                                                <button
+                                                    onClick={toggleFullscreen}
+                                                    className="bg-neutral-800/70 text-white px-3 py-1 rounded hover:bg-neutral-800/90 flex items-center justify-center flex-1"
+                                                    title={
+                                                        isFullscreen
+                                                            ? "Exit fullscreen"
+                                                            : "Enter fullscreen"
+                                                    }
                                                 >
-                                                    {isFullscreen ? (
-                                                        <span
-                                                            className="leading-none"
-                                                            style={{
-                                                                fontWeight: 100,
-                                                                fontFamily: "system-ui",
-                                                            }}
-                                                        >
+                                                    <span
+                                                        className="relative"
+                                                        style={{
+                                                            width: "24px",
+                                                            height: "24px",
+                                                            display: "block",
+                                                        }}
+                                                    >
+                                                        {isFullscreen ? (
                                                             <span
-                                                                className="absolute"
+                                                                className="leading-none"
                                                                 style={{
-                                                                    top: "0px",
-                                                                    right: "1px",
-                                                                    fontSize: "14px",
+                                                                    fontWeight: 100,
+                                                                    fontFamily: "system-ui",
                                                                 }}
                                                             >
-                                                                ↙
+                                                                <span
+                                                                    className="absolute"
+                                                                    style={{
+                                                                        top: "2px",
+                                                                        right: "2px",
+                                                                        fontSize: "12px",
+                                                                    }}
+                                                                >
+                                                                    ↙
+                                                                </span>
+                                                                <span
+                                                                    className="absolute"
+                                                                    style={{
+                                                                        bottom: "0px",
+                                                                        left: "3px",
+                                                                        fontSize: "12px",
+                                                                    }}
+                                                                >
+                                                                    ↗
+                                                                </span>
                                                             </span>
+                                                        ) : (
                                                             <span
-                                                                className="absolute"
+                                                                className="leading-none"
                                                                 style={{
-                                                                    bottom: "-1px",
-                                                                    left: "2px",
-                                                                    fontSize: "14px",
+                                                                    fontWeight: 100,
+                                                                    fontFamily: "system-ui",
                                                                 }}
                                                             >
-                                                                ↗
+                                                                <span
+                                                                    className="absolute"
+                                                                    style={{
+                                                                        top: "2px",
+                                                                        right: "2px",
+                                                                        fontSize: "12px",
+                                                                    }}
+                                                                >
+                                                                    ↗
+                                                                </span>
+                                                                <span
+                                                                    className="absolute"
+                                                                    style={{
+                                                                        bottom: "0px",
+                                                                        left: "2px",
+                                                                        fontSize: "12px",
+                                                                    }}
+                                                                >
+                                                                    ↙
+                                                                </span>
                                                             </span>
-                                                        </span>
-                                                    ) : (
-                                                        <span
-                                                            className="leading-none"
-                                                            style={{
-                                                                fontWeight: 100,
-                                                                fontFamily: "system-ui",
-                                                            }}
-                                                        >
-                                                            <span
-                                                                className="absolute"
-                                                                style={{
-                                                                    top: "0px",
-                                                                    right: "1px",
-                                                                    fontSize: "14px",
-                                                                }}
-                                                            >
-                                                                ↗
-                                                            </span>
-                                                            <span
-                                                                className="absolute"
-                                                                style={{
-                                                                    bottom: "-1px",
-                                                                    left: "2px",
-                                                                    fontSize: "14px",
-                                                                }}
-                                                            >
-                                                                ↙
-                                                            </span>
-                                                        </span>
-                                                    )}
-                                                </span>
-                                            </button>
+                                                        )}
+                                                    </span>
+                                                </button>
+                                                {zoomLevel >= 2.0 && (
+                                                    <button
+                                                        onClick={closeLightbox}
+                                                        className="bg-neutral-800/70 text-white px-3 py-1 rounded hover:bg-neutral-800/90 flex items-center justify-center flex-1"
+                                                        aria-label="Close"
+                                                    >
+                                                        <X size={20} strokeWidth={1.5} />
+                                                    </button>
+                                                )}
+                                            </div>
                                         </div>
                                     );
                                 }

@@ -170,69 +170,81 @@ export const artworks: Artwork[] = [
             details: [
                 // Gallery views first
                 "v1767658253/surface-2-g-front-2-24.jpg",
+
                 "v1767658254/surface-2-g-left-2-24.jpg",
                 // Close-up details
 
                 "v1767658902/surface-2-closeup-2-24.jpg",
-                "v1767658919/surface-2-closeup-6-24.jpg",
+
                 "v1767658902/surface-2-closeup-3-24.jpg",
+
+                "v1767658912/surface-2-closeup-7-24.jpg",
+
+                "v1767658919/surface-2-closeup-6-24.jpg",
 
                 "v1767658988/surface-2-closeup-10-24.jpg",
 
-                "v1767658981/surface-2-closeup-5-24.jpg",
                 "v1767658981/surface-2-closeup-11-24.jpg",
 
-                "v1767658988/surface-2-closeup-12-24.jpg",
+                "v1767658981/surface-2-closeup-5-24.jpg",
 
+                // "v1767658988/surface-2-closeup-12-24.jpg",
                 // "v1767658973/surface-2-closeup-13-24.jpg",
                 // "v1767658982/surface-2-closeup-14-24.jpg",
-                // "v1767658912/surface-2-closeup-7-24.jpg",
                 // "v1767658986/surface-2-closeup-8-24.jpg",
             ],
             // Detail images - Medium versions (1600px) - INCLUDING GALLERY
             detailsMedium: [
                 // Gallery views first
                 "v1767658245/surface-2-g-front-2-16.jpg",
+
                 "v1767658244/surface-2-g-left-2-16.jpg",
                 // Close-up details
 
                 "v1767658868/surface-2-closeup-2-16.jpg",
-                "v1767658893/surface-2-closeup-6-16.jpg",
+
                 "v1767658871/surface-2-closeup-3-16.jpg",
+
+                "v1767658875/surface-2-closeup-7-16.jpg",
+
+                "v1767658893/surface-2-closeup-6-16.jpg",
 
                 "v1767658884/surface-2-closeup-10-16.jpg",
 
-                "v1767658873/surface-2-closeup-5-16.jpg",
                 "v1767658876/surface-2-closeup-11-16.jpg",
 
-                "v1767658882/surface-2-closeup-12-16.jpg",
+                "v1767658873/surface-2-closeup-5-16.jpg",
 
+                // "v1767658882/surface-2-closeup-12-16.jpg",
                 // "v1767658887/surface-2-closeup-13-16.jpg",
                 // "v1767658888/surface-2-closeup-14-16.jpg",
-                // "v1767658875/surface-2-closeup-7-16.jpg",
                 // "v1767658891/surface-2-closeup-8-16.jpg",
             ],
             // Detail images - Thumbnails (400px) - INCLUDING GALLERY
             detailsThumb: [
                 // Gallery views first
                 "v1767657835/surface-2-g-front-2-thumb.jpg",
+
                 "v1767657838/surface-2-g-left-2-thumb.jpg",
                 // Close-up details
 
                 "v1767657831/surface-2-closeup-2-thumb-b.jpg",
-                "v1767657841/surface-2-closeup-6-thumb-b.jpg",
 
                 "v1767657832/surface-2-closeup-3-thumb-b.jpg",
 
+                "v1767657842/surface-2-closeup-7-thumb-b.jpg",
+
+                "v1767657841/surface-2-closeup-6-thumb-b.jpg",
+
                 "v1767657843/surface-2-closeup-10-thumb-b.jpg",
-                "v1767657839/surface-2-closeup-5-thumb-b.jpg",
+
                 "v1767657832/surface-2-closeup-11-thumb-b.jpg",
 
-                "v1767657832/surface-2-closeup-12-thumb-b.jpg",
+                "v1767657839/surface-2-closeup-5-thumb-b.jpg",
 
+                // "v1767657832/surface-2-closeup-12-thumb-b.jpg",
                 // "v1767657833/surface-2-closeup-13-thumb-b.jpg",
                 // "v1767657834/surface-2-closeup-14-thumb-b.jpg",
-                // "v1767657842/surface-2-closeup-7-thumb-b.jpg",
                 // "v1767657842/surface-2-closeup-8-thumb-b.jpg",
             ],
         },

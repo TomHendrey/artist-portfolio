@@ -58,50 +58,26 @@ export default function Portfolio() {
 
     return (
         <div className="pt-16 min-h-screen bg-white">
-            {/* Header */}
-            <div className="py-14 px-4 bg-neutral-50">
-                <div className="max-w-7xl mx-auto text-left">
-                    <div className="ml-4">
-                        <h1 className="text-4xl md:text-5xl font-light mb-4 text-neutral-800">
-                            Works
-                        </h1>
-                        <p
-                            className="text-lg text-neutral-600 max-w-2xl"
-                            style={{ fontFamily: "Courier New, monospace" }}
-                        >
-                            A collection of recent paintings exploring the use of technology, and
-                            the transformation of data.
-                        </p>
-                    </div>
+            {/* Simplified Header */}
+            <div className="py-12 px-4">
+                <div className="max-w-[1400px] mx-auto text-left">
+                    <h1 className="text-2xl md:text-3xl font-light text-neutral-800 mb-4 ml-4">
+                        Surfaces
+                    </h1>
+                    <p
+                        className="text-base md:text-lg text-neutral-600 max-w-2xl ml-4"
+                        style={{ fontFamily: "Courier New, monospace" }}
+                    >
+                        [Your description text here]
+                    </p>
                 </div>
             </div>
 
-            {/* Filter Buttons */}
-            {/* <div className="py-8 px-4 border-neutral-200"> */}
-            {/*     <div className="max-w-7xl mx-auto"> */}
-            {/*         <div className="flex flex-wrap gap-4 ml-4"> */}
-            {/*             {filters.map((filterOption) => ( */}
-            {/*                 <button */}
-            {/*                     key={filterOption} */}
-            {/*                     onClick={() => setFilter(filterOption)} */}
-            {/*                     className={`px-4 py-2 text-sm font-light transition-colors duration-200 ${ */}
-            {/*                         filter === filterOption */}
-            {/*                             ? "bg-neutral-800 text-white" */}
-            {/*                             : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200" */}
-            {/*                     }`} */}
-            {/*                 > */}
-            {/*                     {filterOption.charAt(0).toUpperCase() + filterOption.slice(1)} */}
-            {/*                 </button> */}
-            {/*             ))} */}
-            {/*         </div> */}
-            {/*     </div> */}
-            {/* </div> */}
-            {/**/}
-            {/* Gallery Grid */}
-            <div className="py-12 px-4 max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+            {/* Gallery Grid with Increased Row Spacing */}
+            <div className="py-12 px-4 max-w-[1400px] mx-auto pb-32">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-26">
                     {filteredArtworks.map((artwork) => (
-                        <div key={artwork.id} className="group ">
+                        <div key={artwork.id} className="group">
                             {/* Link to individual artwork page */}
                             <Link href={`/portfolio/${artwork.slug}`} className="block">
                                 <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-neutral-100">
@@ -109,17 +85,17 @@ export default function Portfolio() {
                                         src={getCloudinaryUrl(artwork.images.main, "medium")}
                                         alt={artwork.title}
                                         fill
-                                        className="object-cover  group-hover:scale-105 transition-transform duration-500 "
+                                        className="object-cover group-hover:scale-[1.01] transition-transform duration-500"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        priority={artwork.id <= 6} // Prioritize first 6 images
+                                        priority={artwork.id <= 6}
                                     />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
                                 </div>
                             </Link>
 
-                            <div className="space-y-1 pb-22 md:pb-0 ">
+                            <div className="space-y-1 pb-22 md:pb-0">
                                 <Link href={`/portfolio/${artwork.slug}`}>
-                                    <h3 className="text-base  pb-1 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
+                                    <h3 className="text-base pb-1 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
                                         {artwork.title}
                                     </h3>
                                 </Link>
@@ -130,7 +106,7 @@ export default function Portfolio() {
                                     {artwork.year} • {artwork.medium}
                                 </p>
                                 <p
-                                    className="text-sm text-neutral-500 "
+                                    className="text-sm text-neutral-500"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     {artwork.dimensions}
@@ -149,32 +125,35 @@ export default function Portfolio() {
                 </div>
             </div>
 
-            {/* Lightbox - UPDATED VERSION */}
+            {/* Lightbox */}
             {selectedArtwork && selectedArt && (
                 <div className="fixed inset-0 z-50 bg-white flex items-center justify-center p-4">
                     <button
                         onClick={closeLightbox}
-                        className="absolute top-4 right-4 text-neutral-800 hover:text-neutral-600 z-10"
+                        className="absolute top-4 right-8 text-neutral-400 hover:text-neutral-800 z-10"
+                        aria-label="Close"
                     >
-                        <X size={32} />
+                        <X size={40} strokeWidth={1} />
                     </button>
 
                     <button
                         onClick={() => navigateLightbox("prev")}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-10"
+                        className="absolute left-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-10"
+                        aria-label="Previous"
                     >
-                        <ChevronLeft size={32} />
+                        <ChevronLeft size={40} strokeWidth={1} />
                     </button>
 
                     <button
                         onClick={() => navigateLightbox("next")}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-800 hover:text-neutral-600 z-10"
+                        className="absolute right-6 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-800 transition-colors z-10"
+                        aria-label="Next"
                     >
-                        <ChevronRight size={32} />
+                        <ChevronRight size={40} strokeWidth={1} />
                     </button>
 
                     <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center gap-8">
-                        {/* Image container - larger display */}
+                        {/* Image container */}
                         <div className="flex-1 relative flex items-center justify-center max-h-[90vh]">
                             <Image
                                 src={getCloudinaryUrl(selectedArt.images.main, "large")}
@@ -186,25 +165,31 @@ export default function Portfolio() {
                         </div>
 
                         {/* Details sidebar */}
-                        <div
-                            className="lg:w-80 space-y-4"
-                            style={{ fontFamily: "Courier New, monospace" }}
-                        >
-                            <h2 className="text-2xl font-light text-neutral-800">
+                        <div className="lg:w-80 space-y-4">
+                            <h2
+                                className="text-2xl font-light text-neutral-800"
+                                style={{
+                                    fontFamily:
+                                        "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+                                }}
+                            >
                                 {selectedArt.title}
                             </h2>
-                            <p className="text-neutral-600">{selectedArt.year}</p>
-                            <p className="text-neutral-600">{selectedArt.medium}</p>
-                            <p className="text-neutral-600">{selectedArt.dimensions}</p>
-                            {selectedArt.description && (
-                                <p className="text-sm text-neutral-600 leading-relaxed">
-                                    {selectedArt.description}
-                                </p>
-                            )}
+                            <div style={{ fontFamily: "Courier New, monospace" }}>
+                                <p className="text-neutral-600">{selectedArt.year}</p>
+                                <p className="text-neutral-600">{selectedArt.medium}</p>
+                                <p className="text-neutral-600">{selectedArt.dimensions}</p>
+                                {selectedArt.description && (
+                                    <p className="text-sm text-neutral-600 leading-relaxed">
+                                        {selectedArt.description}
+                                    </p>
+                                )}
+                            </div>
 
                             <Link
                                 href={`/portfolio/${selectedArt.slug}`}
                                 className="inline-block mt-4 text-sm text-neutral-800 hover:text-neutral-600 border-b border-neutral-800"
+                                style={{ fontFamily: "Courier New, monospace" }}
                                 onClick={closeLightbox}
                             >
                                 View Full Details

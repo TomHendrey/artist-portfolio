@@ -45,17 +45,24 @@ export default function Home() {
                                     />
                                 </div>
                             </Link>
-                            <div
-                                className="mt-6 text-left"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                <h3 className="text-neutral-800 font-light text-base">
-                                    {artwork.title}
-                                </h3>
-                                <p className="text-neutral-600 text-sm mt-1">
+                            <div className="space-y-1 pb-22 md:pb-0 mt-6">
+                                <Link href={`/portfolio/${artwork.slug}`}>
+                                    <h3 className="text-base pb-1 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
+                                        {artwork.title}
+                                    </h3>
+                                </Link>
+                                <p
+                                    className="text-sm text-neutral-600"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
                                     {artwork.year} • {artwork.medium}
                                 </p>
-                                <p className="text-neutral-600 text-sm">{artwork.dimensions}</p>
+                                <p
+                                    className="text-sm text-neutral-500"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    {artwork.dimensions}
+                                </p>
                             </div>
                         </div>
                     ))}
@@ -76,7 +83,9 @@ export default function Home() {
             {/* About Preview */}
             <section className="py-30 px-4 bg-neutral-100">
                 <div className="max-w-4xl mx-auto text-left-center">
-                    <h2 className="text-3xl md:text-4xl font-light mb-8 text-neutral-800">About</h2>
+                    <h2 className="text-3xl md:text-4xl font-light mb-8 text-neutral-800">
+                        Studio
+                    </h2>
                     <p
                         className="text-lg text-neutral-600 mb-8 leading-relaxed"
                         style={{ fontFamily: "Courier New, monospace" }}

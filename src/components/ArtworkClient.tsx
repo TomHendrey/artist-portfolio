@@ -751,9 +751,9 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
 
                         {/* Details Section */}
-                        <div className="space-y-6 lg:space-y-8 md:mt-12 lg:mt-32">
+                        <div className="space-y-6 lg:space-y-8 md:mt-12 lg:mt-38">
                             <div>
-                                <h1 className="text-3xl lg:text-4xl font-light mb-3 lg:mb-4 text-neutral-800 leading-tight">
+                                <h1 className="text-2xl md:text-3xl font-light text-neutral-800 mb-6 leading-tight">
                                     {artwork.title}
                                 </h1>
                                 <div
@@ -781,6 +781,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 <Link
                                     href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
                                     className="inline-flex items-center justify-center bg-neutral-800 text-white px-4 py-2 hover:bg-neutral-700 transition-colors duration-300 text-xs lg:text-sm font-light"
+                                    // className="hidden md:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
                                 >
                                     Inquire
                                 </Link>
@@ -795,7 +796,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
 
                             {/* Gallery - Mobile + Desktop */}
                             {artwork.images.details && artwork.images.details.length > 0 && (
-                                <div className="block md:hidden lg:block mt-40 lg:mt-12">
+                                <div className="block md:hidden lg:block mt-40 lg:mt-20">
                                     {/* Mobile: full-width stacked */}
                                     <div className="md:hidden space-y-6">
                                         {artwork.images.details.map((detail, index) => (

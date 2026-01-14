@@ -16,7 +16,7 @@ export default function Home() {
             <HeroSection />
 
             {/* Featured Works Preview - VERTICAL STACKED LAYOUT */}
-            <section className="py-60 px-4 mx-auto" style={{ maxWidth: "45rem" }}>
+            <section className="py-40 px-4 mx-auto" style={{ maxWidth: "45rem" }}>
                 <h2 className="text-left mb-20">
                     <div className="text-2xl md:text-3xl font-light text-neutral-800 mb-6">
                         Featured Works

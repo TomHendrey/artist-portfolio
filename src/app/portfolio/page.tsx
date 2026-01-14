@@ -74,7 +74,7 @@ export default function Portfolio() {
             </div>
 
             {/* Gallery Grid with Increased Row Spacing */}
-            <div className="py-12 px-4 max-w-[1400px] mx-auto pb-32">
+            <div className="py-4 px-4 max-w-[1400px] mx-auto pb-32">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-26">
                     {filteredArtworks.map((artwork) => (
                         <div key={artwork.id} className="group">

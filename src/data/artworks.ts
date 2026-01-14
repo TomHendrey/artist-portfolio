@@ -307,15 +307,29 @@ export const artworks: Artwork[] = [
             main: "v1762205836/surface-4-main-7.jpg",
             cropped: "v1761674574/surface-4-cropped-9.jpg",
             croppedAlts: [],
-            details: ["v1762861158/surface-4-g-front-1_qetuvy.jpg"],
-            // detailsMedium: [
-            //     // Add 1600px versions here
-            //     "v1762861158/surface-4-g-front-1_qetuvy.jpg",
-            // ],
-            // detailsThumb: [
-            //     // Add 400px thumbnail versions here
-            //     "v1762861158/surface-4-g-front-1_qetuvy.jpg",
-            // ],
+            details: [
+                "v1768359014/surface-4-g-front-24.jpg",
+                "v1768359026/surface-4-closeup-1-24.jpg",
+                // "v1768359023/surface-4-closeup-2-24.jpg",
+                "v1768359015/surface-4-closeup-3-24.jpg",
+                "v1768359020/surface-4-closeup-4-24.jpg",
+            ],
+            detailsMedium: [
+                // Add 1600px versions here
+                "v1768359000/surface-4-g-front-16.jpg",
+                "v1768359014/surface-4-closeup-1-16.jpg",
+                // "v1768359022/surface-4-closeup-2-16.jpg",
+                "v1768359011/surface-4-closeup-3-16.jpg",
+                "v1768359002/surface-4-closeup-4-16.jpg",
+            ],
+            detailsThumb: [
+                // Add 400px thumbnail versions here
+                "v1768358933/surface-4-g-front-thumb.jpg",
+                "v1768358930/surface-4-closeup-1-thumb-b.jpg",
+                // "v1768358931/surface-4-closeup-2-thumb-b.jpg",
+                "v1768358931/surface-4-closeup-3-thumb-b.jpg",
+                "v1768358932/surface-4-closeup-4-thumb-b.jpg",
+            ],
             highRes: {
                 base: "v1761586624/surface-4-cropped-9.jpg",
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-4-cropped-18.jpg",

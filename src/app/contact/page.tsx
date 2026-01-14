@@ -56,13 +56,13 @@ export default function Contact() {
 
     return (
         <div className="pt-16 min-h-screen bg-white">
-            <div className="py-20 px-4 max-w-6xl mx-auto">
+            <div className="py-10 px-4 max-w-6xl mx-auto">
                 <div className="text-left mb-16">
-                    <h1 className="text-4xl md:text-5xl font-light mb-6 text-neutral-800">
+                    <h1 className="text-lg md:text-3xl font-light mb-6 text-neutral-800">
                         Get in Touch
                     </h1>
                     <p
-                        className="text-lg text-neutral-600 max-w-2xl"
+                        className="text-neutral-600 leading-relaxed"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         {artworkTitle

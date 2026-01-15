@@ -261,23 +261,56 @@ export const artworks: Artwork[] = [
             "The third piece in the Mars surface exploration, delving deeper into the abstraction of planetary data.",
         maxZoom: 8.0,
         images: {
-            main: "v1761586589/surface-3-main-7.jpg",
-            cropped: "v1761586593/surface-3-cropped-8.jpg",
+            main: "v1768509969/surface-3-main-7.jpg",
+            cropped: "v1768509978/surface-3-cropped-8.jpg",
             croppedAlts: [],
             details: [
                 "v1768474681/surface-3-g-front-2-24.jpg",
                 "v1768474667/surface-3-g-left-1-24.jpg",
+                "v1768512469/surface-3-closeup-7-24.jpg",
+                "v1768513133/surface-3-closeup-9-24.jpg",
+
+                "v1768510092/surface-3-closeup-1-24.jpg",
+                "v1768510093/surface-3-closeup-8-24.jpg",
+
+                "v1768510083/surface-3-closeup-2-24.jpg",
+                "v1768510098/surface-3-closeup-3-24.jpg",
+                // "v1768510046/surface-3-closeup-4-24.jpg",
+                // "v1768510091/surface-3-closeup-5-24.jpg",
+                "v1768510110/surface-3-closeup-6-24.jpg",
             ],
             detailsMedium: [
                 "v1768474676/surface-3-g-front-2-16.jpg",
                 "v1768474665/surface-3-g-left-1-16.jpg",
+
+                "v1768512465/surface-3-closeup-7-16.jpg",
+                "v1768513132/surface-3-closeup-9-16.jpg",
+
+                "v1768510046/surface-3-closeup-1-16.jpg",
+                "v1768510093/surface-3-closeup-8-24.jpg",
+                "v1768510046/surface-3-closeup-2-16.jpg",
+                "v1768510063/surface-3-closeup-3-16.jpg",
+                // "v1768510052/surface-3-closeup-4-16.jpg",
+                // "v1768510042/surface-3-closeup-5-16.jpg",
+                "v1768510053/surface-3-closeup-6-16.jpg",
             ],
             detailsThumb: [
                 "v1768392657/surface-3-g-front-2-thumb.jpg",
                 "v1768392656/surface-3-g-left-1-thumb.jpg",
+
+                "v1768512300/surface-3-closeup-7-thumb-b.jpg",
+                "v1768513136/surface-3-closeup-9-thumb-b.jpg",
+
+                "v1768510139/surface-3-closeup-1-thumb-b.jpg",
+                "v1768510142/surface-3-closeup-8-thumb-b.jpg",
+                "v1768510140/surface-3-closeup-2-thumb-b.jpg",
+                "v1768510140/surface-3-closeup-3-thumb-b.jpg",
+                // "v1768510143/surface-3-closeup-4-thumb-b.jpg",
+                // "v1768510143/surface-3-closeup-5-thumb-b.jpg",
+                "v1768510141/surface-3-closeup-6-thumb-b.jpg",
             ],
             highRes: {
-                base: "v1761586593/surface-3-cropped-8.jpg",
+                base: "v1768509978/surface-3-cropped-8.jpg",
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-3-cropped-18.jpg",
                 ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-3-cropped-69.jpg",
             },

@@ -16,9 +16,12 @@ export default function Home() {
             <HeroSection />
 
             {/* Featured Works Preview - VERTICAL STACKED LAYOUT */}
-            <section className="py-40 px-4 mx-auto" style={{ maxWidth: "45rem" }}>
-                <h2 className="text-left mb-20">
-                    <div className="text-2xl md:text-3xl font-light text-neutral-800 mb-6">
+            <section
+                className="pt-30 pb-26 md:pt-60 md:pb-60 px-4 mx-auto"
+                style={{ maxWidth: "45rem" }}
+            >
+                <h2 className="text-left mb-10 md:mb-20">
+                    <div className="text-2xl md:text-3xl font-light text-neutral-800 mb-2">
                         Featured Works
                     </div>
                     <div
@@ -29,7 +32,7 @@ export default function Home() {
                     </div>
                 </h2>
 
-                <div className="space-y-40">
+                <div className="space-y-8 md:space-y-40">
                     {featuredArtworks.map((artwork) => (
                         <div key={artwork.id}>
                             <Link href={`/portfolio/${artwork.slug}`} className="block">
@@ -69,7 +72,7 @@ export default function Home() {
                 </div>
 
                 {/* View Series Button */}
-                <div className="mt-20 text-left">
+                <div className="mt-0 md:mt-20 text-left">
                     <Link
                         href="/portfolio"
                         className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
@@ -81,13 +84,13 @@ export default function Home() {
             </section>
 
             {/* About Preview */}
-            <section className="py-30 px-4 bg-neutral-100">
+            <section className="py-20 px-6 bg-neutral-100">
                 <div className="max-w-4xl mx-auto text-left-center">
-                    <h2 className="text-3xl md:text-4xl font-light mb-8 text-neutral-800">
+                    <h2 className="text-3xl md:text-4xl font-light mb-12 text-neutral-800">
                         Studio
                     </h2>
                     <p
-                        className="text-lg text-neutral-600 mb-8 leading-relaxed"
+                        className="text-base md:text-lg text-neutral-600 mb-14 leading-relaxed"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         Hendrey Kendall White is the collaborative practice of Thomas Hendrey and

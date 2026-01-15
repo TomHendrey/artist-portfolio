@@ -798,7 +798,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             {artwork.images.details && artwork.images.details.length > 0 && (
                                 <div className="block md:hidden lg:block mt-40 lg:mt-20">
                                     {/* Mobile: full-width stacked */}
-                                    <div className="md:hidden space-y-6">
+                                    <div className="md:hidden space-y-28">
                                         {artwork.images.details.map((detail, index) => (
                                             <div
                                                 key={detail}

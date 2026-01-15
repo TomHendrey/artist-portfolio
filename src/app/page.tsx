@@ -10,6 +10,14 @@ export default function Home() {
     const featuredArtworks = artworks.slice(0, 3);
     const featuredSeriesName = "Surfaces"; // Change this to update throughout
 
+    // Hard-code specific images for featured works (optional)
+    // Add artwork slug and image path to override default main image
+    const featuredImageOverrides: { [key: string]: string } = {
+        // "surface-1": "v1764979198/surface-1-g-front-24.jpg",
+        "surface-2": "v1767658265/surface-2-g-front-2.jpg",
+        surface3: "v1768474667/surface-3-g-left-1-24.jpg",
+    };
+
     return (
         <div className="min-h-screen">
             {/* Dynamic Hero Section with rotating images */}
@@ -33,42 +41,55 @@ export default function Home() {
                 </h2>
 
                 <div className="space-y-8 md:space-y-40">
-                    {featuredArtworks.map((artwork) => (
-                        <div key={artwork.id}>
-                            <Link href={`/portfolio/${artwork.slug}`} className="block">
-                                <div className="w-full bg-white">
-                                    <Image
-                                        src={getCloudinaryUrl(artwork.images.main, "large")}
-                                        alt={artwork.title}
-                                        width={1200}
-                                        height={1500}
-                                        className="w-full h-auto"
-                                        sizes="(max-width: 768px) 100vw, 80vw"
-                                        priority={artwork.id <= 3}
-                                    />
-                                </div>
-                            </Link>
-                            <div className="space-y-1 pb-22 md:pb-0 mt-6">
-                                <Link href={`/portfolio/${artwork.slug}`}>
-                                    <h3 className="text-base pb-1 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
-                                        {artwork.title}
-                                    </h3>
+                    {featuredArtworks.map((artwork) => {
+                        // Use override image if specified, otherwise use main image
+                        const imageUrl =
+                            featuredImageOverrides[artwork.slug] || artwork.images.main;
+
+                        return (
+                            <div key={artwork.id}>
+                                <Link href={`/portfolio/${artwork.slug}`} className="block">
+                                    <div className="w-full bg-white">
+                                        <Image
+                                            src={getCloudinaryUrl(imageUrl, "large")}
+                                            alt={artwork.title}
+                                            width={1200}
+                                            height={1500}
+                                            className="w-full h-auto"
+                                            sizes="(max-width: 768px) 100vw, 80vw"
+                                            priority={artwork.id <= 3}
+                                        />
+                                    </div>
                                 </Link>
-                                <p
-                                    className="text-sm text-neutral-600"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                >
-                                    {artwork.year} • {artwork.medium}
-                                </p>
-                                <p
-                                    className="text-sm text-neutral-500"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                >
-                                    {artwork.dimensions}
-                                </p>
+                                <div className="space-y-1 pb-22 md:pb-0 mt-6">
+                                    <Link href={`/portfolio/${artwork.slug}`}>
+                                        <h3 className="text-base pb-2 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
+                                            {artwork.title}
+                                        </h3>
+                                    </Link>
+                                    <p
+                                        className="text-sm text-neutral-600"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    >
+                                        {artwork.medium}
+                                    </p>
+
+                                    <p
+                                        className="text-sm text-neutral-500"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    >
+                                        {artwork.dimensions}
+                                    </p>
+                                    <p
+                                        className="text-sm text-neutral-600"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    >
+                                        {artwork.year}{" "}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* View Series Button */}

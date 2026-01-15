@@ -93,9 +93,9 @@ export default function Portfolio() {
                                 </div>
                             </Link>
 
-                            <div className="space-y-1 pb-22 md:pb-0">
+                            <div className="space-y-1 pb-22 md:pb-0 mt-6">
                                 <Link href={`/portfolio/${artwork.slug}`}>
-                                    <h3 className="text-base pb-1 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
+                                    <h3 className="text-base pb-2 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
                                         {artwork.title}
                                     </h3>
                                 </Link>
@@ -103,23 +103,31 @@ export default function Portfolio() {
                                     className="text-sm text-neutral-600"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    {artwork.year} • {artwork.medium}
+                                    {artwork.medium}
                                 </p>
+
                                 <p
                                     className="text-sm text-neutral-500"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     {artwork.dimensions}
                                 </p>
+                                <p
+                                    className="text-sm text-neutral-600"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    {artwork.year}{" "}
+                                </p>
                             </div>
 
                             {/* Quick view button - Desktop only */}
-                            <button
-                                onClick={() => openLightbox(artwork.id)}
-                                className="hidden lg:pb-4 md:block mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors"
-                            >
-                                Quick View
-                            </button>
+                            {/* <button */}
+                            {/*     onClick={() => openLightbox(artwork.id)} */}
+                            {/*     className="hidden lg:pb-4 md:block mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors" */}
+                            {/*     style={{ fontFamily: "Courier New, monospace" }} */}
+                            {/* > */}
+                            {/*     Quick View */}
+                            {/* </button> */}
                         </div>
                     ))}
                 </div>

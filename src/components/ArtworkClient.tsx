@@ -736,8 +736,8 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                 </div>
 
                 {/* DETAILS SIDEBAR */}
-                <div className="w-full md:flex-[0.8] lg:min-w-[260px] p-8 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
-                    <div className="w-full max-w-[85%] transform ">
+                <div className="w-full md:flex-[0.8] lg:min-w-[260px] p-4 lg:p-12 bg-white order-2 md:order-1 transition-all duration-300 ease-in-out flex justify-center lg:justify-end">
+                    <div className="w-full pb-40 max-w-[85%] transform">
                         {/* Back Navigation - Desktop only */}
                         <div className="hidden md:block mb-8 lg:mb-16">
                             <Link
@@ -751,39 +751,38 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         </div>
 
                         {/* Details Section */}
-                        <div className="space-y-6 lg:space-y-8 md:mt-12 lg:mt-38">
+                        <div className="pt-10 space-y-8 lg:space-y-10 md:mt-52 lg:mt-38">
                             <div>
-                                <h1 className="text-2xl md:text-3xl font-light text-neutral-800 mb-6 leading-tight">
+                                <h1 className="text-2xl md:text-3xl font-light text-neutral-800 mb-8 leading-tight">
                                     {artwork.title}
                                 </h1>
                                 <div
-                                    className="space-y-1 lg:space-y-1.5 text-neutral-600 mb-4 lg:mb-6"
+                                    className="space-y-2 text-neutral-600 mb-8"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    <p className="text-sm lg:text-sm">{artwork.year}</p>
                                     <p className="text-xs lg:text-sm">{artwork.medium}</p>
                                     <p className="text-xs lg:text-sm">{artwork.dimensions}</p>
+                                    <p className="text-sm lg:text-sm">{artwork.year}</p>
                                 </div>
                             </div>
 
                             {/* Description */}
-                            <div>
-                                <p
-                                    className="text-neutral-600 leading-relaxed text-sm lg:text-sm"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                >
-                                    {artwork.description}
-                                </p>
-                            </div>
+                            {/* <div> */}
+                            {/*     <p */}
+                            {/*         className="text-neutral-600 leading-relaxed text-sm lg:text-sm" */}
+                            {/*         style={{ fontFamily: "Courier New, monospace" }} */}
+                            {/*     > */}
+                            {/*         {artwork.description} */}
+                            {/*     </p> */}
+                            {/* </div> */}
 
                             {/* Buttons */}
-                            <div className="flex gap-3">
+                            <div className="flex gap-3 pt-10">
                                 <Link
                                     href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
-                                    className="inline-flex items-center justify-center bg-neutral-800 text-white px-4 py-2 hover:bg-neutral-700 transition-colors duration-300 text-xs lg:text-sm font-light"
-                                    // className="hidden md:inline-flex items-center justify-center border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors duration-300 text-xs lg:text-sm font-light"
+                                    className="inline-flex items-center justify-center bg-neutral-800 text-white px-6 py-2 hover:bg-neutral-700 transition-colors duration-300 text-xs lg:text-sm font-light"
                                 >
-                                    Inquire
+                                    Enquire
                                 </Link>
 
                                 <button
@@ -794,9 +793,30 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 </button>
                             </div>
 
+                            {/* Previous/Next Navigation - Mobile Only */}
+                            <div className="md:hidden flex gap-4 pt-4">
+                                <button
+                                    onClick={() => navigateToArtwork(prevArtwork.slug)}
+                                    className="flex-1 flex items-center justify-center gap-2 border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors text-xs"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    <ChevronLeft size={16} strokeWidth={1} />
+                                    Prev
+                                </button>
+                                <button
+                                    onClick={() => navigateToArtwork(nextArtwork.slug)}
+                                    className="flex-1 flex items-center justify-center gap-2 border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors text-xs"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    Next
+                                    <ChevronRight size={16} strokeWidth={1} />
+                                </button>
+                            </div>
+
                             {/* Gallery - Mobile + Desktop */}
                             {artwork.images.details && artwork.images.details.length > 0 && (
-                                <div className="block md:hidden lg:block mt-40 lg:mt-20">
+                                <div className="block md:hidden lg:block mt-20 lg:mt-20">
+                                    {/* Rest of gallery code stays the same */}
                                     {/* Mobile: full-width stacked */}
                                     <div className="md:hidden space-y-28">
                                         {artwork.images.details.map((detail, index) => (

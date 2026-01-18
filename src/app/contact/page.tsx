@@ -29,22 +29,28 @@ export default function Contact() {
         }
     }, [artworkTitle]);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Add your form submission logic here
-        console.log("Form submitted:", formData);
-        // You could use EmailJS, Formspree, or your own backend
 
-        // Example with EmailJS:
-        // emailjs.send('service_id', 'template_id', formData, 'public_key')
-        //   .then(() => {
-        //     alert('Message sent successfully!');
-        //     setFormData({ name: "", email: "", subject: "", message: "" });
-        //   })
-        //   .catch((error) => {
-        //     console.error('Error:', error);
-        //     alert('Failed to send message. Please try again.');
-        //   });
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                alert("Message sent successfully! We'll get back to you soon.");
+                setFormData({ name: "", email: "", subject: "", message: "" });
+            } else {
+                alert("Failed to send message. Please try again or email us directly.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to send message. Please try again or email us directly.");
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

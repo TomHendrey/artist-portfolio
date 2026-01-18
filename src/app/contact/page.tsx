@@ -73,7 +73,7 @@ export default function Contact() {
                     >
                         {artworkTitle
                             ? `Interested in "${artworkTitle}"? Send us a message below.`
-                            : "Please get in contact with us via the email below, or leave a message."}
+                            : "Please get in contact with us via the email below, or leave a message.w"}
                     </p>
                 </div>
 

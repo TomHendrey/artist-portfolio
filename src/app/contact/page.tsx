@@ -73,7 +73,7 @@ export default function Contact() {
                     >
                         {artworkTitle
                             ? `Interested in "${artworkTitle}"? Send us a message below.`
-                            : "Interested in this work? Have a question or want to discuss a commission? We would love to hear from you."}
+                            : "Please get in contact with us via the email below, or leave a message."}
                     </p>
                 </div>
 
@@ -268,10 +268,7 @@ export default function Contact() {
                             </button>
                         </form>
 
-                        <p className="text-xs text-neutral-500 mt-4">
-                            * Required fields. We typically respond within 24 hours during business
-                            days.
-                        </p>
+                        <p className="text-xs text-neutral-500 mt-4">* Required fields </p>
                     </div>
                 </div>
             </div>

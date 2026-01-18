@@ -694,7 +694,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             <ArrowLeft size={16} strokeWidth={1} />
-                            Back t
+                            Back to portfolio
                         </Link>
                         <button
                             onClick={() => {

@@ -19,7 +19,8 @@ export default function About() {
                 <div className="max-w-3xl">
                     <div
                         className="space-y-7 text-neutral-600 leading-relaxed text-lg"
-                        style={{ fontFamily: "Cardo, serif" }}
+                        // style={{ fontFamily: "Cardo, serif" }}
+                        style={{ fontFamily: "Courier New, monospace" }}
                     >
                         <p>
                             We are all obliged to engage with our reality - but the nature of that
@@ -106,7 +107,7 @@ export default function About() {
                     <div className="mt-20 pt-8 border-t border-neutral-200">
                         <p
                             className="text-neutral-500 text-base italic"
-                            style={{ fontFamily: "Cardo, serif" }}
+                            style={{ fontFamily: "Inter, sans-serif" }}
                         >
                             - Kendall White 2025
                         </p>

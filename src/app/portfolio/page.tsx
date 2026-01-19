@@ -68,7 +68,7 @@ export default function Portfolio() {
                         className="text-base md:text-lg text-neutral-600 max-w-2xl ml-4"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
-                        [Your description text here]
+                        Studies from the surface of Mars
                     </p>
                 </div>
             </div>

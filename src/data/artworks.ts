@@ -67,14 +67,14 @@ export const artworks: Artwork[] = [
 
         images: {
             // Main composite image (4096px)
-            main: "v1761586550/surface-1-main-8.jpg",
+            main: "v1769009840/surface-1-main-8.jpg",
 
             // Cropped version
-            cropped: "v1761586554/surface-1-cropped-9.jpg",
+            cropped: "v1769009834/surface-1-cropped-9.jpg",
 
             // High-res progressive loading (Vercel blob storage)
             highRes: {
-                base: "v1761586553/surface-1-cropped-9.jpg",
+                base: "v1769009834/surface-1-cropped-9.jpg",
                 medium: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-cropped-20.jpg",
                 ultra: "https://55gtw6fsesomiucf.public.blob.vercel-storage.com/composite/surface-1-cropped-74.jpg",
             },

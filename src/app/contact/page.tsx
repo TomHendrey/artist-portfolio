@@ -66,26 +66,26 @@ export default function Contact() {
 
     return (
         <div className="pt-16 min-h-screen bg-white">
-            <div className="py-20 px-4 max-w-5xl mx-auto">
-                {/* Minimal centered heading */}
-                <div className="text-center mb-20">
+            <div className="py-12 px-4 max-w-5xl mx-auto">
+                {/* Left-aligned heading */}
+                <div className="max-w-2xl mx-auto mb-10 pb-2">
                     <h1 className="text-4xl md:text-4xl font-light text-black mb-4">
                         Get In Touch
                     </h1>
                     <p
-                        className="text-base text-neutral-600 mt-6"
+                        className="text-base text-neutral-600 mt-3"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
-                        Please get in contact with us via the email below, or leave a message.
+                        Please get in contact with us via the email below, or leave a message
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-16 md:gap-20">
-                    {/* Left column - Contact Information */}
-                    <div className="space-y-12">
+                <div className="max-w-2xl mx-auto">
+                    {/* Contact Information - stacked vertically */}
+                    <div className="space-y-5 mb-8">
                         {/* Email */}
                         <div>
-                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-3">
+                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-2">
                                 Email
                             </div>
                             <a
@@ -95,17 +95,11 @@ export default function Contact() {
                             >
                                 studio@hendreykendallwhite.com
                             </a>
-                            {/* <p */}
-                            {/*     className="text-sm text-neutral-500 mt-2" */}
-                            {/*     style={{ fontFamily: "Courier New, monospace" }} */}
-                            {/* > */}
-                            {/*     Inquiries welcome */}
-                            {/* </p> */}
                         </div>
 
                         {/* Instagram */}
                         <div>
-                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-3">
+                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-2">
                                 Instagram
                             </div>
                             <a
@@ -121,7 +115,7 @@ export default function Contact() {
 
                         {/* Location */}
                         <div>
-                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-3">
+                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-2">
                                 Location
                             </div>
                             <p
@@ -131,7 +125,7 @@ export default function Contact() {
                                 London, SW15
                             </p>
                             <p
-                                className="text-sm text-neutral-500 mt-2"
+                                className="text-sm text-neutral-500 mt-1"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 Available by appointment
@@ -139,9 +133,9 @@ export default function Contact() {
                         </div>
                     </div>
 
-                    {/* Right column - Contact Form */}
+                    {/* Contact Form */}
                     <div>
-                        <form onSubmit={handleSubmit} className="space-y-8">
+                        <form onSubmit={handleSubmit} className="space-y-2">
                             {/* Name */}
                             <div>
                                 <input
@@ -173,7 +167,7 @@ export default function Contact() {
                             </div>
 
                             {/* Subject */}
-                            <div>
+                            <div className="pb-3">
                                 <input
                                     type="text"
                                     id="subject"
@@ -195,7 +189,7 @@ export default function Contact() {
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
-                                    rows={6}
+                                    rows={5}
                                     placeholder="Message"
                                     className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 resize-none bg-transparent"
                                     style={{ fontFamily: "Courier New, monospace" }}
@@ -203,11 +197,11 @@ export default function Contact() {
                             </div>
 
                             {/* Submit Button - matches homepage style */}
-                            <div className="pt-4">
+                            <div className="pt-2">
                                 <button
                                     type="submit"
                                     disabled={formStatus === "sending"}
-                                    className="px-8 py-3 border border-neutral-800 text-neutral-800 hover:bg-neutral-800 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="px-8 py-3 bg-neutral-800 text-white hover:bg-neutral-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     {formStatus === "sending"

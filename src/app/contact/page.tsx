@@ -69,12 +69,15 @@ export default function Contact() {
             <div className="py-20 px-4 max-w-5xl mx-auto">
                 {/* Minimal centered heading */}
                 <div className="text-center mb-20">
-                    <h1
-                        className="text-5xl md:text-4xl lg:text-4xl font-light mb-6 text-neutral-800 tracking-tight"
-                        style={{ fontFamily: "Inter, sans-serif" }}
-                    >
+                    <h1 className="text-4xl md:text-4xl font-light text-black mb-4">
                         Get In Touch
                     </h1>
+                    <p
+                        className="text-base text-neutral-600 mt-6"
+                        style={{ fontFamily: "Courier New, monospace" }}
+                    >
+                        Please get in contact with us via the email below, or leave a message.
+                    </p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-16 md:gap-20">
@@ -82,10 +85,7 @@ export default function Contact() {
                     <div className="space-y-12">
                         {/* Email */}
                         <div>
-                            <div
-                                className="text-xs uppercase tracking-wider text-neutral-400 mb-3"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
+                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-3">
                                 Email
                             </div>
                             <a
@@ -95,20 +95,17 @@ export default function Contact() {
                             >
                                 studio@hendreykendallwhite.com
                             </a>
-                            <p
-                                className="text-sm text-neutral-500 mt-2"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                Inquiries welcome
-                            </p>
+                            {/* <p */}
+                            {/*     className="text-sm text-neutral-500 mt-2" */}
+                            {/*     style={{ fontFamily: "Courier New, monospace" }} */}
+                            {/* > */}
+                            {/*     Inquiries welcome */}
+                            {/* </p> */}
                         </div>
 
                         {/* Instagram */}
                         <div>
-                            <div
-                                className="text-xs uppercase tracking-wider text-neutral-400 mb-3"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
+                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-3">
                                 Instagram
                             </div>
                             <a
@@ -124,10 +121,7 @@ export default function Contact() {
 
                         {/* Location */}
                         <div>
-                            <div
-                                className="text-xs uppercase tracking-wider text-neutral-400 mb-3"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
+                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-3">
                                 Location
                             </div>
                             <p

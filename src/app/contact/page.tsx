@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function Contact() {
     const [artworkTitle, setArtworkTitle] = useState<string | null>(null);
@@ -65,155 +66,184 @@ export default function Contact() {
     };
 
     return (
-        <div className="pt-16 min-h-screen bg-white">
-            <div className="py-12 px-4 max-w-5xl mx-auto">
-                {/* Left-aligned heading */}
-                <div className="max-w-2xl mx-auto mb-10 pb-2">
-                    <h1 className="text-4xl md:text-4xl font-light text-black mb-4">
-                        Get In Touch
-                    </h1>
-                    <p
-                        className="text-base text-neutral-600 mt-3"
-                        style={{ fontFamily: "Courier New, monospace" }}
-                    >
-                        Please get in contact with us via the email below, or leave a message
-                    </p>
+        <div className="min-h-screen bg-neutral-50">
+            {/* Mobile: Image at top */}
+            <div className="lg:hidden w-full pt-16">
+                <Image
+                    src="https://res.cloudinary.com/dutoeewfl/image/upload/v1769381512/contact-mobile-16.jpg"
+                    alt="Artwork detail"
+                    width={1600}
+                    height={700}
+                    className="w-full h-auto object-cover"
+                    priority
+                />
+            </div>
+
+            {/* Desktop: Two column layout */}
+            <div className="lg:flex lg:h-screen">
+                {/* Desktop: Image on left */}
+                <div className="hidden lg:block lg:w-2/5 relative">
+                    <Image
+                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1769381514/contact-desktop-1.jpg"
+                        alt="Artwork detail"
+                        width={1000}
+                        height={1400}
+                        className="absolute inset-0 w-full h-full object-cover object-right"
+                        priority
+                    />
                 </div>
 
-                <div className="max-w-2xl mx-auto">
-                    {/* Contact Information - stacked vertically */}
-                    <div className="space-y-5 mb-8">
-                        {/* Email */}
-                        <div>
-                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-2">
-                                Email
-                            </div>
-                            <a
-                                href="mailto:studio@hendreykendallwhite.com"
-                                className="text-neutral-800 hover:text-neutral-600 transition-colors"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                studio@hendreykendallwhite.com
-                            </a>
-                        </div>
-
-                        {/* Instagram */}
-                        <div>
-                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-2">
-                                Instagram
-                            </div>
-                            <a
-                                href="https://instagram.com/hendreykendallwhite"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-neutral-800 hover:text-neutral-600 transition-colors"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                @hendreykendallwhite
-                            </a>
-                        </div>
-
-                        {/* Location */}
-                        <div>
-                            <div className="text-xs uppercase tracking-wider text-neutral-800 mb-2">
-                                Location
-                            </div>
+                {/* Form content */}
+                <div className="lg:w-3/5 py-12 px-4 lg:py-0 md:pl-12 lg:pl-32 lg:pr-16 pt-16 lg:pt-16 md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start">
+                    <div className="max-w-xl mx-auto lg:mx-0 w-full">
+                        {/* Left-aligned heading */}
+                        <div className="mb-6 pb-1">
+                            <h1 className="text-3xl md:text-3xl font-light text-black mb-3">
+                                Get In Touch
+                            </h1>
                             <p
-                                className="text-neutral-800"
+                                className="text-sm text-neutral-600 mt-2"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
-                                London, SW15
-                            </p>
-                            <p
-                                className="text-sm text-neutral-500 mt-1"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                Available by appointment
+                                Please get in contact with us via the email below, or leave a
+                                message
                             </p>
                         </div>
-                    </div>
 
-                    {/* Contact Form */}
-                    <div>
-                        <form onSubmit={handleSubmit} className="space-y-2">
-                            {/* Name */}
-                            <div>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="Name"
-                                    className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                />
-                            </div>
-
+                        {/* Contact Information - stacked vertically */}
+                        <div className="space-y-4 mb-6">
                             {/* Email */}
                             <div>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="Email"
-                                    className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                />
-                            </div>
-
-                            {/* Subject */}
-                            <div className="pb-3">
-                                <input
-                                    type="text"
-                                    id="subject"
-                                    name="subject"
-                                    value={formData.subject}
-                                    onChange={handleChange}
-                                    required
-                                    placeholder="Subject"
-                                    className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                />
-                            </div>
-
-                            {/* Message */}
-                            <div>
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    rows={5}
-                                    placeholder="Message"
-                                    className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 resize-none bg-transparent"
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                />
-                            </div>
-
-                            {/* Submit Button - matches homepage style */}
-                            <div className="pt-2">
-                                <button
-                                    type="submit"
-                                    disabled={formStatus === "sending"}
-                                    className="px-8 py-3 bg-neutral-800 text-white hover:bg-neutral-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                <div className="text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                                    Email
+                                </div>
+                                <a
+                                    href="mailto:studio@hendreykendallwhite.com"
+                                    className="text-neutral-800 hover:text-neutral-600 transition-colors"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    {formStatus === "sending"
-                                        ? "Sending..."
-                                        : formStatus === "success"
-                                          ? "Message Sent!"
-                                          : formStatus === "error"
-                                            ? "Error - Try Again"
-                                            : "Send Message"}
-                                </button>
+                                    studio@hendreykendallwhite.com
+                                </a>
                             </div>
-                        </form>
+
+                            {/* Instagram */}
+                            <div>
+                                <div className="text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                                    Instagram
+                                </div>
+                                <a
+                                    href="https://instagram.com/hendreykendallwhite"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-neutral-800 hover:text-neutral-600 transition-colors"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    @hendreykendallwhite
+                                </a>
+                            </div>
+
+                            {/* Location */}
+                            <div>
+                                <div className="text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                                    Location
+                                </div>
+                                <p
+                                    className="text-neutral-800"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    London, SW15
+                                </p>
+                                <p
+                                    className="text-sm text-neutral-400 mt-1"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
+                                    Available by appointment
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Contact Form */}
+                        <div>
+                            <form onSubmit={handleSubmit} className="space-y-1">
+                                {/* Name */}
+                                <div>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="Name"
+                                        className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    />
+                                </div>
+
+                                {/* Email */}
+                                <div>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="Email"
+                                        className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    />
+                                </div>
+
+                                {/* Subject */}
+                                <div className="pb-2">
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        required
+                                        placeholder="Subject"
+                                        className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    />
+                                </div>
+
+                                {/* Message */}
+                                <div>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        rows={5}
+                                        placeholder="Message"
+                                        className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 resize-none bg-transparent text-sm"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    />
+                                </div>
+
+                                {/* Submit Button */}
+                                <div className="pt-1">
+                                    <button
+                                        type="submit"
+                                        disabled={formStatus === "sending"}
+                                        className="px-8 py-3 bg-neutral-800 text-white hover:bg-neutral-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        style={{ fontFamily: "Courier New, monospace" }}
+                                    >
+                                        {formStatus === "sending"
+                                            ? "Sending..."
+                                            : formStatus === "success"
+                                              ? "Message Sent!"
+                                              : formStatus === "error"
+                                                ? "Error - Try Again"
+                                                : "Send Message"}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

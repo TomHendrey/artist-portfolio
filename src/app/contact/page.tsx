@@ -97,12 +97,12 @@ export default function Contact() {
                 <div className="lg:w-3/5 py-12 px-4 lg:py-0 md:pl-12 lg:pl-32 lg:pr-16 pt-16 lg:pt-16 md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start">
                     <div className="max-w-xl mx-auto lg:mx-0 w-full">
                         {/* Left-aligned heading */}
-                        <div className="mb-6 pb-1">
+                        <div className="mb-6 pb-6">
                             <h1 className="text-3xl md:text-3xl font-light text-black mb-3">
                                 Get In Touch
                             </h1>
                             <p
-                                className="text-sm text-neutral-600 mt-2"
+                                className="text-sm text-neutral-600 mt-2 tracking-tight"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 Please get in contact with us via the email below, or leave a
@@ -110,55 +110,55 @@ export default function Contact() {
                             </p>
                         </div>
 
-                        {/* Contact Information - stacked vertically */}
-                        <div className="space-y-4 mb-6">
-                            {/* Email */}
+                        {/* Contact Information - inline layout */}
+                        <div className="space-y-3 mb-8">
+                            {/* Email - inline */}
                             <div>
-                                <div className="text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                                <span className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
                                     Email
-                                </div>
+                                </span>
                                 <a
                                     href="mailto:studio@hendreykendallwhite.com"
-                                    className="text-neutral-800 hover:text-neutral-600 transition-colors"
+                                    className="text-neutral-800 hover:text-neutral-600 transition-colors text-sm"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     studio@hendreykendallwhite.com
                                 </a>
                             </div>
 
-                            {/* Instagram */}
+                            {/* Instagram - inline */}
                             <div>
-                                <div className="text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                                <span className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
                                     Instagram
-                                </div>
+                                </span>
                                 <a
                                     href="https://instagram.com/hendreykendallwhite"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-neutral-800 hover:text-neutral-600 transition-colors"
+                                    className="text-neutral-800 hover:text-neutral-600 transition-colors text-sm"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     @hendreykendallwhite
                                 </a>
                             </div>
 
-                            {/* Location */}
+                            {/* Location - inline */}
                             <div>
-                                <div className="text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                                <span className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
                                     Location
-                                </div>
-                                <p
-                                    className="text-neutral-800"
+                                </span>
+                                <span
+                                    className="text-neutral-800 text-sm"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    London, SW15
-                                </p>
-                                <p
-                                    className="text-sm text-neutral-400 mt-1"
+                                    London, SW15,
+                                </span>
+                                <span
+                                    className="text-sm text-neutral-400 ml-2"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     Available by appointment
-                                </p>
+                                </span>
                             </div>
                         </div>
 
@@ -226,7 +226,7 @@ export default function Contact() {
                                 </div>
 
                                 {/* Submit Button */}
-                                <div className="pt-1">
+                                <div className="pt-2">
                                     <button
                                         type="submit"
                                         disabled={formStatus === "sending"}

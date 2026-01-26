@@ -94,7 +94,8 @@ export default function Contact() {
                 </div>
 
                 {/* Form content */}
-                <div className="lg:w-3/5 py-12 px-4 lg:py-0 md:pl-12 lg:pl-32 lg:pr-16 pt-16 lg:pt-16 md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start">
+
+                <div className="lg:w-3/5 py-12 px-6 lg:py-0 md:pl-12 lg:pl-12 lg:pr-12 xl:pl-32 xl:pr-20 pt-12 lg:pt-16 md:flex md:items-center md:justify-center lg:flex lg:items-center lg:justify-start">
                     <div className="max-w-xl mx-auto lg:mx-0 w-full">
                         {/* Left-aligned heading */}
                         <div className="mb-6 pb-6">
@@ -102,16 +103,15 @@ export default function Contact() {
                                 Get In Touch
                             </h1>
                             <p
-                                className="text-sm text-neutral-600 mt-2 tracking-tight"
+                                className="text-sm md:text-base text-neutral-600 mt-2 tracking-tight"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
-                                Please get in contact with us via the email below, or leave a
-                                message
+                                Please get in contact via the email below, or leave a message
                             </p>
                         </div>
 
                         {/* Contact Information - inline layout */}
-                        <div className="space-y-3 mb-8">
+                        <div className="space-y-4 mb-8">
                             {/* Email - inline */}
                             <div>
                                 <span className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
@@ -119,7 +119,7 @@ export default function Contact() {
                                 </span>
                                 <a
                                     href="mailto:studio@hendreykendallwhite.com"
-                                    className="text-neutral-800 hover:text-neutral-600 transition-colors text-sm"
+                                    className="text-sm md:text-base text-neutral-800 hover:text-neutral-600 transition-colors"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     studio@hendreykendallwhite.com
@@ -135,7 +135,7 @@ export default function Contact() {
                                     href="https://instagram.com/hendreykendallwhite"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-neutral-800 hover:text-neutral-600 transition-colors text-sm"
+                                    className="text-sm md:text-base text-neutral-800 hover:text-neutral-600 transition-colors"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     @hendreykendallwhite
@@ -148,7 +148,7 @@ export default function Contact() {
                                     Location
                                 </span>
                                 <span
-                                    className="text-neutral-800 text-sm"
+                                    className="text-neutral-800 text-sm md:text-base"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     London, SW15,
@@ -157,7 +157,7 @@ export default function Contact() {
                                     className="text-sm text-neutral-400 ml-2"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    Available by appointment
+                                    available by appointment
                                 </span>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ export default function Contact() {
                                         onChange={handleChange}
                                         required
                                         placeholder="Name"
-                                        className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
+                                        className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
                                         style={{ fontFamily: "Courier New, monospace" }}
                                     />
                                 </div>
@@ -190,7 +190,7 @@ export default function Contact() {
                                         onChange={handleChange}
                                         required
                                         placeholder="Email"
-                                        className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
+                                        className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
                                         style={{ fontFamily: "Courier New, monospace" }}
                                     />
                                 </div>
@@ -205,7 +205,7 @@ export default function Contact() {
                                         onChange={handleChange}
                                         required
                                         placeholder="Subject"
-                                        className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
+                                        className="w-full px-0 py-3 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 bg-transparent text-sm"
                                         style={{ fontFamily: "Courier New, monospace" }}
                                     />
                                 </div>
@@ -218,7 +218,7 @@ export default function Contact() {
                                         value={formData.message}
                                         onChange={handleChange}
                                         required
-                                        rows={5}
+                                        rows={6}
                                         placeholder="Message"
                                         className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 resize-none bg-transparent text-sm"
                                         style={{ fontFamily: "Courier New, monospace" }}

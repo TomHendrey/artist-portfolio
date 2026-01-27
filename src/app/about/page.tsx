@@ -36,7 +36,7 @@ export default function About() {
                             <p>
                                 We are all obliged to engage with our reality - but the nature of
                                 that reality is increasingly defined in detachment from us - it is
-                                reported to us outside of our faculties and experiences. our
+                                reported to us outside of our faculties and experiences. Our
                                 navigation of that reality - our activities of every kind, are
                                 mediated by the same data systems and digital tools…
                             </p>
@@ -45,17 +45,17 @@ export default function About() {
                                 Tech at once enables and connects but it is equally a detaching
                                 force that negates our faculties, denudes our lives of immaterial
                                 notions. We are conflicted about its desirability or indeed
-                                capability. the general embrace of tech is not reflected in art.
+                                capability. The general embrace of tech is not reflected in art.
                                 Traditional modes of art are increasingly technophobic.
                             </p>
 
                             <p className="indent-[1em]">
-                                When we approach genre painting - that is work that explore
+                                When we approach genre painting - that is work that explores
                                 &apos;human centric reality&apos;, it has become a ritual act - self
                                 referential field increasingly irrelevant to its actors and
                                 audiences. The choice of painting demands the direct use of an
-                                individual faculties: that is the result will be a reflection of
-                                their conciousness, there sense perception, their active
+                                individual&apos;s faculties: that is the result will be a reflection
+                                of their consciousness, their sense perception, their active
                                 capabilities.
                             </p>
 
@@ -64,22 +64,23 @@ export default function About() {
                                 implications in a painting that go beyond the content - a painting
                                 is hallowed object between artefact and relic. The content is a
                                 coherent act where gesture, materiality, scale composition etc
-                                discribe something from the creator themselves - a perception
+                                describe something from the creator themselves - a perception
                                 characterised by their nature, their presence in reality.
                             </p>
 
                             <p className="indent-[1em]">
                                 But how can this be contemporarily relevant or conceptually valid
-                                when it is a negation of the creators technological nature?
+                                when it is a negation of the creator&apos;s technological nature?
                             </p>
 
                             <p className="indent-[1em]">
                                 The choice to use primitive traditional means denies the role,
-                                presence and implications of tech in contempary humanity -
+                                presence and implications of tech in contemporary humanity -
                                 cognitive, perceptual, active. And the traditional critical
                                 qualities of the treatment of content (dramatisation,
-                                characterisation, personification) as relative to the authors nature
-                                is impossible when detached from their technological condition…
+                                characterisation, personification) as relative to the author&apos;s
+                                nature is impossible when detached from their technological
+                                condition…
                             </p>
 
                             <p className="indent-[1em]">
@@ -92,8 +93,8 @@ export default function About() {
 
                             <p className="indent-[1em]">
                                 Production is in the manner that reflects the integration of data
-                                system and digital tools in our lives - their nature the role of
-                                these means in contempary thought, perception, action.
+                                systems and digital tools in our lives - their nature the role of
+                                these means in contemporary thought, perception, action.
                             </p>
 
                             <p className="indent-[1em]">
@@ -102,7 +103,7 @@ export default function About() {
                                 disinterested, data driven and precise nature of computational media
                                 and means. They try and show the present reality of contemporary
                                 people between the traditional and its concerns and the
-                                technological and its values an implications.
+                                technological and its values and implications.
                             </p>
 
                             <p className="indent-[1em]">
@@ -110,10 +111,10 @@ export default function About() {
                             </p>
 
                             <p className="indent-[1em]">
-                                In using technological mens are we allowing the moral force of the
-                                content contained - acknowledging these as place and and landscape,
-                                the changing face of humanity, or are these works a subversion of
-                                the moral force of painting.
+                                In using technological means are we allowing the moral force of the
+                                content contained - acknowledging these as place and landscape, the
+                                changing face of humanity, or are these works a subversion of the
+                                moral force of painting.
                             </p>
                         </div>
 

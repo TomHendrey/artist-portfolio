@@ -103,7 +103,7 @@ export default function Contact() {
                                 Get In Touch
                             </h1>
                             <p
-                                className="text-sm md:text-base text-neutral-600 mt-2 tracking-tight"
+                                className="text-sm md:text-sm text-neutral-600 mt-2 tracking-tight"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 Please get in contact via the email below, or leave a message
@@ -111,15 +111,15 @@ export default function Contact() {
                         </div>
 
                         {/* Contact Information - inline layout */}
-                        <div className="space-y-4 mb-8">
+                        <div className="space-y-5 mb-8">
                             {/* Email - inline */}
                             <div>
-                                <span className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
+                                <div className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
                                     Email
-                                </span>
+                                </div>
                                 <a
                                     href="mailto:studio@hendreykendallwhite.com"
-                                    className="text-sm md:text-base text-neutral-800 hover:text-neutral-600 transition-colors"
+                                    className="text-sm md:text-sm text-neutral-800 hover:text-neutral-600 transition-colors"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     studio@hendreykendallwhite.com
@@ -128,14 +128,14 @@ export default function Contact() {
 
                             {/* Instagram - inline */}
                             <div>
-                                <span className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
+                                <div className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
                                     Instagram
-                                </span>
+                                </div>
                                 <a
                                     href="https://instagram.com/hendreykendallwhite"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-sm md:text-base text-neutral-800 hover:text-neutral-600 transition-colors"
+                                    className="text-sm md:text-sm text-neutral-800 hover:text-neutral-600 transition-colors"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     @hendreykendallwhite
@@ -144,21 +144,21 @@ export default function Contact() {
 
                             {/* Location - inline */}
                             <div>
-                                <span className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
+                                <div className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
                                     Location
-                                </span>
-                                <span
-                                    className="text-neutral-800 text-sm md:text-base"
+                                </div>
+                                <div
+                                    className="text-neutral-800 text-sm md:text-sm,"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     London, SW15,
-                                </span>
-                                <span
-                                    className="text-sm text-neutral-400 ml-2"
+                                </div>
+                                <div
+                                    className="text-sm text-neutral-400 "
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    available by appointment
-                                </span>
+                                    Available by appointment
+                                </div>
                             </div>
                         </div>
 
@@ -218,7 +218,7 @@ export default function Contact() {
                                         value={formData.message}
                                         onChange={handleChange}
                                         required
-                                        rows={6}
+                                        rows={5}
                                         placeholder="Message"
                                         className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 resize-none bg-transparent text-sm"
                                         style={{ fontFamily: "Courier New, monospace" }}

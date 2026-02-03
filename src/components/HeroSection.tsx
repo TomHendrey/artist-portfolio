@@ -71,7 +71,7 @@ export default function HeroSection() {
                         transform: scale(1) translateZ(0);
                     }
                     to {
-                        transform: scale(1.2) translateZ(0);
+                        transform: scale(1.23) translateZ(0);
                     }
                 }
                 
@@ -126,7 +126,7 @@ export default function HeroSection() {
                         </p>
                         <Link
                             href="/portfolio"
-                            className="inline-flex items-center gap-2 bg-white text-neutral-800 lg:bg-neutral-900 lg:text-white px-8 py-3 hover:bg-neutral-100 lg:hover:bg-neutral-800 transition-colors duration-300 text-sm md:text-base"
+                            className="inline-flex items-center gap-2 lg:font-light bg-white text-neutral-800 lg:bg-neutral-900 lg:text-white px-8 py-3 hover:bg-neutral-100 lg:hover:bg-neutral-700 transition-colors duration-300 text-sm md:text-base"
                         >
                             View Works
                             <ArrowRight size={18} />

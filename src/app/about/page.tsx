@@ -226,12 +226,12 @@ export default function About() {
                 </div>
             ) : (
                 // TEXT SECTION - Alex's conceptual text
-                <div className="px-6 max-w-4xl mx-auto pb-40">
+                <div className="px-4 max-w-4xl mx-auto pb-40">
                     {/* Text Content */}
                     <div>
                         {/* Body Text */}
                         <div
-                            className="space-y-8 text-neutral-600 leading-loose text-[15px]"
+                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[14px] md:text-[15px] tracking-tight"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             <div className="space-y-8">

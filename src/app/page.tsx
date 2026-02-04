@@ -114,11 +114,12 @@ export default function Home() {
                         className="text-base md:text-lg text-neutral-600 mb-14 leading-relaxed"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
-                        Hendrey Kendall White is the collaborative practice of artists Thomas
-                        Hendrey and Alexander Kendall White. The studio explores contemporary
-                        painting by blending digital processes and traditional painting techniques,
-                        investigating how the collection and transformation of information shapes
-                        our understanding of the world.{" "}
+                        H K W is the collaborative practice of artists Thomas Hendrey and Kendall
+                        White. The studio explores contemporary painting by blending digital
+                        processes and traditional painting techniques, investigating how the
+                        collection and transformation of information shapes contemporary human
+                        nature, in this transitional space between past and future modality of
+                        thought and action.{" "}
                     </p>
                     <Link
                         href="/about"

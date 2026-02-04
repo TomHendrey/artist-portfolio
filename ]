@@ -48,7 +48,7 @@ export default function About() {
                         >
                             <div className="space-y-8">
                                 <h2
-                                    className="text-3xl font-light mt-16 mb-16 text-neutral-800 tracking-tight"
+                                    className="text-3xl font-light mt-24 mb-16 text-neutral-800 tracking-tight"
                                     style={{ fontFamily: "Inter, sans-serif" }}
                                 >
                                     Surfaces
@@ -66,36 +66,30 @@ export default function About() {
                                     pencils, translating numbers into a visible landscape. This act
                                     revealed Mars as a cratered, moon-like surface.
                                 </p>
-
-                                {/* Two small images in grid - left aligned with shared caption */}
-                                <div className="my-24 max-w-lg">
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div>
-                                            <Image
-                                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
-                                                alt="Mariner 4 detail 1"
-                                                width={1600}
-                                                height={1200}
-                                                className="w-full h-74 object-cover"
-                                            />
-                                        </div>
-                                        <div>
-                                            <Image
-                                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-3.jpg"
-                                                alt="Mariner 4 detail 2"
-                                                width={1600}
-                                                height={1200}
-                                                className="w-full h-74 object-cover"
-                                            />
-                                        </div>
+                                {/* Two small images in grid - smaller, left aligned */}
+                                <div className="my-20 grid grid-cols-2 gap-6 max-w-lg">
+                                    <div>
+                                        <Image
+                                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
+                                            alt="Mariner 4 detail 1"
+                                            width={1600}
+                                            height={1200}
+                                            className="w-full h-75 object-cover"
+                                        />
                                     </div>
-                                    <p className="text-xs text-neutral-400 mt-4">
-                                        Engineers at JPL hand-coloring the Mariner 4 data
-                                    </p>
+                                    <div>
+                                        <Image
+                                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-3.jpg"
+                                            alt="Mariner 4 detail 2"
+                                            width={1600}
+                                            height={1200}
+                                            className="w-full h-75 object-cover"
+                                        />
+                                    </div>
                                 </div>
 
-                                {/* Large image - left aligned */}
-                                <div className="my-24 max-w-3xl">
+                                {/* Large image also left-aligned */}
+                                <div className="my-20 max-w-3xl">
                                     <Image
                                         src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770215468/nasa-mars-2-16.jpg"
                                         alt="Engineers at JPL hand-coloring the first Mariner 4 Mars image, 1965"
@@ -103,8 +97,9 @@ export default function About() {
                                         height={1200}
                                         className="w-full h-auto"
                                     />
-                                    <p className="text-xs text-neutral-400 mt-4">
-                                        The first ever colour image of the surface of Mars, 1965
+                                    <p className="text-sm text-neutral-500 mt-4 ">
+                                        Engineers at JPL hand-coloring the first Mariner 4 Mars
+                                        image, 1965
                                     </p>
                                 </div>
 
@@ -115,6 +110,22 @@ export default function About() {
                                     creating the first visualisation of a phenomenon that had never
                                     been directly observed.
                                 </p>
+
+                                {/* Luminet Black Hole Image */}
+                                <div className="my-30 flex flex-col items-center">
+                                    <Image
+                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770074251/blackhole-12.jpg"
+                                        alt="Jean-Pierre Luminet's hand-plotted black hole simulation, 1978"
+                                        width={1600}
+                                        height={1200}
+                                        className="w-full max-w-3xl h-auto"
+                                    />
+                                    <p className="text-sm text-neutral-500 mt-4 italic text-center">
+                                        Jean-Pierre Luminet&apos;s hand-plotted black hole
+                                        simulation, 1978
+                                    </p>
+                                </div>
+
                                 <p className="pt-4">
                                     These moments represent something fundamental: the
                                     transformation of invisible information into visible form. Data
@@ -124,21 +135,6 @@ export default function About() {
                                     comprehend. Each stage is a translation between different states
                                     of information.
                                 </p>
-
-                                {/* Luminet Black Hole Image - left aligned */}
-                                <div className="my-24 max-w-3xl">
-                                    <Image
-                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770074251/blackhole-12.jpg"
-                                        alt="Jean-Pierre Luminet's hand-plotted black hole simulation, 1978"
-                                        width={1600}
-                                        height={1200}
-                                        className="w-full h-auto"
-                                    />
-                                    <p className="text-xs text-neutral-400 mt-4">
-                                        Jean-Pierre Luminet&apos;s hand-plotted black hole
-                                        simulation, 1978
-                                    </p>
-                                </div>
 
                                 <p className="pt-4">
                                     This process is inherently imperfect. Signals degrade across
@@ -166,11 +162,10 @@ export default function About() {
                                 <p className="pt-4">
                                     Painting has always been a system for encoding and transmitting
                                     information across time and space, a way of making the invisible
-                                    or distant present. These works extend that tradition into a
-                                    contemporary technology driven world. They are records of our
-                                    compulsion to extend perception beyond its natural limits, to
-                                    transform the unreachable into something we can see and
-                                    contemplate.
+                                    or distant present. These works continue that tradition: records
+                                    of our compulsion to extend perception beyond its natural
+                                    limits, to transform the unreachable into something we can hold
+                                    and contemplate.
                                 </p>
                             </div>
                         </div>
@@ -178,7 +173,7 @@ export default function About() {
                 </div>
             ) : (
                 // TEXT SECTION - Same clean white background
-                <div className="px-6 max-w-4xl mx-auto pb-40">
+                <div className="px-6 max-w-4xl mx-auto pb-20">
                     {/* Text Content */}
                     <div>
                         {/* Body Text */}
@@ -188,7 +183,7 @@ export default function About() {
                         >
                             <div className="space-y-8">
                                 <h2
-                                    className="text-3xl font-light mt-16 mb-16 text-neutral-800 tracking-tight"
+                                    className="text-3xl font-light mb-16 text-neutral-800 tracking-tight"
                                     style={{ fontFamily: "Inter, sans-serif" }}
                                 >
                                     Text

@@ -129,7 +129,7 @@ export default function HeroSection() {
                             className="inline-flex items-center gap-2 lg:font-light bg-white text-neutral-800 lg:bg-neutral-900 lg:text-white px-8 py-3 hover:bg-neutral-100 lg:hover:bg-neutral-700 transition-colors duration-300 text-sm md:text-base"
                         >
                             View Works
-                            <ArrowRight size={18} />
+                            <ArrowRight size={16} />
                         </Link>
                     </div>
                 </div>

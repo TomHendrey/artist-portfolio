@@ -24,7 +24,7 @@ export default function Contact() {
         if (artworkTitle) {
             setFormData((prev) => ({
                 ...prev,
-                subject: `Inquiry about "${artworkTitle}"`,
+                subject: `Enquiry about "${artworkTitle}"`,
                 message: `I'm interested in learning more about "${artworkTitle}". Please provide pricing information and additional details.\n\n`,
             }));
         }
@@ -153,12 +153,12 @@ export default function Contact() {
                                 >
                                     London, SW15,
                                 </div>
-                                <div
-                                    className="text-sm text-neutral-400 "
-                                    style={{ fontFamily: "Courier New, monospace" }}
-                                >
-                                    Available by appointment
-                                </div>
+                                {/* <div */}
+                                {/*     className="text-sm text-neutral-400 " */}
+                                {/*     style={{ fontFamily: "Courier New, monospace" }} */}
+                                {/* > */}
+                                {/*     Available by appointment */}
+                                {/* </div> */}
                             </div>
                         </div>
 

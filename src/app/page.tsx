@@ -97,9 +97,10 @@ export default function Home() {
                     <Link
                         href="/portfolio"
                         className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+                        style={{ fontFamily: "Courier New, monospace" }}
                     >
                         View {featuredSeriesName}
-                        <ArrowRight size={18} />
+                        <ArrowRight size={14} />
                     </Link>
                 </div>
             </section>
@@ -111,7 +112,7 @@ export default function Home() {
                         Studio
                     </h2>
                     <p
-                        className="text-base md:text-lg text-neutral-600 mb-14 leading-relaxed"
+                        className="text-base md:text-lg text-neutral-700 mb-14 leading-relaxed tracking-tight"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         H K W is the collaborative practice of artists Thomas Hendrey and Kendall
@@ -124,9 +125,10 @@ export default function Home() {
                     <Link
                         href="/about"
                         className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+                        style={{ fontFamily: "Courier New, monospace" }}
                     >
                         Read More
-                        <ArrowRight size={18} />
+                        <ArrowRight size={14} />
                     </Link>
                 </div>
             </section>

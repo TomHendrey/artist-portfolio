@@ -766,21 +766,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 </div>
                             </div>
 
-                            {/* Description */}
-                            {/* <div> */}
-                            {/*     <p */}
-                            {/*         className="text-neutral-600 leading-relaxed text-sm lg:text-sm" */}
-                            {/*         style={{ fontFamily: "Courier New, monospace" }} */}
-                            {/*     > */}
-                            {/*         {artwork.description} */}
-                            {/*     </p> */}
-                            {/* </div> */}
-
-                            {/* Buttons */}
                             <div className="flex gap-3 pt-10">
                                 <Link
                                     href={`/contact?artwork=${encodeURIComponent(artwork.title)}`}
-                                    className="inline-flex items-center justify-center bg-neutral-800 text-white px-6 py-2 hover:bg-neutral-700 transition-colors duration-300 text-xs lg:text-sm font-light"
+                                    className="inline-flex items-center justify-center bg-neutral-800 text-white w-24 py-2 hover:bg-neutral-700 transition-colors duration-300 text-xs lg:text-sm font-light"
                                 >
                                     Enquire
                                 </Link>
@@ -794,10 +783,10 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                             </div>
 
                             {/* Previous/Next Navigation - Mobile Only */}
-                            <div className="md:hidden flex gap-4 pt-4">
+                            <div className="md:hidden flex justify-between items-center pt-4">
                                 <button
                                     onClick={() => navigateToArtwork(prevArtwork.slug)}
-                                    className="flex-1 flex items-center justify-center gap-2 border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors text-xs"
+                                    className="flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors text-xs"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     <ChevronLeft size={16} strokeWidth={1} />
@@ -805,7 +794,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 </button>
                                 <button
                                     onClick={() => navigateToArtwork(nextArtwork.slug)}
-                                    className="flex-1 flex items-center justify-center gap-2 border border-neutral-300 text-neutral-600 px-4 py-2 hover:border-neutral-800 hover:text-neutral-800 transition-colors text-xs"
+                                    className="flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors text-xs"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
                                     Next

@@ -4,11 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function About() {
-    const [activeSection, setActiveSection] = useState<"about" | "writing">("about");
+    const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("about");
 
     return (
         <div className="pt-16 min-h-screen bg-white">
-            {/* Fixed Toggle Navigation - Outside both containers */}
+            {/* Fixed Toggle Navigation - Three options */}
             <div className="py-6 px-6 max-w-5xl mx-auto">
                 <div className="mb-8 text-sm" style={{ fontFamily: "Courier New, monospace" }}>
                     <button
@@ -33,11 +33,23 @@ export default function About() {
                     >
                         About
                     </button>
+                    <span className="mx-2 text-neutral-400">|</span>
+
+                    <button
+                        onClick={() => setActiveSection("studio")}
+                        className={`${
+                            activeSection === "studio"
+                                ? "text-neutral-800 cursor-default"
+                                : "text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
+                        }`}
+                    >
+                        Studio
+                    </button>
                 </div>
             </div>
 
             {activeSection === "about" ? (
-                // ABOUT SECTION - Clean white background
+                // ABOUT SECTION - Surfaces text with images
                 <div className="px-6 max-w-4xl mx-auto pb-20">
                     {/* About Content */}
                     <div>
@@ -67,16 +79,16 @@ export default function About() {
                                     revealed Mars as a cratered, moon-like surface.
                                 </p>
 
-                                {/* Two small images in grid - left aligned with shared caption */}
-                                <div className="my-24 max-w-lg">
-                                    <div className="grid grid-cols-2 gap-6">
+                                {/* Two small images - stack on mobile (smaller, left aligned), side by side on desktop */}
+                                <div className="my-24 max-w-sm md:max-w-lg">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <Image
                                                 src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
                                                 alt="Mariner 4 detail 1"
                                                 width={1600}
                                                 height={1200}
-                                                className="w-full h-74 object-cover"
+                                                className="w-full h-auto md:h-74 md:object-cover"
                                             />
                                         </div>
                                         <div>
@@ -85,7 +97,7 @@ export default function About() {
                                                 alt="Mariner 4 detail 2"
                                                 width={1600}
                                                 height={1200}
-                                                className="w-full h-74 object-cover"
+                                                className="w-full h-auto md:h-74 md:object-cover"
                                             />
                                         </div>
                                     </div>
@@ -93,7 +105,6 @@ export default function About() {
                                         Engineers at JPL hand-coloring the Mariner 4 data
                                     </p>
                                 </div>
-
                                 {/* Large image - left aligned */}
                                 <div className="my-24 max-w-3xl">
                                     <Image
@@ -176,8 +187,45 @@ export default function About() {
                         </div>
                     </div>
                 </div>
+            ) : activeSection === "studio" ? (
+                // STUDIO SECTION - Practical info
+                <div className="px-6 max-w-4xl mx-auto pb-20">
+                    {/* Studio Content */}
+                    <div>
+                        {/* Body Text */}
+                        <div
+                            className="space-y-8 text-neutral-600 leading-loose text-[15px]"
+                            style={{ fontFamily: "Courier New, monospace" }}
+                        >
+                            <div className="space-y-8">
+                                <h2
+                                    className="text-3xl font-light mt-16 mb-16 text-neutral-800 tracking-tight"
+                                    style={{ fontFamily: "Inter, sans-serif" }}
+                                >
+                                    Studio
+                                </h2>
+
+                                <p>
+                                    H K W is the collaborative practice of artists Thomas Hendrey
+                                    and Kendall White. The studio explores contemporary painting by
+                                    blending digital processes and traditional painting techniques,
+                                    investigating how the collection and transformation of
+                                    information shapes contemporary human nature, in this
+                                    transitional space between past and future modality of thought
+                                    and action.
+                                </p>
+
+                                {/* Placeholder for future content */}
+                                <div className="pt-8 space-y-6 text-neutral-500 italic">
+                                    <p>[Personal details and education to be added]</p>
+                                    <p>[Photo of both artists to be added]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             ) : (
-                // TEXT SECTION - Same clean white background
+                // TEXT SECTION - Alex's conceptual text
                 <div className="px-6 max-w-4xl mx-auto pb-40">
                     {/* Text Content */}
                     <div>

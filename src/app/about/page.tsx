@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function About() {
-    const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("about");
+    const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("writing");
 
     return (
         <div className="pt-16 min-h-screen bg-white">
@@ -55,7 +55,7 @@ export default function About() {
                     <div>
                         {/* Body Text */}
                         <div
-                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[15px]"
+                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             <div className="space-y-8">
@@ -194,7 +194,7 @@ export default function About() {
                     <div>
                         {/* Body Text */}
                         <div
-                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[15px]"
+                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             <div className="space-y-8">
@@ -226,12 +226,12 @@ export default function About() {
                 </div>
             ) : (
                 // TEXT SECTION - Alex's conceptual text
-                <div className="px-5 max-w-4xl mx-auto pb-40">
+                <div className="px-6 max-w-4xl mx-auto pb-40">
                     {/* Text Content */}
                     <div>
                         {/* Body Text */}
                         <div
-                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[15px] md:text-[15px] tracking-tighter"
+                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
                             <div className="space-y-8">
@@ -271,8 +271,9 @@ export default function About() {
                                 <p className="pt-4">
                                     The dynamic is something of the elephant in the gallery where
                                     contemporary artists downplay or overstate the role and
-                                    implications of tech, suggesting that their work is dissolvable
-                                    from its context or the present reality of human consciousness.
+                                    implications of technology, suggesting that their work is
+                                    dissolvable from its context or the present reality of human
+                                    consciousness.
                                 </p>
 
                                 <p className="pt-4">

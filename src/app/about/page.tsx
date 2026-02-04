@@ -174,7 +174,7 @@ export default function About() {
                                     required to make it visible.
                                 </p>
 
-                                <p className="pt-4">
+                                <p className="pb-30 pt-4">
                                     Painting has always been a system for encoding and transmitting
                                     information across time and space, a way of making the invisible
                                     or distant present. These works extend that tradition into a

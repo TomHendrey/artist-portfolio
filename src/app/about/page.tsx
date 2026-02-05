@@ -92,7 +92,7 @@ export default function About() {
                                     revealed Mars as a cratered, moon-like surface.
                                 </p>
 
-                                <div className="my-24  max-w-[340px] sm:max-w-[320px] mx-0 ">
+                                <div className="my-30  max-w-[340px] sm:max-w-[320px] mx-0 ">
                                     <Image
                                         src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
                                         alt="Custom cutting machine"
@@ -124,7 +124,7 @@ export default function About() {
                                 </p>
 
                                 {/* Luminet Black Hole Image - left aligned */}
-                                <div className="my-24 max-w-2xl">
+                                <div className="my-30 max-w-2xl">
                                     <Image
                                         src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770074251/blackhole-12.jpg"
                                         alt="Jean-Pierre Luminet's hand-plotted black hole simulation, 1978"

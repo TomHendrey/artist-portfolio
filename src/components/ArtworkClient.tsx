@@ -807,7 +807,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                                 <div className="block md:hidden lg:block mt-20 lg:mt-20">
                                     {/* Rest of gallery code stays the same */}
                                     {/* Mobile: full-width stacked */}
-                                    <div className="md:hidden space-y-28">
+                                    <div className="md:hidden space-y-34">
                                         {artwork.images.details.map((detail, index) => (
                                             <div
                                                 key={detail}

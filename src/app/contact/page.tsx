@@ -68,7 +68,7 @@ export default function Contact() {
     return (
         <div className="min-h-screen bg-neutral-50">
             {/* Mobile: Image at top */}
-            <div className="lg:hidden w-full pt-16">
+            <div className="lg:hidden w-full pt-10">
                 <Image
                     src="https://res.cloudinary.com/dutoeewfl/image/upload/v1769381512/contact-mobile-16.jpg"
                     alt="Artwork detail"
@@ -151,14 +151,8 @@ export default function Contact() {
                                     className="text-neutral-800 text-sm md:text-sm,"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    London, SW15,
+                                    London, SW15
                                 </div>
-                                {/* <div */}
-                                {/*     className="text-sm text-neutral-400 " */}
-                                {/*     style={{ fontFamily: "Courier New, monospace" }} */}
-                                {/* > */}
-                                {/*     Available by appointment */}
-                                {/* </div> */}
                             </div>
                         </div>
 

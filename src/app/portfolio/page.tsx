@@ -65,7 +65,7 @@ export default function Portfolio() {
                         Surfaces
                     </h1>
                     <p
-                        className="text-base  text-neutral-600 max-w-2xl ml-4"
+                        className="text-sm  text-neutral-600 max-w-2xl ml-4"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         Studies from the surface of Mars

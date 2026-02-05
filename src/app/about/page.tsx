@@ -214,12 +214,27 @@ export default function About() {
                                     transitional space between past and future modality of thought
                                     and action.
                                 </p>
-
-                                {/* Placeholder for future content */}
-                                <div className="pt-8 space-y-6 text-neutral-500 italic">
-                                    <p>[Personal details and education to be added]</p>
-                                    <p>[Photo of both artists to be added]</p>
-                                </div>
+                            </div>
+                        </div>
+                        {/* Placeholder for future content */}
+                        <div className="pt-28 space-y-2 text-neutral-700 ">
+                            <p>Alex Kendall White</p>
+                            <div
+                                className="text-neutral-500 text-sm"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
+                                <p>The Bartlette School Of Architecture - MA, Architecture</p>
+                                {/* <p>University Of Kent - BA, Architecture</p> */}
+                            </div>
+                        </div>
+                        {/* Placeholder for future content */}
+                        <div className="pt-8 space-y-2 text-neutral-700 ">
+                            <p>Thomas Hendrey</p>
+                            <div
+                                className="text-neutral-500 text-sm"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
+                                <p>Camberwell College of Arts - BA, Fine Art</p>
                             </div>
                         </div>
                     </div>

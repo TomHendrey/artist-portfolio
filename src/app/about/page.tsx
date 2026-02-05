@@ -124,7 +124,7 @@ export default function About() {
                                 </p>
 
                                 {/* Luminet Black Hole Image - left aligned */}
-                                <div className="my-30 max-w-2xl">
+                                <div className="my-30 max-w-3xl">
                                     <Image
                                         src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770074251/blackhole-12.jpg"
                                         alt="Jean-Pierre Luminet's hand-plotted black hole simulation, 1978"

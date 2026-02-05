@@ -57,7 +57,7 @@ export default function About() {
                     {/* Studio Image */}
                     <div className="mb-16 max-w-[340px] sm:max-w-[320px] mx-0 ">
                         <Image
-                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770314810/image-asset-7.jpg"
+                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770315355/image-asset-7.jpg"
                             alt="Custom cutting machine"
                             width={1600}
                             height={1200}

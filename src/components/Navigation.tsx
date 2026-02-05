@@ -20,7 +20,7 @@ export default function Navigation() {
 
     const navItems = [
         { href: "/", label: "Home" },
-        { href: "/portfolio", label: "Works" },
+        { href: "/works", label: "Works" },
         { href: "/about", label: "About" },
         { href: "/contact", label: "Contact" },
     ];
@@ -68,7 +68,6 @@ export default function Navigation() {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                style={{ fontFamily: "Courier New, monospace" }}
                                 className="block py-2 text-neutral-600 hover:text-neutral-800 transition-colors duration-200"
                                 onClick={() => setIsOpen(false)}
                             >

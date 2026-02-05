@@ -7,10 +7,13 @@ export default function About() {
     const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("writing");
 
     return (
-        <div className="pt-16 min-h-screen bg-white">
+        <div className="pt-10 md:pt-16 min-h-screen bg-white">
             {/* Fixed Toggle Navigation - Three options */}
             <div className="py-6 px-6 max-w-5xl mx-auto">
-                <div className="mb-8 text-sm" style={{ fontFamily: "Courier New, monospace" }}>
+                <div
+                    className="mb-8 text-sm lg:ml-4"
+                    style={{ fontFamily: "Courier New, monospace" }}
+                >
                     <button
                         onClick={() => setActiveSection("writing")}
                         className={`${
@@ -51,6 +54,16 @@ export default function About() {
             {activeSection === "about" ? (
                 // ABOUT SECTION - Surfaces text with images
                 <div className="px-6 max-w-4xl mx-auto pb-20">
+                    {/* Studio Image */}
+                    <div className="mb-16 max-w-[340px] sm:max-w-[320px] mx-0 ">
+                        <Image
+                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770314810/image-asset-7.jpg"
+                            alt="Custom cutting machine"
+                            width={1600}
+                            height={1200}
+                            className="w-full h-auto"
+                        />
+                    </div>
                     {/* About Content */}
                     <div>
                         {/* Body Text */}
@@ -60,10 +73,10 @@ export default function About() {
                         >
                             <div className="space-y-8">
                                 <h2
-                                    className="text-3xl font-light mt-16 mb-16 text-neutral-800 tracking-tight"
+                                    className="text-3xl font-light mt-28 mb-16 text-neutral-800 tracking-tight"
                                     style={{ fontFamily: "Inter, sans-serif" }}
                                 >
-                                    Surfaces
+                                    About
                                 </h2>
 
                                 <p>
@@ -79,44 +92,18 @@ export default function About() {
                                     revealed Mars as a cratered, moon-like surface.
                                 </p>
 
-                                {/* Two small images - stack on mobile (smaller, left aligned), side by side on desktop */}
-                                <div className="my-24 max-w-sm md:max-w-lg">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <Image
-                                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
-                                                alt="Mariner 4 detail 1"
-                                                width={1600}
-                                                height={1200}
-                                                className="w-full h-auto md:h-74 md:object-cover"
-                                            />
-                                        </div>
-                                        <div>
-                                            <Image
-                                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-3.jpg"
-                                                alt="Mariner 4 detail 2"
-                                                width={1600}
-                                                height={1200}
-                                                className="w-full h-auto md:h-74 md:object-cover"
-                                            />
-                                        </div>
-                                    </div>
-                                    <p className="text-xs text-neutral-400 mt-4">
-                                        Engineers at JPL hand-coloring the Mariner 4 data
-                                    </p>
-                                </div>
-                                {/* Large image - left aligned */}
-                                <div className="my-24 max-w-3xl">
+                                <div className="my-24  max-w-[340px] sm:max-w-[320px] mx-0 ">
                                     <Image
-                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770215468/nasa-mars-2-16.jpg"
-                                        alt="Engineers at JPL hand-coloring the first Mariner 4 Mars image, 1965"
+                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
+                                        alt="Custom cutting machine"
                                         width={1600}
                                         height={1200}
                                         className="w-full h-auto"
                                     />
-                                    <p className="text-xs text-neutral-400 mt-4">
-                                        The first ever colour image of the surface of Mars, 1965
-                                    </p>
+                                    <div className="text-xs text-neutral-400 mt-4">
+                                        Engineers at JPL hand-coloring the first ever colour image
+                                        of the surface of Mars, 1965
+                                    </div>
                                 </div>
 
                                 <p className="pt-4">
@@ -137,7 +124,7 @@ export default function About() {
                                 </p>
 
                                 {/* Luminet Black Hole Image - left aligned */}
-                                <div className="my-24 max-w-3xl">
+                                <div className="my-24 max-w-2xl">
                                     <Image
                                         src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770074251/blackhole-12.jpg"
                                         alt="Jean-Pierre Luminet's hand-plotted black hole simulation, 1978"
@@ -167,11 +154,11 @@ export default function About() {
                                     information chain. Like the hand-coloured Mariner printouts or
                                     Luminet&apos;s plotted calculations, they translate transmitted
                                     data, in this case from Mars, through manual processes:
-                                    algorithmic cutting paths combined with oil pastel applied by
-                                    hand. By the time these images become completed paintings, they
-                                    are already many steps removed from their source. Each painting
-                                    is an image of a distant world, but also a record of everything
-                                    required to make it visible.
+                                    algorithmic cutting paths combined with oil paint applied and
+                                    layered by hand. By the time these images become completed
+                                    paintings, they are already many steps removed from their
+                                    source. Each painting is an image of a distant world, but also a
+                                    record of everything required to make it visible.
                                 </p>
 
                                 <p className="pb-30 pt-4">
@@ -190,6 +177,16 @@ export default function About() {
             ) : activeSection === "studio" ? (
                 // STUDIO SECTION - Practical info
                 <div className="px-6 max-w-4xl mx-auto pb-20">
+                    {/* Studio Image */}
+                    <div className="mb-16 max-w-[340px] sm:max-w-[320px] mx-0 ">
+                        <Image
+                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770303228/machine-1.jpg"
+                            alt="Custom cutting machine"
+                            width={1600}
+                            height={1200}
+                            className="w-full h-auto"
+                        />
+                    </div>
                     {/* Studio Content */}
                     <div>
                         {/* Body Text */}
@@ -217,7 +214,7 @@ export default function About() {
                             </div>
                         </div>
                         {/* Placeholder for future content */}
-                        <div className="pt-28 space-y-2 text-neutral-700 ">
+                        <div className="pt-20 space-y-2 text-neutral-700 ">
                             <p>Alex Kendall White</p>
                             <div
                                 className="text-neutral-500 text-sm"
@@ -242,6 +239,18 @@ export default function About() {
             ) : (
                 // TEXT SECTION - Alex's conceptual text
                 <div className="px-6 max-w-4xl mx-auto pb-40">
+                    {/* Studio Image */}
+                    <div className="mb-16 max-w-[340px] sm:max-w-[280px] mx-0 ">
+                        <Image
+                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770314541/surface-2-g-front-3-16.jpg"
+                            // src="https://res.cloudinary.com/dutoeewfl/image/upload/v1765331050/surface-1-closeup-2-16.jpg"
+                            alt="Custom cutting machine"
+                            width={1600}
+                            height={1200}
+                            className="w-full h-auto"
+                        />
+                    </div>
+
                     {/* Text Content */}
                     <div>
                         {/* Body Text */}
@@ -304,7 +313,7 @@ export default function About() {
                                 {/* Signature */}
                                 <div className="mt-16 pt-8 border-t border-neutral-300">
                                     <p
-                                        className="text-base font-light text-neutral-800"
+                                        className="mt-12 text-base font-light text-neutral-800"
                                         style={{ fontFamily: "Inter, sans-serif" }}
                                     >
                                         - Kendall White 2026

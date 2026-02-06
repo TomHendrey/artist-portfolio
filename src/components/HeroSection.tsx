@@ -18,7 +18,7 @@ const HERO_IMAGES_DESKTOP = [
 const HERO_IMAGES_MOBILE = [
     "v1762601265/hero-22-md_uteqnr.jpg", // REPLACE with your mobile versions
     "v1762602276/hero-24-md_dk8cml.jpg",
-    "v1770397252/hero-33-md.jpg",
+    "v1770397669/hero-33-md.jpg",
     "v1762601264/hero-25-md_fgw3qa.jpg",
     "v1762601266/hero-29-md_w9o3ec.jpg",
 ];

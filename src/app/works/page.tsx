@@ -73,11 +73,11 @@ export default function Portfolio() {
                                         src={getCloudinaryUrl(artwork.images.main, "medium")}
                                         alt={artwork.title}
                                         fill
-                                        className="object-cover group-hover:scale-[1.01] transition-transform duration-500"
+                                        className="object-cover group-hover:scale-[1.0] transition-transform duration-500"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         priority={artwork.id <= 6}
                                     />
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/0 transition-colors duration-300" />
                                 </div>
                             </Link>
 

@@ -122,7 +122,11 @@ export default function Home() {
                         nature, in this transitional space between past and future modality of
                         thought and action.{" "}
                     </p>
-                    <Link href="/about" style={{ fontFamily: "Courier New, monospace" }}>
+                    <Link
+                        href="/about"
+                        className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+                        style={{ fontFamily: "Courier New, monospace" }}
+                    >
                         Read More
                         <ArrowRight size={14} />
                     </Link>

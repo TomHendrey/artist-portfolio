@@ -114,7 +114,10 @@ export default function Contact() {
                         <div className="space-y-5 mb-8">
                             {/* Email - inline */}
                             <div>
-                                <div className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
+                                <div
+                                    className="text-xs uppercase tracking-wider text-neutral-400 mb-1 mr-4"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
                                     Email
                                 </div>
                                 <a
@@ -128,7 +131,10 @@ export default function Contact() {
 
                             {/* Instagram - inline */}
                             <div>
-                                <div className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
+                                <div
+                                    className="text-xs uppercase tracking-wider text-neutral-400 mb-1  mr-4"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
                                     Instagram
                                 </div>
                                 <a
@@ -144,7 +150,10 @@ export default function Contact() {
 
                             {/* Location - inline */}
                             <div>
-                                <div className="text-xs uppercase tracking-wider text-neutral-400 mr-4">
+                                <div
+                                    className="text-xs uppercase tracking-wider text-neutral-400 mb-1 mr-4"
+                                    style={{ fontFamily: "Courier New, monospace" }}
+                                >
                                     Location
                                 </div>
                                 <div
@@ -212,7 +221,7 @@ export default function Contact() {
                                         value={formData.message}
                                         onChange={handleChange}
                                         required
-                                        rows={5}
+                                        rows={6}
                                         placeholder="Message"
                                         className="w-full px-0 py-2 border-0 border-b border-neutral-300 focus:border-neutral-800 focus:outline-none transition-colors duration-200 resize-none bg-transparent text-sm"
                                         style={{ fontFamily: "Courier New, monospace" }}
@@ -224,7 +233,8 @@ export default function Contact() {
                                     <button
                                         type="submit"
                                         disabled={formStatus === "sending"}
-                                        className="px-8 py-3 bg-neutral-800 text-white hover:bg-neutral-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        // className="px-8 py-3 bg-neutral-800 text-white hover:bg-neutral-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
                                         style={{ fontFamily: "Courier New, monospace" }}
                                     >
                                         {formStatus === "sending"

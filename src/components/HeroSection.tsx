@@ -113,24 +113,26 @@ export default function HeroSection() {
                 </div>
 
                 {/* Text content overlay */}
-                <div className="relative z-10 text-center lg:text-left text-white lg:text-neutral-900 px-6 md:px-8 lg:pl-10 xl:pl-10 2xl:pl-35 lg:pr-[60%] w-full">
-                    <div className="">
-                        <h1 className="font-helvetica text-2xl xs:text-3xl md:text-5xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none lg:max-w-[260px] xl:max-w-none 2xl:max-w-none ">
-                            Hendrey - Kendall White
-                        </h1>
-                        <p
-                            className="text-xl md:text-2xl lg:text-[17px] xl:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
-                            style={{ fontFamily: "Courier New, monospace" }}
-                        >
-                            Contemporary Painting
-                        </p>
-                        <Link
-                            href="/portfolio"
-                            className="inline-flex items-center gap-2 lg:font-light bg-white text-neutral-800 lg:bg-neutral-900 lg:text-white px-8 py-3 hover:bg-neutral-100 lg:hover:bg-neutral-700 transition-colors duration-300 text-sm md:text-base"
-                        >
-                            View Works
-                            <ArrowRight size={16} />
-                        </Link>
+                <div className="relative z-10 text-white lg:text-neutral-900 px-6 md:px-8 w-full">
+                    <div className="flex items-center justify-center lg:justify-start lg:pl-10 xl:pl-10 2xl:pl-35 lg:pr-[60%] min-h-[60vh] lg:min-h-0">
+                        <div className="text-left max-w-md  pl-4 sm:pl-0 -ml-8 -md:ml-16 lg:ml-0">
+                            <h1 className="font-helvetica text-[28px] xs:text-3xl sm:text-4xl lg:text-3xl font-light mb-6 tracking-wide drop-shadow-lg lg:drop-shadow-none lg:max-w-[260px] xl:max-w-none 2xl:max-w-none">
+                                Hendrey - Kendall White
+                            </h1>
+                            <p
+                                className="text-lg  md:text-[17px] xl:text-xl font-light mb-8 drop-shadow-lg lg:drop-shadow-none"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
+                                Contemporary Painting
+                            </p>
+                            <Link
+                                href="/works"
+                                className="inline-flex items-center gap-2 lg:font-light bg-white text-neutral-800 lg:bg-neutral-900 lg:text-white px-8 py-3 hover:bg-neutral-100 lg:hover:bg-neutral-700 transition-colors duration-300 text-sm md:text-base"
+                            >
+                                View Works
+                                <ArrowRight size={16} />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>

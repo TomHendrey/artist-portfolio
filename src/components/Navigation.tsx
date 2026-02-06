@@ -69,6 +69,7 @@ export default function Navigation() {
                                 key={item.href}
                                 href={item.href}
                                 className="block py-2 text-neutral-600 hover:text-neutral-800 transition-colors duration-200"
+                                style={{ fontFamily: "Courier New, monospace" }}
                                 onClick={() => setIsOpen(false)}
                             >
                                 {item.label}

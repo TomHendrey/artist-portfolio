@@ -196,7 +196,7 @@ export const artworks: Artwork[] = [
             // Detail images - Medium versions (1600px) - INCLUDING GALLERY
             detailsMedium: [
                 // Gallery views first
-                "v1767658245/surface-2-g-front-2-16.jpg",
+                "v1770390253/surface-2-g-front-2-16.jpg",
 
                 "v1767658244/surface-2-g-left-2-16.jpg",
                 // Close-up details

@@ -11,7 +11,7 @@ export default function Navigation() {
 
     // Hide navigation on artwork detail pages (e.g., /portfolio/surface-i)
     // But show it on the portfolio grid page (/portfolio)
-    const isArtworkPage = pathname?.startsWith("/portfolio/") && pathname !== "/portfolio";
+    const isArtworkPage = pathname?.startsWith("/works/") && pathname !== "/works";
 
     // Don't render anything if we're on an artwork detail page
     if (isArtworkPage) {

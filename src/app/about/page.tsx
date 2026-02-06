@@ -11,7 +11,7 @@ export default function About() {
             {/* Fixed Toggle Navigation - Three options */}
             <div className="py-6 px-6 max-w-5xl mx-auto">
                 <div
-                    className="mb-8 text-sm lg:ml-4"
+                    className="mb-12 text-sm lg:ml-4"
                     style={{ fontFamily: "Courier New, monospace" }}
                 >
                     <button
@@ -57,7 +57,7 @@ export default function About() {
                     {/* Studio Image */}
                     <div className="mb-16 max-w-[340px] sm:max-w-[320px] mx-0 ">
                         <Image
-                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770315355/image-asset-7.jpg"
+                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770335700/image-asset-7.jpg"
                             alt="Custom cutting machine"
                             width={1600}
                             height={1200}
@@ -73,7 +73,7 @@ export default function About() {
                         >
                             <div className="space-y-8">
                                 <h2
-                                    className="text-3xl font-light mt-28 mb-16 text-neutral-800 tracking-tight"
+                                    className="text-3xl font-light mt-20 mb-16 text-neutral-800 tracking-tight"
                                     style={{ fontFamily: "Inter, sans-serif" }}
                                 >
                                     About
@@ -196,7 +196,7 @@ export default function About() {
                         >
                             <div className="space-y-8">
                                 <h2
-                                    className="text-3xl font-light mt-16 mb-16 text-neutral-800 tracking-tight"
+                                    className="text-3xl font-light mt-20 mb-16 text-neutral-800 tracking-tight"
                                     style={{ fontFamily: "Inter, sans-serif" }}
                                 >
                                     Studio
@@ -240,10 +240,11 @@ export default function About() {
                 // TEXT SECTION - Alex's conceptual text
                 <div className="px-6 max-w-4xl mx-auto pb-40">
                     {/* Studio Image */}
-                    <div className="mb-16 max-w-[340px] sm:max-w-[280px] mx-0 ">
+                    <div className="mb-16 max-w-[340px] sm:max-w-[320px] mx-0 ">
                         <Image
-                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770314541/surface-2-g-front-3-16.jpg"
-                            // src="https://res.cloudinary.com/dutoeewfl/image/upload/v1765331050/surface-1-closeup-2-16.jpg"
+                            // src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770314541/surface-2-g-front-3-16.jpg"
+                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770336902/text-5.jpg"
+                            // src="https:res.cloudinary.com/dutoeewfl/image/upload/v1765331050/surface-1-closeup-2-16.jpg"
                             alt="Custom cutting machine"
                             width={1600}
                             height={1200}
@@ -260,7 +261,7 @@ export default function About() {
                         >
                             <div className="space-y-8">
                                 <h2
-                                    className="text-3xl font-light mt-16 mb-16 text-neutral-800 tracking-tight"
+                                    className="text-3xl font-light mt-20 mb-16 text-neutral-800 tracking-tight"
                                     style={{ fontFamily: "Inter, sans-serif" }}
                                 >
                                     Text

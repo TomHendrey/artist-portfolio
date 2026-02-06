@@ -33,7 +33,7 @@ export default function Home() {
                         Featured Works
                     </div>
                     <div
-                        className="text-lg md:text-xl text-neutral-600"
+                        className="text-base pt-2 text-neutral-600"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         {featuredSeriesName}
@@ -112,7 +112,7 @@ export default function Home() {
                         Studio
                     </h2>
                     <p
-                        className="text-base md:text-lg text-neutral-700 mb-14 leading-relaxed tracking-tight"
+                        className="text-base  text-neutral-700 mb-14 leading-loose tracking-tight"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         H K W is the collaborative practice of artists Thomas Hendrey and Kendall

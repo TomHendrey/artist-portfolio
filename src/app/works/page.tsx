@@ -9,16 +9,9 @@ import { getCloudinaryUrl } from "@/lib/cloudinary";
 
 export default function Portfolio() {
     const [selectedArtwork, setSelectedArtwork] = useState<number | null>(null);
-    const [filter, setFilter] = useState<string>("all");
+    const [filter] = useState<string>("all");
 
     // Generate filters from artwork data
-    const allYears = [...new Set(artworks.map((art) => art.year))].sort().reverse().map(String);
-    const allCategories = [...new Set(artworks.map((art) => art.category).filter(Boolean))].map(
-        String,
-    );
-    const allMediums = [...new Set(artworks.map((art) => art.medium.split(" ")[0].toLowerCase()))];
-
-    const filters: string[] = ["all", ...allYears, ...allCategories, ...allMediums];
 
     const filteredArtworks = artworks.filter((artwork) => {
         if (filter === "all") return true;
@@ -28,11 +21,6 @@ export default function Portfolio() {
             artwork.medium.toLowerCase().includes(filter.toLowerCase())
         );
     });
-
-    const openLightbox = (id: number) => {
-        setSelectedArtwork(id);
-        document.body.style.overflow = "hidden";
-    };
 
     const closeLightbox = () => {
         setSelectedArtwork(null);
@@ -79,7 +67,7 @@ export default function Portfolio() {
                     {filteredArtworks.map((artwork) => (
                         <div key={artwork.id} className="group">
                             {/* Link to individual artwork page */}
-                            <Link href={`/portfolio/${artwork.slug}`} className="block">
+                            <Link href={`/works/${artwork.slug}`} className="block">
                                 <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-neutral-100">
                                     <Image
                                         src={getCloudinaryUrl(artwork.images.main, "medium")}
@@ -94,7 +82,7 @@ export default function Portfolio() {
                             </Link>
 
                             <div className="space-y-1 pb-22 md:pb-0 mt-6">
-                                <Link href={`/portfolio/${artwork.slug}`}>
+                                <Link href={`/works/${artwork.slug}`}>
                                     <h3 className="text-base pb-2 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
                                         {artwork.title}
                                     </h3>
@@ -119,15 +107,6 @@ export default function Portfolio() {
                                     {artwork.year}{" "}
                                 </p>
                             </div>
-
-                            {/* Quick view button - Desktop only */}
-                            {/* <button */}
-                            {/*     onClick={() => openLightbox(artwork.id)} */}
-                            {/*     className="hidden lg:pb-4 md:block mt-2 text-xs text-neutral-500 hover:text-neutral-700 transition-colors" */}
-                            {/*     style={{ fontFamily: "Courier New, monospace" }} */}
-                            {/* > */}
-                            {/*     Quick View */}
-                            {/* </button> */}
                         </div>
                     ))}
                 </div>
@@ -195,7 +174,7 @@ export default function Portfolio() {
                             </div>
 
                             <Link
-                                href={`/portfolio/${selectedArt.slug}`}
+                                href={`/works/${selectedArt.slug}`}
                                 className="inline-block mt-4 text-sm text-neutral-800 hover:text-neutral-600 border-b border-neutral-800"
                                 style={{ fontFamily: "Courier New, monospace" }}
                                 onClick={closeLightbox}

@@ -656,7 +656,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
         currentIndex < artworks.length - 1 ? artworks[currentIndex + 1] : artworks[0];
 
     const navigateToArtwork = (slug: string) => {
-        router.push(`/portfolio/${slug}`);
+        router.push(`/works/${slug}`);
     };
 
     // ============================================
@@ -689,7 +689,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                     {/* Mobile + Tablet Header */}
                     <div className="md:hidden bg-white px-6 py-6 flex items-center justify-between">
                         <Link
-                            href="/portfolio"
+                            href="/works"
                             className="flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors text-sm"
                             style={{ fontFamily: "Courier New, monospace" }}
                         >
@@ -741,7 +741,7 @@ export default function ArtworkClient({ artwork }: ArtworkClientProps) {
                         {/* Back Navigation - Desktop only */}
                         <div className="hidden md:block mb-8 lg:mb-16">
                             <Link
-                                href="/portfolio"
+                                href="/works"
                                 className="flex items-center gap-2 text-neutral-600 hover:text-neutral-800 transition-colors text-sm"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >

@@ -48,7 +48,7 @@ export default function Home() {
 
                         return (
                             <div key={artwork.id}>
-                                <Link href={`/portfolio/${artwork.slug}`} className="block">
+                                <Link href={`/works/${artwork.slug}`} className="block">
                                     <div className="w-full bg-white">
                                         <Image
                                             src={getCloudinaryUrl(imageUrl, "large")}
@@ -62,7 +62,7 @@ export default function Home() {
                                     </div>
                                 </Link>
                                 <div className="space-y-1 pb-22 md:pb-0 mt-6">
-                                    <Link href={`/portfolio/${artwork.slug}`}>
+                                    <Link href={`/works/${artwork.slug}`}>
                                         <h3 className="text-base pb-2 font-light text-neutral-800 hover:text-neutral-600 transition-colors">
                                             {artwork.title}
                                         </h3>
@@ -95,7 +95,7 @@ export default function Home() {
                 {/* View Series Button */}
                 <div className="mt-0 md:mt-20 text-left">
                     <Link
-                        href="/portfolio"
+                        href="/works"
                         className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
@@ -122,11 +122,7 @@ export default function Home() {
                         nature, in this transitional space between past and future modality of
                         thought and action.{" "}
                     </p>
-                    <Link
-                        href="/about"
-                        className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
-                        style={{ fontFamily: "Courier New, monospace" }}
-                    >
+                    <Link href="/about" style={{ fontFamily: "Courier New, monospace" }}>
                         Read More
                         <ArrowRight size={14} />
                     </Link>

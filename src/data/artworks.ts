@@ -459,7 +459,7 @@ export const artworks: Artwork[] = [
         slug: "surface7",
         title: "Surface VII",
         year: "2022",
-        medium: "Acrylic and oil pastel on panel",
+        medium: "Mixed media on wood",
         dimensions: "70 x 95cm",
         description:
             "Marks the beginning of a new series focused on Venusian landscapes, reinterpreting dense atmospheric data into vibrant surface expressions.",

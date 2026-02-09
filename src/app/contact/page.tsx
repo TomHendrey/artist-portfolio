@@ -68,7 +68,7 @@ export default function Contact() {
     return (
         <div className="min-h-screen bg-neutral-50">
             {/* Mobile: Image at top */}
-            <div className="lg:hidden w-full pt-10">
+            <div className="lg:hidden w-full pt-12">
                 <Image
                     src="https://res.cloudinary.com/dutoeewfl/image/upload/v1769381512/contact-mobile-16.jpg"
                     alt="Artwork detail"
@@ -144,7 +144,7 @@ export default function Contact() {
                                     className="text-sm md:text-sm text-neutral-800 hover:text-neutral-600 transition-colors"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    @hendreykendallwhite
+                                    @hendreykendallwhit
                                 </a>
                             </div>
 

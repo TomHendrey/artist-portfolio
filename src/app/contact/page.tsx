@@ -144,7 +144,7 @@ export default function Contact() {
                                     className="text-sm md:text-sm text-neutral-800 hover:text-neutral-600 transition-colors"
                                     style={{ fontFamily: "Courier New, monospace" }}
                                 >
-                                    @hendreykendallwhit
+                                    @hendreykendallwhite
                                 </a>
                             </div>
 

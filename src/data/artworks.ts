@@ -597,8 +597,9 @@ export const artworks: Artwork[] = [
             "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
         maxZoom: 4.0,
         images: {
-            main: "v1761587833/surface-12-main-9.jpg",
-            cropped: "v1761587835/surface-12-cropped-9.jpg",
+            main: "v1761587791/surface-10-main-8.jpg",
+            cropped: "v1761587790/surface-10-cropped-10.jpg",
+
             croppedAlts: [],
             details: [
                 "v1768444553/surface-10-g-front-1-24.jpg",
@@ -679,8 +680,8 @@ export const artworks: Artwork[] = [
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
         maxZoom: 4.0,
         images: {
-            main: "v1761587791/surface-10-main-8.jpg",
-            cropped: "v1761587790/surface-10-cropped-10.jpg",
+            main: "v1761587833/surface-12-main-9.jpg",
+            cropped: "v1761587835/surface-12-cropped-9.jpg",
             croppedAlts: [],
             details: [
                 "v1768444733/surface-12-g-front-24.jpg",

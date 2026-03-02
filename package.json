@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^1.1.1",
     "cloudinary": "^2.7.0",
     "cloudinary-cli": "^1.1.2",

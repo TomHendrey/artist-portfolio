@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter, Courier_Prime } from "next/font/google";
 import Navigation from "@/components/Navigation";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 const courierPrime = Courier_Prime({
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={`${inter.className} ${courierPrime.variable} bg-neutral-50`}>
                 <Navigation />
                 <main className="min-h-screen">{children}</main>
+                <Analytics />:
             </body>
         </html>
     );

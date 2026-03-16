@@ -4,26 +4,24 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function About() {
-    const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("writing");
+    const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("studio"); // Changed default to "studio"
 
     return (
         <div className="pt-10 md:pt-16 min-h-screen bg-white">
             {/* Fixed Toggle Navigation - Three options */}
             <div className="py-6 px-6 max-w-5xl mx-auto">
-                <div
-                    className="mb-12 text-sm lg:ml-4"
-                    style={{ fontFamily: "Courier New, monospace" }}
-                >
+                <div className="mb-12 text-sm " style={{ fontFamily: "Courier New, monospace" }}>
                     <button
-                        onClick={() => setActiveSection("writing")}
+                        onClick={() => setActiveSection("studio")}
                         className={`${
-                            activeSection === "writing"
+                            activeSection === "studio"
                                 ? "text-neutral-800 cursor-default"
                                 : "text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
                         }`}
                     >
-                        Text
+                        Studio
                     </button>
+
                     <span className="mx-2 text-neutral-400">|</span>
 
                     <button
@@ -34,19 +32,20 @@ export default function About() {
                                 : "text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
                         }`}
                     >
-                        About
+                        About - Surfaces {/* Changed from "About" */}
                     </button>
+
                     <span className="mx-2 text-neutral-400">|</span>
 
                     <button
-                        onClick={() => setActiveSection("studio")}
+                        onClick={() => setActiveSection("writing")}
                         className={`${
-                            activeSection === "studio"
+                            activeSection === "writing"
                                 ? "text-neutral-800 cursor-default"
                                 : "text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
                         }`}
                     >
-                        Studio
+                        Essay {/* Changed from "Text" */}
                     </button>
                 </div>
             </div>
@@ -264,51 +263,71 @@ export default function About() {
                                     className="text-3xl font-light mt-20 mb-16 text-neutral-800 tracking-tight"
                                     style={{ fontFamily: "Inter, sans-serif" }}
                                 >
-                                    Text
+                                    The Choice to Paint
                                 </h2>
 
                                 <p>
-                                    This project aims to integrate traditional and new media means
-                                    in a way that reflects the true nature of contemporary mores and
-                                    practice.
+                                    The world has been transformed into a monstrous fantastic
+                                    perpetually moving machine, and the sense of rhythm and
+                                    mechanical harmony, reflected in the whole of the world, cannot
+                                    but be echoed in all our thoughts and in our spiritual life. -
+                                    Aleksandr Shevchenko, writing in 1913 about the second
+                                    industrial revolution.
                                 </p>
 
                                 <p className="pt-4">
-                                    Traditional mediums of art hold an adversarial stance towards
-                                    technology; the critical and conceptual values we hold for them
-                                    frame technological means as incompatible with our nature - a
-                                    negation of mind and body that impedes the metaphysical and
-                                    psychological transferences that the demands of traditional
-                                    practice deploy.
+                                    The great project of art is to reconcile us to the world.
+                                    Conscious of our individuality – our difference – the act of art
+                                    is one of orientation, it serves as an incident between creator
+                                    and audience that places the inner life of the mind into the
+                                    outer material and social realms, it is a chance for communion.
                                 </p>
 
                                 <p className="pt-4">
-                                    Reciprocally, technologically enabled art - new media - demands
-                                    an alternative set of critical values and conceptual interests.
-                                    Descending from the values of the Enlightenment and scientific
-                                    revolutions, it rejects the notional soft quantities of
-                                    traditional practice as petty, limited and irrelevant to
-                                    contemporary mores and practice. It ignores its dependency and
-                                    moral contingency on these modes, denying their potency and
-                                    rendering them illegible.
+                                    Genre has traditionally been the space within which this has
+                                    been most accessible; provisionally by having content at the
+                                    scale of human behaviour and experience, and deployed through
+                                    generally understood means that demand the use of faculties
+                                    common between audience and creator, results are relational, but
+                                    at a conceptual level the framework of genre is potent as its
+                                    content and material implications provide an intimate social,
+                                    psychological and metaphysical portrait of its author.
                                 </p>
 
                                 <p className="pt-4">
-                                    The dynamic is something of the elephant in the gallery where
-                                    contemporary artists downplay or overstate the role and
-                                    implications of technology, suggesting that their work is
-                                    dissolvable from its context or the present reality of human
-                                    consciousness.
+                                    However, as this 4th industrial revolution unfolds humanity is
+                                    being remade in the image of technology, our means of perception
+                                    and action are increasingly dependent on technological tools,
+                                    our ideas and memories are increasingly contingent on its reach
+                                    and defined within its terms changing the way we see the world
+                                    and ourselves within it.
                                 </p>
 
                                 <p className="pt-4">
-                                    In this collaboration between Tom Hendrey and myself - Kendall
-                                    White - we have explored this dynamic through genre, examining
-                                    how tech at once connects and detaches us from perception and
-                                    action, how the traditional notions of place and practice are
-                                    altered by data culture and digital tools, and what the abstract
-                                    implications are and the demands these must transfer to the
-                                    practice of painting.
+                                    This vast and rapid emergence of data culture has produced as
+                                    many problems as opportunities for art; technologically enabled
+                                    art – or new media – offers a scope of output that was hitherto
+                                    inaccessible or completely impossible, and in being the
+                                    consequence of data technologies general presence, New Media art
+                                    is of increasing relevance to contemporary mores and practice,
+                                    but its use practically mitigates the relationship of the
+                                    creator to the work, the acquired capabilities, content and the
+                                    deterministic effect of the tools are a negation of our innate
+                                    faculties and lived experiences, the values of technologically
+                                    enabled art deny the conceptual values and potency of
+                                    traditional form of creation.
+                                </p>
+
+                                <p className="pt-4">
+                                    The past and future seem to press so heavily on the present that
+                                    we are left with something of an ultimatum that belies the
+                                    coexistent reality and implications of both on our social,
+                                    intellectual and spiritual lives. In this collaboration between
+                                    Tom Hendrey and myself - Kendall White - we have explored how
+                                    data culture connects and detaches us, the abstract and notional
+                                    implications of data thinking in genre and how the contemporary
+                                    conception of painting can accommodate the changing nature of
+                                    humanity.
                                 </p>
 
                                 {/* Signature */}

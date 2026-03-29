@@ -10,6 +10,8 @@ export interface Artwork {
     maxZoom?: number;
     images: {
         main: string; // Main image filename (Cloudinary path)
+        featured?: string; // Optional featured image
+        featuredMobile?: string; // Optional featured mobile image
         cropped?: string; // Optional cropped version
         croppedAlts?: string[]; // Optional alternative cropped versions
 
@@ -68,6 +70,9 @@ export const artworks: Artwork[] = [
         images: {
             // Main composite image (4096px)
             main: "v1769009840/surface-1-main-8.jpg",
+
+            featured: "v1774735184/surface-1-main-wide-40.jpg",
+            featuredMobile: "v1769009840/surface-1-main-8.jpg",
 
             // Cropped version
             cropped: "v1769009834/surface-1-cropped-9.jpg",
@@ -158,8 +163,11 @@ export const artworks: Artwork[] = [
         images: {
             // Main composite image (4096px)
             main: "v1767658373/surface-2-main-6.jpg",
-            // Cropped version
-            cropped: "v1767658376/surface-2-cropped-8.jpg",
+
+            featured: "v1774738034/surface-2-g-front-wide-40.jpg", // featured image
+            featuredMobile: "v1767658268/surface-2-g-front-1.jpg",
+
+            ropped: "v1767658376/surface-2-cropped-8.jpg",
             // High-res progressive loading (Vercel blob storage)
             highRes: {
                 base: "v1767658376/surface-2-cropped-8.jpg",
@@ -262,6 +270,9 @@ export const artworks: Artwork[] = [
         maxZoom: 8.0,
         images: {
             main: "v1768509969/surface-3-main-7.jpg",
+            featured: "v1774738074/surface-3-g-left-1-wide-40.jpg",
+            featuredMobile: "v1768474667/surface-3-g-left-1-24.jpg",
+
             cropped: "v1768509978/surface-3-cropped-8.jpg",
             croppedAlts: [],
             details: [

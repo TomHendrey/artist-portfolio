@@ -8,15 +8,7 @@ import HeroSection from "@/components/HeroSection";
 export default function Home() {
     // Get first 3 artworks for featured section
     const featuredArtworks = artworks.slice(0, 3);
-    const featuredSeriesName = "Surfaces"; // Change this to update throughout
-
-    // Hard-code specific images for featured works (optional)
-    // Add artwork slug and image path to override default main image
-    const featuredImageOverrides: { [key: string]: string } = {
-        // "surface-1": "v1764979198/surface-1-g-front-24.jpg",
-        "surface-2": "v1767658265/surface-2-g-front-2.jpg",
-        surface3: "v1768474667/surface-3-g-left-1-24.jpg",
-    };
+    const featuredSeriesName = "Surfaces";
 
     return (
         <div className="min-h-screen bg-white">
@@ -24,10 +16,7 @@ export default function Home() {
             <HeroSection />
 
             {/* Featured Works Preview - VERTICAL STACKED LAYOUT */}
-            <section
-                className="pt-30 pb-26 md:pt-60 md:pb-60 px-4 mx-auto"
-                style={{ maxWidth: "45rem" }}
-            >
+            <section className="pt-30 pb-26 md:pt-60 md:pb-60 px-4 mx-auto max-w-[95%] md:max-w-[1400px]">
                 <h2 className="text-left mb-10 md:mb-20">
                     <div className="text-2xl md:text-3xl font-light text-neutral-800 mb-2">
                         Featured Works
@@ -40,23 +29,36 @@ export default function Home() {
                     </div>
                 </h2>
 
-                <div className="space-y-8 md:space-y-40">
+                <div className="space-y-32 md:space-y-60">
                     {featuredArtworks.map((artwork) => {
-                        // Use override image if specified, otherwise use main image
-                        const imageUrl =
-                            featuredImageOverrides[artwork.slug] || artwork.images.main;
+                        // Use featured image if available, otherwise use main image
+                        const imageUrl = artwork.images.featured || artwork.images.main;
+                        const mobileImageUrl = artwork.images.featuredMobile || artwork.images.main;
 
                         return (
                             <div key={artwork.id}>
                                 <Link href={`/works/${artwork.slug}`} className="block">
-                                    <div className="w-full bg-white">
+                                    {/* Desktop/Tablet - horizontal cropping with WIDE featured image */}
+                                    <div className="hidden md:block w-full bg-white relative overflow-hidden h-[650px] md:h-[850px]">
                                         <Image
-                                            src={getCloudinaryUrl(imageUrl, "large")}
+                                            src={getCloudinaryUrl(imageUrl, "large")} // This uses the featured image
+                                            alt={artwork.title}
+                                            fill
+                                            className="object-cover object-center"
+                                            sizes="1400px"
+                                            priority={artwork.id <= 3}
+                                        />
+                                    </div>
+
+                                    {/* Mobile - proportional scaling with ORIGINAL main image */}
+                                    <div className="block md:hidden w-full bg-white">
+                                        <Image
+                                            src={getCloudinaryUrl(mobileImageUrl, "large")} // Always use main, not featured
                                             alt={artwork.title}
                                             width={1200}
                                             height={1500}
                                             className="w-full h-auto"
-                                            sizes="(max-width: 768px) 100vw, 80vw"
+                                            sizes="100vw"
                                             priority={artwork.id <= 3}
                                         />
                                     </div>
@@ -93,7 +95,7 @@ export default function Home() {
                 </div>
 
                 {/* View Series Button */}
-                <div className="mt-0 md:mt-20 text-left">
+                <div className="mt-10 md:mt-20 text-left">
                     <Link
                         href="/works"
                         className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"

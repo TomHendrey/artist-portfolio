@@ -167,7 +167,7 @@ export const artworks: Artwork[] = [
             featured: "v1774738034/surface-2-g-front-wide-40.jpg", // featured image
             featuredMobile: "v1767658268/surface-2-g-front-1.jpg",
 
-            ropped: "v1767658376/surface-2-cropped-8.jpg",
+            cropped: "v1767658376/surface-2-cropped-8.jpg",
             // High-res progressive loading (Vercel blob storage)
             highRes: {
                 base: "v1767658376/surface-2-cropped-8.jpg",

@@ -17,7 +17,7 @@ export default function Home() {
 
             {/* Featured Works Preview - VERTICAL STACKED LAYOUT */}
             <section className="pt-30 pb-26 md:pt-60 md:pb-60 px-4 mx-auto max-w-[95%] md:max-w-[1400px]">
-                <h2 className="text-left mb-10 md:mb-20">
+                <h2 className="text-left mb-10 md:mb-30">
                     <div className="text-2xl md:text-3xl font-light text-neutral-800 mb-2">
                         Featured Works
                     </div>
@@ -95,7 +95,7 @@ export default function Home() {
                 </div>
 
                 {/* View Series Button */}
-                <div className="mt-10 md:mt-20 text-left">
+                <div className="mt-10 md:mt-40 text-left">
                     <Link
                         href="/works"
                         className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"

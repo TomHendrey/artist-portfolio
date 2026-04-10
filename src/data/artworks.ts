@@ -167,7 +167,6 @@ export const artworks: Artwork[] = [
             featured: "v1774738034/surface-2-g-front-wide-40.jpg", // featured image
             featuredMobile: "v1767658268/surface-2-g-front-1.jpg",
 
-            cropped: "v1767658376/surface-2-cropped-8.jpg",
             // High-res progressive loading (Vercel blob storage)
             highRes: {
                 base: "v1767658376/surface-2-cropped-8.jpg",
@@ -605,30 +604,29 @@ export const artworks: Artwork[] = [
         medium: "Mixed media on wood",
         dimensions: "65 x 85cm",
         description:
-            "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
+            "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
         maxZoom: 4.0,
         images: {
-            main: "v1761587791/surface-10-main-8.jpg",
-            cropped: "v1761587790/surface-10-cropped-10.jpg",
-
+            main: "v1761587833/surface-12-main-9.jpg",
+            cropped: "v1761587835/surface-12-cropped-9.jpg",
             croppedAlts: [],
             details: [
-                "v1768444553/surface-10-g-front-1-24.jpg",
-                "v1768444576/surface-10-closeup-1-24.jpg",
-                "v1768444576/surface-10-closeup-2-24.jpg",
-                "v1768444572/surface-10-closeup-3-24.jpg",
+                "v1768444733/surface-12-g-front-24.jpg",
+                "v1768444738/surface-12-closeup-1-24.jpg",
+                "v1768444740/surface-12-closeup-2-24.jpg",
+                "v1768444719/surface-12-closeup-3-24.jpg",
             ],
             detailsMedium: [
-                "v1768444548/surface-10-g-front-1-16.jpg",
-                "v1768444551/surface-10-closeup-1-16.jpg",
-                "v1768444564/surface-10-closeup-2-16.jpg",
-                "v1768444557/surface-10-closeup-3-16.jpg",
+                "v1768444714/surface-12-g-front-16.jpg",
+                "v1768444727/surface-12-closeup-1-16.jpg",
+                "v1768444720/surface-12-closeup-2-16.jpg",
+                "v1768444723/surface-12-closeup-3-16.jpg",
             ],
             detailsThumb: [
-                "v1768444532/surface-10-g-front-1-thumb.jpg",
-                "v1768444535/surface-10-closeup-1-thumb-b.jpg",
-                "v1768444544/surface-10-closeup-2-thumb-b.jpg",
-                "v1768444541/surface-10-closeup-3-thumb-b.jpg",
+                "v1768444698/surface-12-g-front-thumb.jpg",
+                "v1768444707/surface-12-closeup-1-thumb-b.jpg",
+                "v1768444704/surface-12-closeup-2-thumb-b.jpg",
+                "v1768444701/surface-12-closeup-3-thumb-b.jpg",
             ],
             highRes: {
                 base: "v1761587835/surface-12-cropped-9.jpg",
@@ -639,6 +637,7 @@ export const artworks: Artwork[] = [
         category: "surfaces",
         available: true,
     },
+
     {
         id: 11,
         slug: "surface11",
@@ -688,29 +687,30 @@ export const artworks: Artwork[] = [
         medium: "Mixed media on wood",
         dimensions: "65 x 85cm",
         description:
-            "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
+            "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
         maxZoom: 4.0,
         images: {
-            main: "v1761587833/surface-12-main-9.jpg",
-            cropped: "v1761587835/surface-12-cropped-9.jpg",
+            main: "v1761587791/surface-10-main-8.jpg",
+            cropped: "v1761587790/surface-10-cropped-10.jpg",
+
             croppedAlts: [],
             details: [
-                "v1768444733/surface-12-g-front-24.jpg",
-                "v1768444738/surface-12-closeup-1-24.jpg",
-                "v1768444740/surface-12-closeup-2-24.jpg",
-                "v1768444719/surface-12-closeup-3-24.jpg",
+                "v1768444553/surface-10-g-front-1-24.jpg",
+                "v1768444576/surface-10-closeup-1-24.jpg",
+                "v1768444576/surface-10-closeup-2-24.jpg",
+                "v1768444572/surface-10-closeup-3-24.jpg",
             ],
             detailsMedium: [
-                "v1768444714/surface-12-g-front-16.jpg",
-                "v1768444727/surface-12-closeup-1-16.jpg",
-                "v1768444720/surface-12-closeup-2-16.jpg",
-                "v1768444723/surface-12-closeup-3-16.jpg",
+                "v1768444548/surface-10-g-front-1-16.jpg",
+                "v1768444551/surface-10-closeup-1-16.jpg",
+                "v1768444564/surface-10-closeup-2-16.jpg",
+                "v1768444557/surface-10-closeup-3-16.jpg",
             ],
             detailsThumb: [
-                "v1768444698/surface-12-g-front-thumb.jpg",
-                "v1768444707/surface-12-closeup-1-thumb-b.jpg",
-                "v1768444704/surface-12-closeup-2-thumb-b.jpg",
-                "v1768444701/surface-12-closeup-3-thumb-b.jpg",
+                "v1768444532/surface-10-g-front-1-thumb.jpg",
+                "v1768444535/surface-10-closeup-1-thumb-b.jpg",
+                "v1768444544/surface-10-closeup-2-thumb-b.jpg",
+                "v1768444541/surface-10-closeup-3-thumb-b.jpg",
             ],
             highRes: {
                 base: "v1761587790/surface-10-cropped-10.jpg",

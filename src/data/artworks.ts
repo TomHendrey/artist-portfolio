@@ -557,7 +557,7 @@ export const artworks: Artwork[] = [
         slug: "surface9",
         title: "Surface IX",
         year: "2023",
-        medium: "Acrylic and oil pastel on panel",
+        medium: "Mixed media on wood",
         dimensions: "65 x 85cm",
         description:
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition's forms.",
@@ -601,7 +601,7 @@ export const artworks: Artwork[] = [
         slug: "surface10",
         title: "Surface X",
         year: "2023",
-        medium: "Mixed media on wood",
+        medium: "Oil pastel on wood",
         dimensions: "65 x 85cm",
         description:
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
@@ -684,7 +684,7 @@ export const artworks: Artwork[] = [
         slug: "surface12",
         title: "Surface XII",
         year: "2023",
-        medium: "Mixed media on wood",
+        medium: "Oil pastel on wood",
         dimensions: "65 x 85cm",
         description:
             "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",

@@ -422,7 +422,7 @@ export const artworks: Artwork[] = [
         title: "Surface VI",
         year: "2022",
         medium: "Mixed media on wood",
-        dimensions: "70 x 95cm",
+        dimensions: "70 x 95 cm",
         description:
             "Final piece in the current Mars surface series, synthesizing all previous explorations.",
         maxZoom: 4.0,
@@ -470,7 +470,7 @@ export const artworks: Artwork[] = [
         title: "Surface VII",
         year: "2022",
         medium: "Mixed media on wood",
-        dimensions: "70 x 95cm",
+        dimensions: "70 x 95 cm",
         description:
             "Marks the beginning of a new series focused on Venusian landscapes, reinterpreting dense atmospheric data into vibrant surface expressions.",
         maxZoom: 4.0,
@@ -558,7 +558,7 @@ export const artworks: Artwork[] = [
         title: "Surface IX",
         year: "2023",
         medium: "Mixed media on wood",
-        dimensions: "65 x 85cm",
+        dimensions: "65 x 85 cm",
         description:
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition's forms.",
         maxZoom: 4.0,
@@ -602,7 +602,7 @@ export const artworks: Artwork[] = [
         title: "Surface X",
         year: "2023",
         medium: "Oil pastel on wood",
-        dimensions: "65 x 85cm",
+        dimensions: "65 x 85 cm",
         description:
             "Concludes the twelve-part surface series with a return to Mars, revisiting earlier themes with evolved techniques and a layered visual language.",
         maxZoom: 4.0,
@@ -685,7 +685,7 @@ export const artworks: Artwork[] = [
         title: "Surface XII",
         year: "2023",
         medium: "Oil pastel on wood",
-        dimensions: "65 x 85cm",
+        dimensions: "65 x 85 cm",
         description:
             "Bridges Martian and Venusian studies, contrasting the arid and volcanic energies of the two planetary bodies.",
         maxZoom: 4.0,

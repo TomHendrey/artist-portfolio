@@ -643,7 +643,7 @@ export const artworks: Artwork[] = [
         slug: "surface11",
         title: "Surface XI",
         year: "2023",
-        medium: "Mixed media on wood",
+        medium: "Oil pastel on wood",
         dimensions: "65 x 85cm",
         description:
             "Combines analog texture with digital prints of planetary data to create a hybrid surface aesthetic.",

@@ -557,7 +557,7 @@ export const artworks: Artwork[] = [
         slug: "surface9",
         title: "Surface IX",
         year: "2023",
-        medium: "Mixed media on wood",
+        medium: "Acrylic and oil pastel on wood",
         dimensions: "65 x 85 cm",
         description:
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition's forms.",

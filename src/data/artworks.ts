@@ -59,7 +59,7 @@ export interface Artwork {
 export const artworks: Artwork[] = [
     {
         id: 1,
-        slug: "surface-1",
+        slug: "surface1",
         title: "Surface I",
         year: "2025",
         medium: "Oil pastel on wood",
@@ -152,7 +152,7 @@ export const artworks: Artwork[] = [
     },
     {
         id: 2,
-        slug: "surface-2",
+        slug: "surface2",
         title: "Surface II",
         year: "2025",
         medium: "Oil pastel on wood",
@@ -386,6 +386,8 @@ export const artworks: Artwork[] = [
         maxZoom: 4.0,
         images: {
             main: "v1761587672/surface-5-main-7.jpg",
+            featured: "v1777991254/surface-5-main-wide-40.jpg",
+            featuredMobile: "v1761587672/surface-5-main-7.jpg",
             cropped: "v1761587680/surface-5-cropped-8.jpg",
             croppedAlts: [],
             details: [
@@ -428,6 +430,8 @@ export const artworks: Artwork[] = [
         maxZoom: 4.0,
         images: {
             main: "v1761608329/surface-6-main-7.jpg",
+            featured: "v1777992478/surface-6-main-wide-40.jpg",
+            featuredMobile: "v1761608329/surface-6-main-7.jpg",
             cropped: "v1761612469/surface-6-cropped-9.jpg",
             croppedAlts: [],
             details: [
@@ -510,13 +514,15 @@ export const artworks: Artwork[] = [
         slug: "surface8",
         title: "Surface VIII",
         year: "2024",
-        medium: "Acrylic and oil pastel on panel",
+        medium: "Acrylic & oil pastel on panel",
         dimensions: "85 x 95 cm",
         description:
             "Captures the intense heat and pressure of Venus through layered textures and fiery hues, continuing the series' planetary theme.",
         maxZoom: 4.0,
         images: {
             main: "v1761660151/surface-8-main-7.jpg",
+            featured: "v1777992699/surface-8-main-wide-40.jpg",
+            featuredMobile: "v1761660151/surface-8-main-7.jpg",
             cropped: "v1761657106/surface-8-cropped-8.jpg",
             croppedAlts: [],
             details: [
@@ -557,7 +563,7 @@ export const artworks: Artwork[] = [
         slug: "surface9",
         title: "Surface IX",
         year: "2023",
-        medium: "Acrylic and oil pastel on wood",
+        medium: "Oil pastel on wood",
         dimensions: "65 x 85 cm",
         description:
             "An abstract response to Venusian topography, referencing radar mapping data to shape the composition's forms.",
@@ -691,8 +697,9 @@ export const artworks: Artwork[] = [
         maxZoom: 4.0,
         images: {
             main: "v1761587791/surface-10-main-8.jpg",
+            featured: "v1777992761/surface-12-main-wide-40.jpg",
+            featuredMobile: "v1761587791/surface-10-main-8.jpg",
             cropped: "v1761587790/surface-10-cropped-10.jpg",
-
             croppedAlts: [],
             details: [
                 "v1768444553/surface-10-g-front-1-24.jpg",

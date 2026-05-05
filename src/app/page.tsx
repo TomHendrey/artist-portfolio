@@ -1,13 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { artworks } from "@/data/artworks";
+import { artworks, Artwork } from "@/data/artworks";
 import { getCloudinaryUrl } from "@/lib/cloudinary";
 import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
     // Get first 3 artworks for featured section
-    const featuredArtworks = artworks.slice(0, 3);
+    const featuredSlugs = [
+        "surface1",
+        "surface2",
+        "surface3",
+        "surface8",
+        // "surface5",
+        "surface6",
+        // "surface12",
+    ];
+    const featuredArtworks = featuredSlugs
+        .map((slug) => artworks.find((a) => a.slug === slug))
+        .filter((a): a is Artwork => Boolean(a));
     const featuredSeriesName = "Surfaces";
 
     return (

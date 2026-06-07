@@ -13,8 +13,12 @@ const courierPrime = Courier_Prime({
 });
 
 export const metadata: Metadata = {
-    title: "Hendrey Kendall White | Art ",
-    description: "Contemporary artist specializing in digital painting",
+    title: {
+        default: "Hendrey Kendall White — Contemporary Painting",
+        template: "%s | Hendrey Kendall White",
+    },
+    description:
+        "The collaborative painting practice of Thomas Hendrey and Alex Kendall White. The Surfaces series turns transmitted data into hand-worked oil pastel paintings.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -219,7 +219,7 @@ export default function About() {
                                 className="text-neutral-500 text-sm"
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
-                                <p>The Bartlette School Of Architecture - MA, Architecture</p>
+                                <p>The Bartlett School Of Architecture - MA, Architecture</p>
                                 {/* <p>University Of Kent - BA, Architecture</p> */}
                             </div>
                         </div>

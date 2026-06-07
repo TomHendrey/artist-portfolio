@@ -514,7 +514,7 @@ export const artworks: Artwork[] = [
         slug: "surface8",
         title: "Surface VIII",
         year: "2024",
-        medium: "Acrylic & oil pastel on panel",
+        medium: "Acrylic & oil pastel on wood",
         dimensions: "85 x 95 cm",
         description:
             "Captures the intense heat and pressure of Venus through layered textures and fiery hues, continuing the series' planetary theme.",

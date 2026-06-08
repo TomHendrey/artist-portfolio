@@ -3,8 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export const metadata = { title: "About" };
-
 export default function About() {
     const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("studio"); // Changed default to "studio"
 

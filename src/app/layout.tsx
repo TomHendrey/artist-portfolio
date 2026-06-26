@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={`${inter.className} ${courierPrime.variable} bg-neutral-50`}>
                 <Navigation />
                 <main className="min-h-screen">{children}</main>
-                <Analytics />:
+                <Analytics />
             </body>
         </html>
     );

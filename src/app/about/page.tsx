@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function About() {
-    const [activeSection, setActiveSection] = useState<"about" | "writing" | "studio">("studio"); // Changed default to "studio"
+    const [activeSection, setActiveSection] = useState<"about" | "studio">("studio"); // Changed default to "studio"
 
     return (
         <div className="pt-10 md:pt-16 min-h-screen bg-white">
@@ -33,19 +33,6 @@ export default function About() {
                         }`}
                     >
                         About - Surfaces {/* Changed from "About" */}
-                    </button>
-
-                    <span className="mx-2 text-neutral-400">|</span>
-
-                    <button
-                        onClick={() => setActiveSection("writing")}
-                        className={`${
-                            activeSection === "writing"
-                                ? "text-neutral-800 cursor-default"
-                                : "text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
-                        }`}
-                    >
-                        Essay {/* Changed from "Text" */}
                     </button>
                 </div>
             </div>
@@ -173,7 +160,7 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-            ) : activeSection === "studio" ? (
+            ) : (
                 // STUDIO SECTION - Practical info
                 <div className="px-6 max-w-4xl mx-auto pb-20">
                     {/* Studio Image */}
@@ -231,114 +218,6 @@ export default function About() {
                                 style={{ fontFamily: "Courier New, monospace" }}
                             >
                                 <p>Camberwell College of Arts - BA, Fine Art</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ) : (
-                // TEXT SECTION - Alex's conceptual text
-                <div className="px-6 max-w-4xl mx-auto pb-40">
-                    {/* Studio Image */}
-                    <div className="mb-16 max-w-[340px] sm:max-w-[320px] mx-0 ">
-                        <Image
-                            // src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770314541/surface-2-g-front-3-16.jpg"
-                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770336902/text-5.jpg"
-                            // src="https:res.cloudinary.com/dutoeewfl/image/upload/v1765331050/surface-1-closeup-2-16.jpg"
-                            alt="Custom cutting machine"
-                            width={1600}
-                            height={1200}
-                            className="w-full h-auto"
-                        />
-                    </div>
-
-                    {/* Text Content */}
-                    <div>
-                        {/* Body Text */}
-                        <div
-                            className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
-                            style={{ fontFamily: "Courier New, monospace" }}
-                        >
-                            <div className="space-y-8">
-                                <h2
-                                    className="text-3xl font-light mt-20 mb-16 text-neutral-800 tracking-tight"
-                                    style={{ fontFamily: "Inter, sans-serif" }}
-                                >
-                                    The Choice to Paint
-                                </h2>
-
-                                <p>
-                                    The world has been transformed into a monstrous fantastic
-                                    perpetually moving machine, and the sense of rhythm and
-                                    mechanical harmony, reflected in the whole of the world, cannot
-                                    but be echoed in all our thoughts and in our spiritual life. -
-                                    Aleksandr Shevchenko, writing in 1913 about the second
-                                    industrial revolution.
-                                </p>
-
-                                <p className="pt-4">
-                                    The great project of art is to reconcile us to the world.
-                                    Conscious of our individuality – our difference – the act of art
-                                    is one of orientation, it serves as an incident between creator
-                                    and audience that places the inner life of the mind into the
-                                    outer material and social realms, it is a chance for communion.
-                                </p>
-
-                                <p className="pt-4">
-                                    Genre has traditionally been the space within which this has
-                                    been most accessible; provisionally by having content at the
-                                    scale of human behaviour and experience, and deployed through
-                                    generally understood means that demand the use of faculties
-                                    common between audience and creator, results are relational, but
-                                    at a conceptual level the framework of genre is potent as its
-                                    content and material implications provide an intimate social,
-                                    psychological and metaphysical portrait of its author.
-                                </p>
-
-                                <p className="pt-4">
-                                    However, as this 4th industrial revolution unfolds humanity is
-                                    being remade in the image of technology, our means of perception
-                                    and action are increasingly dependent on technological tools,
-                                    our ideas and memories are increasingly contingent on its reach
-                                    and defined within its terms changing the way we see the world
-                                    and ourselves within it.
-                                </p>
-
-                                <p className="pt-4">
-                                    This vast and rapid emergence of data culture has produced as
-                                    many problems as opportunities for art; technologically enabled
-                                    art – or new media – offers a scope of output that was hitherto
-                                    inaccessible or completely impossible, and in being the
-                                    consequence of data technologies general presence, New Media art
-                                    is of increasing relevance to contemporary mores and practice,
-                                    but its use practically mitigates the relationship of the
-                                    creator to the work, the acquired capabilities, content and the
-                                    deterministic effect of the tools are a negation of our innate
-                                    faculties and lived experiences, the values of technologically
-                                    enabled art deny the conceptual values and potency of
-                                    traditional form of creation.
-                                </p>
-
-                                <p className="pt-4">
-                                    The past and future seem to press so heavily on the present that
-                                    we are left with something of an ultimatum that belies the
-                                    coexistent reality and implications of both on our social,
-                                    intellectual and spiritual lives. In this collaboration between
-                                    Tom Hendrey and myself - Kendall White - we have explored how
-                                    data culture connects and detaches us, the abstract and notional
-                                    implications of data thinking in genre and how the contemporary
-                                    conception of painting can accommodate the changing nature of
-                                    humanity.
-                                </p>
-
-                                {/* Signature */}
-                                <div className="mt-16 pt-8 border-t border-neutral-300">
-                                    <p
-                                        className="mt-12 text-base font-light text-neutral-800"
-                                        style={{ fontFamily: "Inter, sans-serif" }}
-                                    >
-                                        - Kendall White 2026
-                                    </p>
-                                </div>
                             </div>
                         </div>
                     </div>

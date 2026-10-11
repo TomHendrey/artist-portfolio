@@ -1,54 +1,55 @@
+/*
+ * IMAGE HANDLING ON THIS PAGE - two deliberate approaches:
+ *
+ * 1. Small reference images (Mariner, Luminet) use next/image and let Next resize them.
+ *    Fine at ~320px wide on low-detail documentary scans.
+ *
+ * 2. The two large images (studio portrait, Surfaces detail) use a plain <img> with a
+ *    hand-built srcSet, bypassing Next's optimizer. Next resizes to its own fixed widths
+ *    and re-encodes, which on detailed textures produced visible aliasing. Files are
+ *    exported from Photoshop at the exact widths listed in each srcSet.
+ *    The Surfaces detail also uses <picture> to serve a different, tighter crop on phones.
+ *
+ * Longer term both could move to a custom Cloudinary loader on next/image, which would
+ * unify this page with the homepage and remove the hand exports.
+ */
+
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default function About() {
     return (
         <div className="pt-10 md:pt-16 min-h-screen bg-white">
             <div className="px-6 max-w-4xl mx-auto pt-24 pb-20">
-                {/* Studio portraits - files are 800x1000, served straight from Cloudinary (unoptimized) */}
-                <div className="grid grid-cols-2 gap-4 max-w-[624px] mb-16">
-                    <div>
-                        <div className="relative aspect-[4/5]">
-                            <Image
-                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1790811457/Tom_Studio_02.jpg"
-                                alt="Tom Hendrey in the studio"
-                                fill
-                                unoptimized
-                                className="object-cover"
-                            />
-                        </div>
-                        <p
-                            className="text-xs text-neutral-400 mt-4"
-                            style={{ fontFamily: "Courier New, monospace" }}
-                        >
-                            Tom Hendrey
-                        </p>
-                    </div>
-                    <div>
-                        <div className="relative aspect-[4/5]">
-                            <Image
-                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1790811457/Alex_Studio_02.jpg"
-                                alt="Kendall White in the studio"
-                                fill
-                                unoptimized
-                                className="object-cover"
-                            />
-                        </div>
-                        <p
-                            className="text-xs text-neutral-400 mt-4"
-                            style={{ fontFamily: "Courier New, monospace" }}
-                        >
-                            Kendall White
-                        </p>
-                    </div>
-                </div>
+                {/* Studio portrait - hand-sized exports served straight from Cloudinary */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791728919/Studio_Portrait_04_412k.jpg"
+                    srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791728917/Studio_Portrait_05_247k.jpg 672w,
+                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791728919/Studio_Portrait_04_412k.jpg 896w,
+                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791728920/Studio_Portrait_03_812k.jpg 1344w,
+                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791728917/Studio_Portrait_02_1.3.jpg 1792w"
+                    sizes="(max-width: 944px) calc(100vw - 48px), 896px"
+                    width={1792}
+                    height={1152}
+                    alt="Kendall White and Tom Hendrey seated in the studio in front of two Surfaces paintings"
+                    className="w-full h-auto"
+                />
+                <p
+                    className="text-xs text-neutral-400 mt-4"
+                    style={{ fontFamily: "Courier New, monospace" }}
+                >
+                    Kendall White and Tom Hendrey
+                </p>
 
                 {/* ===================== STUDIO ===================== */}
                 <div
-                    className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
+                    className="space-y-8 text-neutral-700 md:text-neutral-600 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
                     style={{ fontFamily: "Courier New, monospace" }}
                 >
                     <h2
-                        className="text-3xl font-light mt-20 mb-16 text-neutral-800 tracking-tight"
+                        className="text-3xl font-light mt-24 mb-8 text-neutral-800 tracking-tight"
                         style={{ fontFamily: "Inter, sans-serif" }}
                     >
                         Studio
@@ -90,6 +91,22 @@ export default function About() {
                     </p>
                 </div>
 
+                {/* Studio, full width - closes the Studio section */}
+                <div className="mt-24">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757660/studio_wide_900.jpg"
+                        srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757660/studio_wide_900.jpg 900w,
+                                https://res.cloudinary.com/dutoeewfl/image/upload/v1791757663/studio_wide_1344.jpg 1344w,
+                                https://res.cloudinary.com/dutoeewfl/image/upload/v1791757664/studio_wide_1800.jpg 1800w"
+                        sizes="(max-width: 944px) calc(100vw - 48px), 896px"
+                        width={1800}
+                        height={1200}
+                        alt="The studio, with a Surfaces panel mounted on the cutting machine"
+                        className="w-full h-auto"
+                    />
+                </div>
+
                 {/* Education blocks - kept for a future CV section */}
                 {/*
                 <div className="pt-20 space-y-2 text-neutral-700 ">
@@ -112,35 +129,22 @@ export default function About() {
                 </div>
                 */}
 
-                {/* Separator between Studio and Surfaces */}
-                <div className="mt-40 md:mt-56 border-t border-neutral-200" />
-
-                {/* ===================== SURFACES ===================== */}
-                <div className="pt-40 md:pt-56">
-                    {/* Surfaces opening image */}
-                    <div className="mb-16 max-w-[340px] sm:max-w-[320px] mx-0 ">
-                        <Image
-                            src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770335700/image-asset-7.jpg"
-                            alt="Detail of the studio's custom cutting machine"
-                            width={1600}
-                            height={1200}
-                            className="w-full h-auto"
-                        />
-                    </div>
-
+                {/* ===================== SURFACES =====================
+                    No separator rule here: the full-width image is the section break. */}
+                <div className="pt-32 md:pt-48">
                     <div
-                        className="space-y-8 text-neutral-800 md:text-neutral-700 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
+                        className="space-y-8 text-neutral-700 md:text-neutral-600 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
                         style={{ fontFamily: "Courier New, monospace" }}
                     >
                         <h2
-                            className="text-3xl font-light mt-20 mb-16 text-neutral-800 tracking-tight"
+                            className="text-3xl font-light mb-8 text-neutral-800 tracking-tight"
                             style={{ fontFamily: "Inter, sans-serif" }}
                         >
                             Surfaces
                         </h2>
 
                         <p>
-                            On July 15, 1965, NASA&apos;s Mariner 4 transmitted the first close-up
+                            On 15 July, 1965, NASA&apos;s Mariner 4 transmitted the first close-up
                             images of Mars from approximately 10,500 miles away. The spacecraft sent
                             data back to Earth over 8.5 hours as a series of binary numbers
                             representing brightness values across a 200-pixel grid. At JPL,
@@ -151,7 +155,7 @@ export default function About() {
                             revealed Mars as a cratered, moon-like surface.
                         </p>
 
-                        <div className="my-30  max-w-[340px] sm:max-w-[320px] mx-0 ">
+                        <div className="my-16 max-w-[340px] sm:max-w-[320px] mx-0">
                             <Image
                                 src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
                                 alt="Engineers at JPL hand-colouring the first Mariner 4 image of Mars, 1965"
@@ -181,7 +185,7 @@ export default function About() {
                         </p>
 
                         {/* Luminet Black Hole Image - left aligned */}
-                        <div className="my-30 max-w-3xl">
+                        <div className="my-16 max-w-3xl">
                             <Image
                                 src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770074251/blackhole-12.jpg"
                                 alt="Jean-Pierre Luminet's hand-plotted black hole simulation, 1978"
@@ -215,7 +219,7 @@ export default function About() {
                             also a record of everything required to make it visible.
                         </p>
 
-                        <p className="pb-30 pt-4">
+                        <p className="pt-4">
                             Painting has always been a system for encoding and transmitting
                             information across time and space, a way of making the invisible or
                             distant present. These works extend that tradition into a contemporary
@@ -223,6 +227,186 @@ export default function About() {
                             perception beyond its natural limits, to transform the unreachable into
                             something we can see and contemplate.
                         </p>
+                    </div>
+
+                    {/* Surfaces opening image - landscape on desktop, narrow crop on phones.
+                        <picture> means the browser downloads only the one it uses.
+                        CHECK: the 1800w entry below points at a file named "1080" - confirm it is
+                        actually 1800px wide, or correct the width descriptor to match. */}
+                    <div className="pt-24">
+                        <picture>
+                            <source
+                                media="(max-width: 767px)"
+                                srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791740541/surface-4-closeup-4-720.jpg 720w,
+                                        https://res.cloudinary.com/dutoeewfl/image/upload/v1791740545/surface-4-closeup-4-1080.jpg 1080w"
+                                sizes="calc(100vw - 48px)"
+                                width={1080}
+                                height={1440}
+                            />
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791740541/surface4-closeup-5-900.jpg"
+                                srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791740541/surface4-closeup-5-900.jpg 900w,
+                                        https://res.cloudinary.com/dutoeewfl/image/upload/v1791740542/surface4-closeup-5-1350.jpg 1350w,
+                                        https://res.cloudinary.com/dutoeewfl/image/upload/v1791740544/surface-4-closeup-1080.jpg 1800w"
+                                sizes="(max-width: 944px) calc(100vw - 48px), 896px"
+                                width={1800}
+                                height={1200}
+                                alt="Close-up detail of Surface IV, thick black pigment built up over a warm copper ground with the wood grain visible beneath"
+                                className="w-full h-auto"
+                            />
+                        </picture>
+                        <p
+                            className="text-xs text-neutral-400 mt-4"
+                            style={{ fontFamily: "Courier New, monospace" }}
+                        >
+                            Surface IV, detail
+                        </p>
+                    </div>
+
+                    {/* ===================== PROCESS =====================
+                        Hand-sized exports served straight from Cloudinary, same approach as the
+                        studio portrait. Captions are drafts - rewrite in your own words.
+                        TODO: write the short process paragraph in the slot marked below.
+                        TODO: add the height map image in the slot marked below. */}
+                    <div className="pt-32 md:pt-48">
+                        <div
+                            className="space-y-8 text-neutral-700 md:text-neutral-600 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
+                            style={{ fontFamily: "Courier New, monospace" }}
+                        >
+                            <h2
+                                className="text-3xl font-light mb-8 text-neutral-800 tracking-tight"
+                                style={{ fontFamily: "Inter, sans-serif" }}
+                            >
+                                Process
+                            </h2>
+
+                            {/* PROCESS PARAGRAPH GOES HERE - three or four sentences of plain fact:
+                                where the source data comes from, how the cutting paths are
+                                generated, what goes onto the panel and in what order. */}
+                        </div>
+                    </div>
+
+                    <div className="pt-16 space-y-24">
+                        {/* HEIGHT MAP GOES HERE - full width.
+                            Copy the studio image block from the Studio section above and swap
+                            the URLs, width, height, alt and caption. */}
+
+                        {/* Pair 1: pigment mixed, then laid onto the panel */}
+                        <div className="max-w-[888px]">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757660/pastel_432.jpg"
+                                        srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757660/pastel_432.jpg 432w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757661/pastel_648.jpg 648w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757662/pastel_864.jpg 864w"
+                                        sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 944px) calc(50vw - 36px), 432px"
+                                        width={864}
+                                        height={1152}
+                                        alt="Pigment worked on a glass slab, with the machine's laptop and a set of scales on the same bench"
+                                        className="w-full h-auto"
+                                    />
+                                </div>
+                                <div>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/applied_432.jpg"
+                                        srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/applied_432.jpg 432w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/applied_648.jpg 648w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/applied_864.jpg 864w"
+                                        sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 944px) calc(50vw - 36px), 432px"
+                                        width={864}
+                                        height={1152}
+                                        alt="A gloved hand laying a band of purple pigment onto a bare panel with a blade"
+                                        className="w-full h-auto"
+                                    />
+                                </div>
+                            </div>
+                            <p
+                                className="text-xs text-neutral-400 mt-4"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
+                                Pigment mixed in the studio, then laid onto the panel by hand
+                            </p>
+                        </div>
+
+                        {/* Pair 2: the machine cutting, then the mark it leaves */}
+                        <div className="max-w-[888px]">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/gantry_432.jpg"
+                                        srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/gantry_432.jpg 432w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757660/gantry_648.jpg 648w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757663/gantry_864.jpg 864w"
+                                        sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 944px) calc(50vw - 36px), 432px"
+                                        width={864}
+                                        height={1152}
+                                        alt="The cutting machine over a panel, with a line of removed pigment collected along the bottom rail"
+                                        className="w-full h-auto"
+                                    />
+                                </div>
+                                <div>
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/layers_432.jpg"
+                                        srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757659/layers_432.jpg 432w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757660/layers_648.jpg 648w,
+                                            https://res.cloudinary.com/dutoeewfl/image/upload/v1791757661/layers_864.jpg 864w"
+                                        sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 944px) calc(50vw - 36px), 432px"
+                                        width={864}
+                                        height={1152}
+                                        alt="Close detail of the ribbed texture left by the cutting head, with lower layers showing through"
+                                        className="w-full h-auto"
+                                    />
+                                </div>
+                            </div>
+                            <p
+                                className="text-xs text-neutral-400 mt-4"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
+                                The cutting process removes the pigment rather than adding it, in a
+                                reversal of traditional painting techniques
+                            </p>
+                        </div>
+
+                        {/* Result, full width */}
+                        <div>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757662/macro_detail_900.jpg"
+                                srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757662/macro_detail_900.jpg 900w,
+                                        https://res.cloudinary.com/dutoeewfl/image/upload/v1791757663/macro_detail_1344.jpg 1344w,
+                                        https://res.cloudinary.com/dutoeewfl/image/upload/v1791757665/macro_detail_1800.jpg 1800w"
+                                sizes="(max-width: 944px) calc(100vw - 48px), 896px"
+                                width={1800}
+                                height={1200}
+                                alt="Close detail of a finished surface, black over purple over a copper ground"
+                                className="w-full h-auto"
+                            />
+                            <p
+                                className="text-xs text-neutral-400 mt-4"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
+                                The final stage reveals black over purple cut back into the surface
+                                to expose each layer
+                            </p>
+                        </div>
+
+                        {/* Link through to the works */}
+                        <div className="pt-12 pb-24">
+                            <Link
+                                href="/works"
+                                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
+                                style={{ fontFamily: "Courier New, monospace" }}
+                            >
+                                View Surfaces
+                                <ArrowRight size={14} />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -59,7 +59,7 @@ export default function About() {
 
                     <p>
                         Kendall White (b. 1990) is a graduate of the Bartlett School of
-                        Architecture, UCL (MArch 2016). His professional life began at Pinewood
+                        Architecture, UCL (March 2016). His professional life began at Pinewood
                         Studios, then MDM Props, before becoming fully engaged as an artist,
                         designer and fabricator specialising in new media sculptural work, making
                         digitally enabled objects and performative environments. It was during this

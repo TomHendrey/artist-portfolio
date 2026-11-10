@@ -17,6 +17,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import StudioClip from "@/components/StudioClip";
 
 export default function About() {
     return (
@@ -150,7 +151,6 @@ export default function About() {
                             Surface IV, detail
                         </p>
                     </div>
-
                     <div
                         className="space-y-8 text-neutral-700 md:text-neutral-600 leading-loose text-[16px] md:text-[15px] tracking-tighter md:tracking-tight"
                         style={{ fontFamily: "Courier New, monospace" }}
@@ -163,7 +163,7 @@ export default function About() {
                         </h2>
 
                         <p>
-                            On 15 July, 1965, NASA&apos;s Mariner 4 transmitted the first close-up
+                            On 15 July 1965, NASA&apos;s Mariner 4 transmitted the first close-up
                             images of Mars from approximately 10,500 miles away. The spacecraft sent
                             data back to Earth over 8.5 hours as a series of binary numbers
                             representing brightness values across a 200-pixel grid. At JPL,
@@ -247,33 +247,15 @@ export default function About() {
                             something we can see and contemplate.
                         </p>
                     </div>
-
-                    <div className="pt-24 space-y-24">
-                        {/* Result, full width */}
-                        <div>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757662/macro_detail_900.jpg"
-                                srcSet="https://res.cloudinary.com/dutoeewfl/image/upload/v1791757662/macro_detail_900.jpg 900w,
-                                        https://res.cloudinary.com/dutoeewfl/image/upload/v1791757663/macro_detail_1344.jpg 1344w,
-                                        https://res.cloudinary.com/dutoeewfl/image/upload/v1791757665/macro_detail_1800.jpg 1800w"
-                                sizes="(max-width: 944px) calc(100vw - 48px), 896px"
-                                width={1800}
-                                height={1200}
-                                alt="Close detail of a finished surface, black over purple over a copper ground"
-                                className="w-full h-auto"
-                            />
-                            <p
-                                className="text-xs text-neutral-400 mt-4"
-                                style={{ fontFamily: "Courier New, monospace" }}
-                            >
-                                The final stage reveals black over purple cut back into the surface
-                                to expose each layer
-                            </p>
-                        </div>
+                    <div className="pt-44">
+                        <StudioClip
+                            src="https://res.cloudinary.com/dutoeewfl/video/upload/f_auto,q_auto,ac_none,w_1280/v1794322347/LANDSCAPE_101126_rev.mp4"
+                            poster="https://res.cloudinary.com/dutoeewfl/video/upload/so_1.5,w_1280,f_auto,q_auto/v1794322347/LANDSCAPE_101126_rev.jpg"
+                            label="Studio footage showing the process from heightmap to finished panel"
+                        />
 
                         {/* Link through to the works */}
-                        <div className="pt-12 pb-24">
+                        <div className="pt-34 pb-24">
                             <Link
                                 href="/works"
                                 className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"
@@ -283,7 +265,7 @@ export default function About() {
                                 <ArrowRight size={14} />
                             </Link>
                         </div>
-                    </div>
+                    </div>{" "}
                 </div>
             </div>
         </div>

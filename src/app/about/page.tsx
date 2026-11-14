@@ -249,8 +249,10 @@ export default function About() {
                     </div>
                     <div className="pt-44">
                         <StudioClip
-                            src="https://res.cloudinary.com/dutoeewfl/video/upload/f_auto,q_auto,ac_none,w_1280/v1794322347/LANDSCAPE_101126_rev.mp4"
-                            poster="https://res.cloudinary.com/dutoeewfl/video/upload/so_1.5,w_1280,f_auto,q_auto/v1794322347/LANDSCAPE_101126_rev.jpg"
+                            src="https://res.cloudinary.com/dutoeewfl/video/upload/f_auto,q_auto,ac_none,w_1280/v1794582034/LANDSCAPE_02.mp4"
+                            poster="https://res.cloudinary.com/dutoeewfl/video/upload/so_1.5,w_1280,f_auto,q_auto/v1794582034/LANDSCAPE_02.jpg"
+                            srcMobile="https://res.cloudinary.com/dutoeewfl/video/upload/f_auto,q_auto,ac_none,w_1080/v1794582066/PORTRAIT_02.mp4"
+                            posterMobile="https://res.cloudinary.com/dutoeewfl/video/upload/so_2.5,w_1080,f_auto,q_auto/v1794582066/PORTRAIT_02.jpg"
                             label="Studio footage showing the process from heightmap to finished panel"
                         />
 

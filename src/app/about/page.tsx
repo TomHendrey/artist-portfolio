@@ -60,7 +60,7 @@ export default function About() {
 
                     <p>
                         Kendall White (b. 1990) is a graduate of the Bartlett School of
-                        Architecture, UCL (March 2016). His professional life began at Pinewood
+                        Architecture, UCL (MArch 2016). His professional life began at Pinewood
                         Studios, then MDM Props, before becoming fully engaged as an artist,
                         designer and fabricator specialising in new media sculptural work, making
                         digitally enabled objects and performative environments. It was during this
@@ -163,18 +163,21 @@ export default function About() {
                         </h2>
 
                         <p>
-                            On 15 July 1965, NASA&apos;s Mariner 4 transmitted the first close-up
-                            images of Mars from approximately 10,500 miles away. The spacecraft sent
-                            data back to Earth over 8.5 hours as a series of binary numbers
-                            representing brightness values across a 200-pixel grid. At JPL,
-                            engineers couldn&apos;t wait for official photographic processing.
-                            Instead, they hand-coloured a printout of the raw numerical data, using
-                            pencils to shade squares according to the transmitted values. Engineers
-                            with pencils, translating numbers into a visible landscape. This act
-                            revealed Mars as a cratered, moon-like surface.
+                            Surfaces is a series of landscapes concerned with the transfer of
+                            information, and with the part technology now plays in painting.
                         </p>
 
-                        <div className="my-16 max-w-[340px] sm:max-w-[320px] mx-0">
+                        <p className="pt-4">
+                            Using a combination of handmade and mechanised techniques developed in
+                            the studio, these paintings are built up in layers and then cut back, so
+                            the landscape is revealed by what is removed. What appears is shaped by
+                            the interpretation of data gathered at a distance that puts the place
+                            itself out of reach.
+                        </p>
+
+                        {/* Mariner image opens the historical section: more room above than below,
+        using padding because space-y-8 overrides margin-top on children. */}
+                        <div className="pt-16 max-w-[340px] sm:max-w-[320px] mx-0">
                             <Image
                                 src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770213259/nasa-mars-7.jpg"
                                 alt="Engineers at JPL hand-colouring the first Mariner 4 image of Mars, 1965"
@@ -189,11 +192,24 @@ export default function About() {
                         </div>
 
                         <p className="pt-4">
+                            On 15 July 1965, NASA&apos;s Mariner 4 transmitted the first close-up
+                            images of Mars from approximately 10,500 miles away. The spacecraft sent
+                            data back to Earth over 8.5 hours as a series of binary numbers
+                            representing brightness values across a 200 by 200 pixel grid. At JPL,
+                            engineers couldn&apos;t wait for official photographic processing.
+                            Instead, they hand-coloured a printout of the raw numerical data, using
+                            pencils to shade squares according to the transmitted values. Engineers
+                            with pencils, translating numbers into a visible landscape. This act
+                            revealed Mars as a cratered, moon-like surface.
+                        </p>
+
+                        <p className="pt-4">
                             Thirteen years later, French astrophysicist Jean-Pierre Luminet used a
                             1960s IBM 7040 computer to calculate the appearance of a black hole,
                             then plotted the results by hand with ink on paper, creating the first
                             visualisation of a phenomenon that had never been directly observed.
                         </p>
+
                         <p className="pt-4">
                             These moments represent something fundamental: the transformation of
                             invisible information into visible form. Data is collected through
@@ -203,8 +219,9 @@ export default function About() {
                             between different states of information.
                         </p>
 
-                        {/* Luminet Black Hole Image - left aligned */}
-                        <div className="my-16 max-w-3xl">
+                        {/* Luminet black hole image, left aligned. Sits inside the flow rather
+        than opening a section, so the space around it is even. */}
+                        <div className="pt-8 pb-4 max-w-3xl">
                             <Image
                                 src="https://res.cloudinary.com/dutoeewfl/image/upload/v1770074251/blackhole-12.jpg"
                                 alt="Jean-Pierre Luminet's hand-plotted black hole simulation, 1978"
@@ -220,8 +237,8 @@ export default function About() {
                         <p className="pt-4">
                             This process is inherently imperfect. Signals degrade across distance,
                             introducing noise and distortion. Bandwidth limitations compress and
-                            pixelate. Transmission errors create artifacts. Yet these imperfections
-                            have become a language of their own. Scan lines, compression artifacts,
+                            pixelate. Transmission errors create artefacts. Yet these imperfections
+                            have become a language of their own. Scan lines, compression artefacts,
                             colour shifts, and digital noise are not simply failures but signatures
                             of the technological process itself. They tell us not just what we are
                             seeing, but how we are seeing it.
@@ -242,7 +259,7 @@ export default function About() {
                             Painting has always been a system for encoding and transmitting
                             information across time and space, a way of making the invisible or
                             distant present. These works extend that tradition into a contemporary
-                            technology driven world. They are records of our compulsion to extend
+                            technology-driven world. They are records of our compulsion to extend
                             perception beyond its natural limits, to transform the unreachable into
                             something we can see and contemplate.
                         </p>
@@ -257,7 +274,7 @@ export default function About() {
                         />
 
                         {/* Link through to the works */}
-                        <div className="pt-34 pb-24">
+                        <div className="pt-32 pb-24">
                             <Link
                                 href="/works"
                                 className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-800 px-8 py-3 hover:bg-neutral-800 hover:text-white transition-colors duration-300"

@@ -163,8 +163,8 @@ export default function About() {
                         </h2>
 
                         <p>
-                            Surfaces is a series of landscapes concerned with the transfer of
-                            information, and with the part technology now plays in painting.
+                            Surfaces is a series of landscapes paintings concerned with the transfer
+                            of information, and with the role technology now plays in painting.
                         </p>
 
                         <p className="pt-4">

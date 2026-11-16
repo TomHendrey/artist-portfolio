@@ -58,7 +58,7 @@ export default function HeroSection() {
         const interval = setInterval(() => {
             setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
             setNextImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-        }, 20000); // 20 seconds per image
+        }, 12000); // 20 seconds per image
 
         return () => clearInterval(interval);
     }, [HERO_IMAGES.length]);
@@ -76,7 +76,7 @@ export default function HeroSection() {
                 }
                 
                 .kenburns-active {
-                    animation: kenburns 102s linear infinite;
+                    animation: kenburns 51s linear infinite;
                     will-change: transform;
                 }
             `}</style>

@@ -210,6 +210,17 @@ export default function About() {
                             visualisation of a phenomenon that had never been directly observed.
                         </p>
 
+                        <div className="pt-16 pb-8 max-w-2xl">
+                            <p
+                                className="text-xl md:text-2xl leading-relaxed text-neutral-700"
+                                style={{ textIndent: "-0.55em" }}
+                            >
+                                &ldquo;I had to produce the final image by hand from numerical
+                                data.&rdquo;
+                            </p>
+                            <p className="text-xs text-neutral-400 mt-6">Jean-Pierre Luminet</p>
+                        </div>
+
                         <p className="pt-4">
                             These moments represent something fundamental: the transformation of
                             invisible information into visible form. Data is collected through

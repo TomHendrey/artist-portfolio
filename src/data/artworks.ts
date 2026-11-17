@@ -71,7 +71,7 @@ export const artworks: Artwork[] = [
             // Main composite image (4096px)
             main: "v1769009840/surface-1-main-8.jpg",
 
-            featured: "v1774735184/surface-1-main-wide-40.jpg",
+            featured: "v1794957225/Gallery_Daria_s1.jpg",
             featuredMobile: "v1769009840/surface-1-main-8.jpg",
 
             // Cropped version

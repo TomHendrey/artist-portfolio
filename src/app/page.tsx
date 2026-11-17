@@ -9,11 +9,13 @@ export default function Home() {
     // Get first 3 artworks for featured section
     const featuredSlugs = [
         "surface1",
-        "surface2",
-        "surface3",
         "surface8",
-        // "surface5",
+        "surface2",
         "surface6",
+        "surface3",
+
+        // "surface5",
+
         // "surface12",
     ];
     const featuredArtworks = featuredSlugs

@@ -76,7 +76,7 @@ export default function HeroSection() {
                 }
                 
                 .kenburns-active {
-                    animation: kenburns 51s linear infinite;
+                    animation: kenburns 64s linear infinite;
                     will-change: transform;
                 }
             `}</style>
